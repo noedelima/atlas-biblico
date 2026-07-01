@@ -5,7 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Atlas Bíblico Interativo — MVP F1: Gênesis 1–11 como espinha narrativa contínua, sincronizada com três visões (tempo, mapa, genealogia), nas três tradições textuais (TM · LXX · PS), com proveniência por afirmação.">
 <title>Atlas Gênesis 1–11 — texto · tempo · mapa · genealogia (F1)</title>
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="%230e1218"/><rect x="21" y="21" width="22" height="22" transform="rotate(45 32 32)" fill="%23e9c46a"/><rect x="26.5" y="26.5" width="11" height="11" transform="rotate(45 32 32)" fill="%230e1218"/></svg>'>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Atlas Bíblico Interativo">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Atlas Gênesis 1–11 — texto · tempo · mapa · genealogia">
+<meta property="og:description" content="As doze perícopes de Gn 1–11 em leitura contínua, com texto integral e paralelos do cânon, sincronizadas com linha do tempo, mapa do mundo antigo e árvore genealógica.">
+<meta property="og:url" content="https://noedelima.github.io/atlas-biblico/atlas.html">
+<meta property="og:image" content="https://noedelima.github.io/atlas-biblico/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <script src="dados.js"></script>
+<script src="dados-texto.js"></script>
 <style>
   /* ═══ DESIGN TOKENS · Atlas Bíblico Interativo · v1 · WCAG 2.1 AA ═══ */
   :root{
@@ -73,6 +85,18 @@
   .par b{font-weight:600; color:#e3eefb}
   .modlink{display:inline-block; margin-top:10px; font-size:12.5px; color:var(--gold1); text-decoration:none; border-bottom:1px dashed var(--gold2); padding-bottom:1px}
   .modlink:hover{color:var(--ink)}
+
+  /* leitura integral (Bíblia Livre) */
+  details.leitura{margin:2px 0 10px; border:1px solid var(--line); border-radius:10px; background:var(--field)}
+  details.leitura summary{cursor:pointer; padding:9px 13px; color:var(--gold1); font-size:12.5px; list-style:none}
+  details.leitura summary::-webkit-details-marker{display:none}
+  details.leitura summary::before{content:"› "; color:var(--muted)}
+  details.leitura[open] summary::before{content:"⌄ "}
+  .versos{padding:2px 14px 12px; font-family:var(--serif); font-size:14px; line-height:1.85; color:#e7e4da}
+  .versos p{margin:4px 0}
+  .versos sup{color:var(--gold1); font-size:10px; margin-right:2px; font-weight:600}
+  .versos h4{font-family:var(--sans); color:var(--muted); font-size:11px; letter-spacing:.1em; text-transform:uppercase; margin:10px 0 4px; font-weight:600}
+  .versos .fonte{color:var(--muted); font-size:11px; font-family:var(--sans); margin-top:8px}
 
   /* ── visões ── */
   .views{position:sticky; top:12px}
@@ -237,7 +261,7 @@
   </div>
 
   <footer>
-    <b>Proveniência:</b> texto <b>Almeida</b> (domínio público, transcrição provisória) · cronologias TM · LXX · PS como camadas, em <i>Anno Mundi</i> · identificações geográficas tradicionais com grau de confiança · basemap <b>Natural Earth</b> (domínio público).
+    <b>Proveniência:</b> trechos em destaque: <b>Almeida</b> (domínio público) · texto integral: <b>Bíblia Livre</b> (BLIVRE, CC-BY 3.0 BR — revisão moderna e livre da Almeida) · cronologias TM · LXX · PS como camadas, em <i>Anno Mundi</i> · identificações geográficas tradicionais com grau de confiança · basemap <b>Natural Earth</b> (domínio público).
     <br><b>Continue a leitura:</b> <a href="patriarcas.html" style="color:var(--gold1)">as migrações dos Patriarcas (Gn 12–50) →</a> · Roadmap: refinamento com gazetteers acadêmicos (Pleiades · OpenBible · STEPBible) → F3 Êxodo.
   </footer>
 </div>
@@ -253,6 +277,7 @@
   <div class="cnav" id="cnav"></div>
   <div class="csec" id="ctexthead"></div>
   <div class="ctext" id="ctext"></div>
+  <div id="cleitura"></div>
   <div class="csec" id="cafhead" hidden>Afirmações e proveniência</div>
   <div id="cafs"></div>
   <div class="csrc" id="csrc"></div>
@@ -275,6 +300,21 @@
   /* resolve campos que variam por tradição (pai/gera de Gn 11) */
   function resolve(v){return (v&&typeof v==="object")?v[trad]:v;}
 
+  /* leitura integral (Bíblia Livre) para uma referência */
+  function leituraHtml(ref){
+    if(!window.TEXTO) return "";
+    var p=window.TEXTO.passagem(ref);
+    if(!p) return "";
+    var livro=ref.charAt(0)==="J"&&ref.charAt(1)==="s"?"Josué":"Gênesis";
+    var h="";
+    p.forEach(function(g){
+      if(p.length>1) h+="<h4>"+livro+" "+g.cap+"</h4>";
+      h+="<p>"+g.versos.map(function(x){return "<sup>"+x.v+"</sup>"+x.t;}).join(" ")+"</p>";
+    });
+    h+="<div class='fonte'>"+window.TEXTO.META.nome+" ("+window.TEXTO.META.sigla+") · "+window.TEXTO.META.nota+" · "+window.TEXTO.META.licenca+"</div>";
+    return "<details class='leitura'><summary>Ler o texto completo · "+ref+"</summary><div class='versos'>"+h+"</div></details>";
+  }
+
   /* ════════ ESPINHA NARRATIVA ════════ */
   var spine=document.getElementById("spine");
   A.PERICOPES.forEach(function(pc){
@@ -288,6 +328,7 @@
     var body=document.createElement("div");
     body.className="pbody"; body.hidden=true;
     var h="<div class='ptexto'>"+pc.texto+"</div>";
+    h+=leituraHtml(pc.ref);
     if(pc.paralelos&&pc.paralelos.length){
       h+="<div class='seclbl'>Paralelos no cânon</div><div class='chips'>"+
         pc.paralelos.map(function(p){return "<span class='par'><b>"+p.r+"</b> · "+p.n+"</span>";}).join("")+"</div>";
@@ -665,6 +706,7 @@
       if(p.modulo){var a=document.createElement("a");a.className="chip";a.style.textDecoration="none";a.href=p.modulo.href;a.innerHTML=p.modulo.label+" →";nav.appendChild(a);}
       document.getElementById("ctexthead").textContent="Texto · "+p.ref;
       document.getElementById("ctext").textContent=p.txt||"—";
+      document.getElementById("cleitura").innerHTML=leituraHtml(p.ref);
       var afs=afHtml(p.af);
       document.getElementById("cafhead").hidden=!afs;
       document.getElementById("cafs").innerHTML=afs;
@@ -680,6 +722,7 @@
       var pc=A.pericope(l.pericope);
       document.getElementById("ctexthead").textContent="Texto · "+pc.ref+" — "+pc.titulo;
       document.getElementById("ctext").textContent=pc.texto;
+      document.getElementById("cleitura").innerHTML=leituraHtml(l.ref);
       var afs2=afHtml(l.af);
       document.getElementById("cafhead").hidden=!afs2;
       document.getElementById("cafs").innerHTML=afs2;

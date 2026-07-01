@@ -1,0 +1,11 @@
+{
+  "name": "atlas-biblico",
+  "private": true,
+  "description": "Atlas Bíblico Interativo — testes de fumaça (o site em si não tem build: HTML + JS puro)",
+  "scripts": {
+    "test": "node tests/smoke.js"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  }
+}
