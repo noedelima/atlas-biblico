@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Atlas Bíblico Interativo — texto, tempo, território e genealogia num só ambiente. Protótipos: cronologias de Gênesis 5 (TM · LXX · PS) e a Tábua das Nações (Gn 10) sobre cartografia do mundo antigo.">
-<title>Atlas Bíblico Interativo — protótipos</title>
+<meta name="description" content="Atlas Bíblico Interativo — texto, tempo, território e genealogia num só ambiente. MVP F1: Gênesis 1–11 com três visões sincronizadas; cronologias TM · LXX · PS; Tábua das Nações sobre cartografia do mundo antigo.">
+<title>Atlas Bíblico Interativo — Gênesis 1–11</title>
 <style>
   /* ═══ DESIGN TOKENS · Atlas Bíblico Interativo · v1 · WCAG 2.1 AA ═══ */
   :root{
@@ -39,6 +39,8 @@
 
   .mods{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:38px 0 0}
   @media(max-width:720px){.mods{grid-template-columns:1fr}}
+  .mod.feature{grid-column:1/-1; border-color:#3b4a5c; background:linear-gradient(180deg,#1d2635,var(--panel-2))}
+  .mod .new{display:inline-block; font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#0e1218; background:var(--gold1); border-radius:5px; padding:2px 7px; margin-left:8px; vertical-align:2px}
   .mod{display:block; text-decoration:none; color:inherit; background:linear-gradient(180deg,#1a2230,var(--panel-2));
        border:1px solid var(--line); border-radius:16px; padding:22px 22px 20px; transition:border-color .15s, transform .15s}
   .mod:hover{border-color:var(--line-strong); transform:translateY(-2px)}
@@ -61,7 +63,7 @@
 <body>
 <div class="wrap">
   <header>
-    <div class="kicker">Atlas Bíblico Interativo · protótipos F0</div>
+    <div class="kicker">Atlas Bíblico Interativo · MVP F1 · Gênesis 1–11</div>
     <h1>Texto, tempo, território e genealogia — num só ambiente.</h1>
     <p class="sub">Estudo interativo da Escritura com a leitura <b>mainstream sempre visível</b> e camadas opcionais por cima: variantes textuais, geografia histórica e atestação arqueológica — cada afirmação com sua <b>proveniência</b> e grau de confiança.</p>
     <div class="principles" aria-label="Princípios do projeto">
@@ -73,6 +75,27 @@
   </header>
 
   <nav class="mods" aria-label="Módulos">
+    <a class="mod feature" href="atlas.html">
+      <span class="tag">Atlas · Gênesis 1–11 · MVP F1<span class="new">novo</span></span>
+      <svg class="glyph" viewBox="0 0 300 74" role="img" aria-label="Miniatura: texto, linha do tempo, mapa e genealogia lado a lado">
+        <rect x="6"  y="10" width="86" height="7" rx="3" fill="#9aa6b6" opacity=".7"/>
+        <rect x="6"  y="24" width="70" height="7" rx="3" fill="#9aa6b6" opacity=".45"/>
+        <rect x="6"  y="38" width="80" height="7" rx="3" fill="#9aa6b6" opacity=".45"/>
+        <rect x="6"  y="52" width="58" height="7" rx="3" fill="#9aa6b6" opacity=".45"/>
+        <rect x="112" y="12" width="64" height="8" rx="4" fill="#edca73"/>
+        <rect x="124" y="26" width="58" height="8" rx="4" fill="#d9a94f"/>
+        <rect x="136" y="40" width="30" height="8" rx="4" fill="#7ed8c9"/>
+        <line x1="172" y1="6" x2="172" y2="56" stroke="#5aa0d6" stroke-width="2.2"/>
+        <path d="M200,52 Q222,34 246,42 T294,36 L294,66 L200,66 Z" fill="#20303f"/>
+        <rect x="222" y="30" width="8" height="8" transform="rotate(45 226 34)" fill="#e9c46a"/>
+        <rect x="252" y="42" width="8" height="8" transform="rotate(45 256 46)" fill="none" stroke="#e9c46a" stroke-width="1.6" stroke-dasharray="2.5 2"/>
+        <circle cx="206" cy="14" r="4" fill="#7d8ef2"/><line x1="206" y1="18" x2="206" y2="26" stroke="#66798e"/>
+        <circle cx="206" cy="30" r="4" fill="#2ea87d"/>
+      </svg>
+      <h2>O ambiente de estudo: texto · tempo · mapa · genealogia</h2>
+      <p>As doze perícopes de Gn 1–11 em leitura contínua, com paralelos do cânon, sincronizadas com três visões — linha do tempo (Adão → Abrão, com Dilúvio e Babel), mapa do mundo antigo (do Éden a Harã) e árvore genealógica. Tudo nas três tradições textuais, com proveniência por afirmação.</p>
+      <span class="go">Abrir o atlas →</span>
+    </a>
     <a class="mod" href="genesis5.html">
       <span class="tag">Módulo 1 · Gênesis 5</span>
       <svg class="glyph" viewBox="0 0 300 74" role="img" aria-label="Miniatura: barras de vidas em linha do tempo com marco do Dilúvio">
@@ -106,7 +129,7 @@
     </a>
   </nav>
 
-  <p class="road"><b>Roadmap</b> · <span class="done">✓ F0 protótipos</span> → F1 MVP Gênesis 1–11 (grafo de afirmações + três visões sincronizadas: tempo, mapa, genealogia) → F2 Patriarcas (migrações no mapa-tempo) → F3+ Gênesis → Apocalipse.</p>
+  <p class="road"><b>Roadmap</b> · <span class="done">✓ F0 protótipos</span> → <span class="done">✓ F1 MVP Gênesis 1–11</span> (grafo de afirmações + três visões sincronizadas: tempo, mapa, genealogia) → F1.1 refinamento com gazetteers acadêmicos (Pleiades · OpenBible · STEPBible) → F2 Patriarcas (migrações no mapa-tempo) → F3+ Gênesis → Apocalipse.</p>
 
   <footer>
     <b>Fontes e licenças:</b> texto bíblico <b>Almeida</b> (domínio público, transcrição provisória) · basemap <b>Natural Earth</b> (domínio público) · identificações tradicionais/debatidas sinalizadas por nível de confiança.
