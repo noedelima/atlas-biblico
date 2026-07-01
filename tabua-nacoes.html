@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tábua das Nações (Gn 10) — mapa interativo (protótipo v03 · AA)</title>
+<style>
+  /* ═══ DESIGN TOKENS · Atlas Bíblico Interativo · v1 ═══
+     Verificados WCAG 2.1 AA (texto ≥4.5:1 · não-texto ≥3:1) — jun/2026 */
+  :root{
+    color-scheme:dark;
+    /* superfícies */
+    --bg:#0b1118; --panel:#141d27; --panel-2:#19222e; --field:#0f1620;
+    /* traços: line = decorativo · line-strong = funcional (≥3:1) */
+    --line:#26303d; --line-strong:#5d7183;
+    /* tinta */
+    --ink:#eceae3; --muted:#94a1b2; --gold:#e9c46a;
+    /* foco */
+    --focus:#e9c46a;
+    /* linhagens: base = marcador no mapa claro · ui = chrome escuro · text = tags */
+    --jafe:#4a5fd0; --jafe-ui:#7d8ef2; --jafe-text:#b3bdff;
+    --cam:#b05a12;  --cam-ui:#c97a35;  --cam-text:#f3a76a;
+    --sem:#147a56;  --sem-ui:#2ea87d;  --sem-text:#7cd9b2;
+    /* basemap físico */
+    --water-1:#c8e2ef; --water-2:#a6cde0;
+    --land-1:#d9e6c4; --land-2:#e3e2c0; --land-3:#ebdcb9;
+    --river:#44789a; --sea-label:#2e5063; --coast:#93a59a; --halo:#8a5f04;
+    /* tipografia */
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(1100px 560px at 82% -12%,#16263a 0,transparent 60%),var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.45;-webkit-font-smoothing:antialiased}
+  :focus-visible{outline:2px solid var(--focus); outline-offset:2px; border-radius:4px}
+  .wrap{max-width:1080px;margin:0 auto;padding:26px 18px 52px}
+  .kicker{color:var(--gold);font-size:12px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:8px}
+  h1{font-family:var(--serif);font-weight:600;font-size:clamp(21px,3.3vw,30px);margin:0 0 4px}
+  .sub{color:var(--muted);font-size:14px;max-width:66ch}
+  .controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:18px 0 6px}
+  .layers{display:inline-flex;gap:6px;background:var(--panel);border:1px solid var(--line-strong);border-radius:12px;padding:5px}
+  .layers button{appearance:none;border:1px solid transparent;background:transparent;color:var(--ink);font:inherit;font-size:12.5px;padding:7px 12px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:7px;transition:.15s;min-height:36px}
+  .layers button .dot{width:11px;height:11px;display:inline-block;flex:none}
+  .dot--j{border-radius:50%;background:var(--jafe-ui)}
+  .dot--c{border-radius:2px;background:var(--cam-ui)}
+  .dot--s{clip-path:polygon(50% 0,100% 100%,0 100%);background:var(--sem-ui)}
+  .layers button[aria-pressed="true"]{background:#1c2632;border-color:#36424f}
+  .layers button[aria-pressed="false"]{color:var(--muted)}
+  .layers button[aria-pressed="false"] .dot{background:var(--muted)}
+  .layers button:focus-visible{outline:2px solid var(--focus);outline-offset:-2px}
+  .legend{display:flex;flex-wrap:wrap;gap:13px;color:var(--muted);font-size:12px;margin-left:auto}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .legend i{width:12px;height:12px;border-radius:50%;display:inline-block;border:1.5px solid #fff}
+  .legend i.hollow{background:#fff!important;border:1.6px dashed var(--muted)}
+
+  .mapcard{background:#0e1620;border:1px solid var(--line);border-radius:14px;padding:6px;margin-top:10px;overflow:hidden}
+  .scroll{overflow-x:auto}
+  svg.map{display:block;width:100%;min-width:720px;height:auto}
+  .grat{stroke:#9fb4c2;stroke-width:.5;opacity:.45}
+  .river{fill:none;stroke:var(--river);stroke-width:1.5;opacity:.95;stroke-linecap:round}
+  .sea{fill:var(--sea-label);font-style:italic;font-size:11px;font-family:var(--serif);letter-spacing:.04em}
+  .npt{cursor:pointer}
+  .npt .shape{transition:transform .12s;transform-box:fill-box;transform-origin:center}
+  .npt:hover .shape,.npt:focus-within .shape{transform:scale(1.4)}
+  .nlbl{font-size:10.5px;fill:#26331b;paint-order:stroke;stroke:#f3f5ec;stroke-width:3px;stroke-linejoin:round;pointer-events:none}
+  .npt:hover .nlbl,.npt:focus-within .nlbl{font-weight:700}
+  .hit{cursor:pointer}
+  .hit:focus{outline:none}
+  .hit:focus-visible{outline:2px solid var(--halo);stroke:var(--halo);stroke-width:2.5}
+  .ararat text{fill:#6b4f2a;font-size:9.5px;font-style:italic;font-family:var(--serif)}
+  .dim{opacity:.18}
+
+  .timewrap{display:flex;align-items:center;gap:14px;margin:14px 4px 0}
+  .timewrap input{flex:1;accent-color:var(--gold);min-height:28px}
+  .epoch{font-size:13px;color:var(--ink)}
+  .epoch b{color:var(--gold);font-weight:600}
+  .hint{color:var(--muted);font-size:12px;margin:10px 4px 0}
+  .hint b{color:var(--gold)}
+  footer{margin-top:20px;color:var(--muted);font-size:12px;border-top:1px solid var(--line);padding-top:13px}
+  footer b{color:var(--ink)}
+
+  #backdrop{position:fixed;inset:0;background:rgba(6,9,13,.45);opacity:0;visibility:hidden;transition:.18s;z-index:50}
+  #backdrop.show{opacity:1;visibility:visible}
+  #panel{position:fixed;z-index:60;right:24px;top:80px;width:392px;max-height:calc(100vh - 110px);overflow:auto;background:linear-gradient(180deg,#19222e,#111922);border:1px solid #38444f;border-radius:16px;box-shadow:0 24px 60px rgba(0,0,0,.55);padding:18px;opacity:0;visibility:hidden;transform:translateY(10px);transition:.2s}
+  #panel.show{opacity:1;visibility:visible;transform:none}
+  #panel:focus{outline:none}
+  #pclose{position:absolute;top:10px;right:10px;width:36px;height:36px;border-radius:9px;border:1px solid var(--line-strong);background:var(--field);color:var(--muted);font-size:20px;cursor:pointer}
+  #pclose:hover{color:var(--ink)}
+  .pclu{display:flex;align-items:center;gap:8px;margin:2px 40px 8px 0;font-size:12px;color:var(--muted)}
+  .pclu button{width:32px;height:32px;border-radius:8px;border:1px solid var(--line-strong);background:var(--field);color:var(--gold);cursor:pointer;font-size:15px}
+  .pclu button:hover{border-color:var(--gold)}
+  .pname{font-family:var(--serif);font-size:22px;padding-right:40px;font-weight:400;margin:0}
+  .ptag{display:inline-block;font-size:11px;padding:2px 9px;border-radius:20px;margin-top:8px;font-weight:600}
+  .pid{color:var(--ink);font-size:13px;margin:11px 0 0}
+  .phist{color:var(--muted);font-size:12.8px;margin-top:8px;line-height:1.55}
+  .psec{color:var(--gold);font-size:11px;letter-spacing:.05em;text-transform:uppercase;margin:14px 0 6px}
+  .prefs{display:flex;flex-wrap:wrap;gap:6px}
+  .prefs b{font-size:11.5px;color:#cfe0ef;background:#1a2735;border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-weight:500}
+  .ptext{font-family:var(--serif);font-size:13.5px;line-height:1.65;color:#e7e4da;background:var(--field);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:10px;padding:11px 13px}
+  .psrc{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:11px;color:var(--muted)}
+  @media(max-width:640px){
+    #panel{right:0;left:0;bottom:0;top:auto;width:100%;max-height:82vh;border-radius:16px 16px 0 0}
+    #pclose{width:44px;height:44px}
+    .pclu button{width:44px;height:44px}
+    .layers button{min-height:44px}
+  }
+.crumbs{margin-bottom:14px;font-size:13px}
+.crumbs a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line-strong);padding-bottom:1px}
+.crumbs a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="crumbs" aria-label="Navegação"><a href="./">← Atlas Bíblico Interativo</a></nav>
+  <div class="kicker">Atlas Bíblico Interativo · módulo 2 · protótipo v03 · AA</div>
+  <h1>Tábua das Nações — Gênesis 10</h1>
+  <p class="sub">Os povos descendentes de Noé (amostra de ~29 dos 70) sobre um mapa físico do mundo antigo, sem fronteiras modernas. Ligue/desligue as linhagens, clique num povo para texto, história e referências, e arraste o tempo para ver a leitura de Gênesis migrar rumo à atestação histórica.</p>
+
+  <div class="controls">
+    <div class="layers" role="group" aria-label="Linhagens — mostrar ou ocultar">
+      <button data-son="J" aria-pressed="true"><span class="dot dot--j" aria-hidden="true"></span>Jafé</button>
+      <button data-son="C" aria-pressed="true"><span class="dot dot--c" aria-hidden="true"></span>Cam</button>
+      <button data-son="S" aria-pressed="true"><span class="dot dot--s" aria-hidden="true"></span>Sem</button>
+    </div>
+    <div class="legend">
+      <span>forma e cor = linhagem</span>
+      <span><i style="background:#8b98a8"></i> atestado</span>
+      <span><i class="hollow"></i> identificação provável</span>
+    </div>
+  </div>
+
+  <div class="mapcard">
+    <div class="scroll">
+      <svg class="map" id="map" viewBox="0 0 1000 620" role="group" aria-label="Mapa da Tábua das Nações. Cada povo é um botão que abre um card com texto, história e referências. Círculo: linhagem de Jafé; quadrado: Cam; triângulo: Sem.">
+        <defs>
+          <linearGradient id="gWater" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#c8e2ef"/><stop offset="1" stop-color="#a6cde0"/>
+          </linearGradient>
+          <linearGradient id="gLand" gradientUnits="userSpaceOnUse" x1="0" y1="30" x2="0" y2="590">
+            <stop offset="0" stop-color="#d9e6c4"/><stop offset="0.5" stop-color="#e3e2c0"/><stop offset="1" stop-color="#ebdcb9"/>
+          </linearGradient>
+          <filter id="coastsh" x="-5%" y="-5%" width="110%" height="110%">
+            <feDropShadow dx="0" dy="0" stdDeviation="2.4" flood-color="#5b86a0" flood-opacity="0.55"/>
+          </filter>
+        </defs>
+        <rect x="0" y="0" width="1000" height="620" fill="url(#gWater)"/>
+        <g id="grat"></g>
+        <path id="coast" d="M34.0,321.2 L44.0,311.1 L50.3,307.2 L60.9,295.0 L57.8,276.7 L64.3,256.4 L72.5,246.5 L94.6,233.7 L107.1,209.5 L116.5,209.6 L124.1,215.8 L136.2,214.8 L154.9,218.2 L167.1,210.2 L180.8,207.6 L188.8,201.6 L201.1,197.1 L243.6,193.3 L250.0,195.5 L262.0,189.7 L275.5,189.6 L280.7,193.0 L289.4,192.1 L303.2,186.2 L312.1,188.0 L311.7,195.4 L322.5,190.0 L323.4,192.8 L317.1,200.0 L317.0,206.8 L321.4,210.4 L319.7,223.1 L311.3,230.5 L313.8,238.5 L320.3,238.7 L323.5,245.7 L328.4,248.0 L343.3,253.0 L348.6,251.8 L359.2,254.2 L376.1,260.8 L382.0,273.8 L411.3,282.8 L424.9,290.1 L431.1,286.3 L437.1,279.5 L434.2,268.3 L438.2,261.2 L447.3,254.3 L456.1,252.3 L473.2,255.3 L477.6,261.9 L499.0,266.1 L502.1,271.0 L519.0,270.7 L549.7,281.2 L564.7,272.4 L575.9,271.2 L584.9,273.0 L588.4,280.3 L591.3,275.5 L601.5,279.0 L611.4,279.8 L617.7,276.1 L621.4,271.3 L620.5,270.5 L623.9,263.6 L626.4,252.5 L633.1,236.7 L639.7,225.9 L638.5,214.7 L641.6,208.6 L636.9,202.0 L641.7,196.5 L634.0,197.7 L623.4,194.3 L614.6,202.8 L595.4,204.4 L585.1,196.6 L571.4,196.1 L568.5,202.1 L559.7,203.9 L547.4,196.1 L533.5,196.3 L526.0,181.8 L516.7,173.6 L522.9,162.2 L514.8,155.2 L528.9,141.2 L548.5,140.6 L553.8,129.4 L578.0,131.4 L593.3,121.9 L608.1,117.7 L629.1,117.4 L651.3,127.8 L669.5,133.4 L684.3,131.2 L695.2,132.5 L710.2,124.8 L712.1,118.5 L709.0,108.5 L701.6,103.1 L694.6,101.4 L673.7,84.6 L659.2,79.0 L648.3,70.4 L657.5,68.1 L668.1,55.8 L661.0,50.0 L679.7,44.0 L679.3,40.8 L657.8,44.3 L649.3,49.1 L637.5,49.9 L626.5,55.3 L627.3,64.4 L633.5,68.0 L646.4,67.1 L643.9,72.3 L630.0,74.9 L612.8,83.4 L605.7,80.4 L608.5,73.5 L594.7,69.2 L596.9,66.4 L609.1,61.5 L605.4,58.2 L585.6,54.4 L584.8,49.0 L573.0,50.8 L568.3,58.9 L558.4,69.7 L558.7,73.5 L552.6,76.6 L548.7,75.3 L545.2,93.0 L538.6,99.0 L533.9,109.5 L539.5,123.5 L550.6,128.3 L548.3,131.9 L533.2,132.7 L517.2,145.1 L513.2,138.3 L513.4,135.2 L499.0,133.4 L483.6,137.3 L492.5,145.5 L486.0,147.9 L478.9,147.9 L472.2,140.4 L469.8,143.6 L472.7,152.3 L479.0,159.2 L474.2,162.4 L487.6,173.4 L487.8,181.7 L476.0,177.8 L479.8,185.3 L471.7,186.9 L476.5,199.8 L468.1,200.0 L457.7,193.6 L450.7,172.1 L439.2,157.0 L438.4,152.8 L436.2,151.8 L436.0,148.6 L428.9,143.7 L427.8,136.7 L430.6,122.1 L422.3,113.9 L404.8,105.5 L397.5,100.3 L385.9,95.9 L375.2,85.1 L377.7,84.0 L371.9,77.8 L371.7,72.9 L363.5,70.6 L359.6,76.9 L355.9,72.0 L356.2,66.9 L359.5,65.3 L349.3,63.2 L339.0,68.4 L339.7,75.7 L338.2,79.9 L342.3,87.3 L354.2,94.7 L360.6,106.8 L374.8,118.7 L384.7,118.6 L387.8,121.8 L384.3,124.7 L405.0,134.5 L415.8,142.1 L417.2,144.9 L414.8,150.1 L407.7,143.3 L396.7,140.8 L391.4,150.3 L400.5,155.8 L399.0,163.4 L393.7,164.3 L386.9,176.9 L381.6,178.0 L384.3,165.7 L387.0,162.5 L378.2,146.6 L372.9,144.8 L369.2,138.5 L361.0,135.8 L355.5,129.9 L346.1,129.0 L336.2,122.3 L315.9,104.3 L312.0,89.8 L295.3,83.3 L289.5,85.3 L282.1,92.1 L276.9,93.2 L265.4,101.4 L240.3,97.5 L221.8,102.2 L220.4,111.1 L221.0,119.6 L209.0,129.4 L192.7,132.5 L191.6,137.4 L183.8,145.5 L178.9,157.5 L183.8,165.8 L176.5,172.4 L173.7,181.9 L164.2,184.8 L155.2,196.1 L126.9,196.1 L119.0,201.2 L114.1,206.8 L107.9,205.6 L103.2,200.6 L99.6,192.2 L87.7,189.9 L82.6,193.7 L75.9,191.6 L69.4,193.3 L71.3,181.8 L70.1,172.8 L64.5,171.4 L61.4,165.9 L62.4,156.3 L67.5,150.9 L71.0,136.2 L70.8,130.0 L67.7,119.8 L68.3,109.3 L63.1,102.9 L81.1,92.4 L127.2,97.4 L158.3,97.1 L164.8,88.3 L167.3,59.1 L154.2,43.7 L144.8,36.3 L125.3,30.0 L969.9,30.0 L969.9,365.5 L963.6,366.2 L911.5,356.5 L906.1,338.5 L900.0,335.9 L890.2,338.5 L877.4,345.6 L861.9,340.8 L849.1,329.5 L836.8,325.3 L828.4,311.4 L819.0,291.8 L812.1,294.2 L804.1,289.4 L799.3,295.1 L791.8,294.4 L794.4,300.8 L793.3,304.2 L802.4,327.9 L808.6,331.2 L810.8,336.4 L819.5,342.6 L820.2,348.6 L819.0,353.5 L827.8,370.9 L827.0,360.3 L830.4,352.6 L833.9,351.0 L837.7,355.6 L837.9,364.2 L835.2,372.8 L837.6,378.4 L839.8,377.7 L840.3,381.7 L850.3,379.4 L868.4,380.2 L898.3,346.9 L899.9,348.1 L897.1,356.9 L898.8,368.4 L904.5,378.5 L911.6,383.8 L928.4,388.4 L937.6,401.7 L942.1,403.5 L942.1,406.8 L935.4,419.6 L930.1,424.3 L925.3,434.4 L919.6,433.6 L916.9,437.1 L914.9,444.5 L916.5,454.4 L915.3,456.2 L909.4,456.1 L901.5,461.6 L900.2,468.7 L897.3,471.8 L889.4,471.7 L884.5,475.4 L884.5,481.3 L878.4,485.4 L871.4,484.0 L862.9,489.0 L847.8,493.7 L845.1,505.2 L832.4,511.4 L812.1,518.3 L800.7,528.6 L791.3,528.6 L783.9,534.7 L775.8,537.5 L762.0,539.1 L759.2,543.0 L755.8,544.0 L753.9,547.8 L747.6,547.4 L743.5,549.4 L734.7,548.7 L731.4,540.1 L731.8,532.1 L727.2,516.9 L723.6,510.9 L726.1,510.2 L724.8,503.5 L726.4,500.6 L724.2,488.0 L720.3,483.6 L719.3,477.7 L712.8,472.5 L706.0,460.2 L702.4,448.2 L693.6,438.1 L688.0,435.7 L679.6,421.7 L678.1,411.5 L678.6,402.8 L671.4,386.6 L665.4,380.9 L658.5,377.8 L654.4,369.4 L655.1,366.1 L651.5,358.5 L647.8,355.2 L642.9,344.3 L628.6,322.4 L622.3,322.5 L626.4,303.4 L626.0,301.3 L624.7,297.5 L626.0,301.3 L622.4,307.2 L616.3,325.9 L613.3,328.5 L603.3,317.2 L594.3,296.2 L593.0,297.5 L598.2,313.0 L615.6,350.6 L624.4,366.8 L635.8,383.1 L633.3,385.6 L633.7,395.2 L650.7,411.3 L654.8,425.7 L652.0,428.4 L653.9,443.5 L658.5,461.0 L670.3,470.0 L677.7,487.0 L681.2,500.5 L705.5,521.5 L723.4,543.3 L729.6,547.8 L732.6,552.3 L732.2,558.4 L725.0,561.9 L734.6,568.6 L737.1,574.7 L742.8,580.8 L749.1,580.9 L761.1,577.1 L774.9,575.4 L796.9,567.2 L808.2,566.4 L820.8,562.7 L826.8,557.7 L831.6,557.7 L830.8,577.9 L827.2,587.3 L30.0,587.3 L30.0,321.7 L34.0,321.2ZM812.1,144.8 L807.7,161.3 L803.0,164.7 L803.3,172.0 L807.4,182.8 L819.4,185.8 L828.2,193.2 L846.3,195.7 L866.1,191.8 L867.3,188.4 L865.0,178.0 L866.8,162.7 L856.9,157.7 L860.2,147.7 L851.7,146.8 L854.6,134.5 L866.5,138.1 L877.7,133.4 L868.4,124.6 L864.8,116.2 L854.6,119.9 L853.3,130.7 L848.6,117.6 L851.7,111.5 L849.3,106.4 L834.6,101.4 L828.8,88.2 L821.8,84.5 L821.4,79.7 L833.8,81.1 L834.3,70.4 L845.1,68.0 L856.1,70.2 L858.4,55.9 L856.2,46.8 L843.5,47.5 L832.7,44.0 L818.0,50.4 L806.1,53.5 L800.3,62.2 L788.0,64.6 L775.4,79.7 L786.9,93.7 L785.7,103.5 L806.2,128.5 L812.7,138.9 L818.6,139.6 L822.5,143.6 L812.1,144.8ZM357.0,176.2 L379.6,173.3 L375.0,184.8 L376.9,189.4 L374.2,196.9 L364.5,191.4 L340.3,182.3 L342.1,174.8 L357.0,176.2ZM293.1,134.1 L299.4,129.6 L307.0,140.0 L305.2,159.4 L299.5,158.5 L294.3,163.4 L289.5,159.5 L289.0,141.8 L286.1,133.4 L293.1,134.1ZM299.7,127.1 L293.9,124.1 L291.0,114.2 L293.5,108.8 L301.7,103.2 L303.9,115.8 L299.7,127.1ZM610.1,215.2 L621.6,210.8 L613.0,217.1 L614.4,221.0 L601.3,227.0 L595.1,225.0 L592.1,219.2 L599.1,218.5 L600.9,215.0 L610.1,215.2ZM509.4,218.0 L516.4,216.3 L514.8,220.6 L496.5,221.8 L496.6,219.4 L481.1,216.6 L483.5,210.3 L490.4,215.3 L509.7,215.5 L509.4,218.0Z" fill="url(#gLand)" stroke="#93a59a" stroke-width="1" filter="url(#coastsh)"/>
+        <g id="rivers"></g>
+        <g id="seas"></g>
+        <g id="ararat" class="ararat"></g>
+        <g id="nodes"></g>
+      </svg>
+    </div>
+    <div class="timewrap">
+      <input id="time" type="range" min="0" max="100" value="0" aria-label="Tempo: da leitura de Gênesis 10 à atestação histórica na Idade do Ferro">
+      <div class="epoch" id="epoch" aria-live="polite"></div>
+    </div>
+  </div>
+  <p class="hint">▸ <b>Clique</b> num povo — ou navegue com <b>Tab</b> e abra com <b>Enter</b>. Em aglomerados, o card mostra <b>setas ◂ ▸</b> (teclas ←/→). <b>Esc</b> fecha. Formas: <b>●</b> Jafé · <b>■</b> Cam · <b>▲</b> Sem.</p>
+
+  <footer>
+    Basemap: <b>Natural Earth</b> (domínio público), estilo físico, sem fronteiras modernas. Linhagem em <b>forma e cor</b>; confiança em <b>preenchimento</b> (cheio = atestado · tracejado = provável). Texto: <b>Almeida (domínio público)</b>, provisório — Bíblia de Jerusalém entra como overlay privado.
+  </footer>
+</div>
+
+<div id="backdrop" aria-hidden="true"></div>
+<aside id="panel" role="dialog" aria-modal="false" aria-labelledby="pname" tabindex="-1">
+  <button id="pclose" aria-label="Fechar card">×</button>
+  <div class="pclu" id="pclu" style="display:none">
+    <button id="cprev" type="button" aria-label="Povo anterior do aglomerado">◂</button>
+    <span id="ccount" aria-live="polite"></span>
+    <button id="cnext" type="button" aria-label="Próximo povo do aglomerado">▸</button>
+  </div>
+  <h2 class="pname" id="pname"></h2>
+  <div id="ptagwrap"></div>
+  <div class="pid" id="pid"></div>
+  <div class="phist" id="phist"></div>
+  <div class="psec">Referências cruzadas</div>
+  <div class="prefs" id="prefs"></div>
+  <div class="psec">Texto · <span id="pref"></span></div>
+  <div class="ptext" id="ptext"></div>
+  <div class="psrc" id="psrc"></div>
+</aside>
+
+<script>
+(function(){
+  "use strict";
+  var KC=12.702, K=14.667, MX=30, MY=30, L0=-12, B1=48;
+  function xp(lon){return MX+(lon-L0)*KC;} function yp(lat){return MY+(B1-lat)*K;}
+  var NS="http://www.w3.org/2000/svg";
+  function el(t,a){var e=document.createElementNS(NS,t);if(a)for(var k in a)e.setAttribute(k,a[k]);return e;}
+  var css=getComputedStyle(document.documentElement);
+  function tok(n){return css.getPropertyValue(n).trim();}
+  // linhagens: forma + cor (1.4.1 — não só cor)
+  var SON={
+    J:{name:"Jafé",col:tok("--jafe")||"#4a5fd0",ui:tok("--jafe-ui"),text:tok("--jafe-text"),shape:"circle"},
+    C:{name:"Cam", col:tok("--cam") ||"#b05a12",ui:tok("--cam-ui"), text:tok("--cam-text"), shape:"square"},
+    S:{name:"Sem", col:tok("--sem") ||"#147a56",ui:tok("--sem-ui"), text:tok("--sem-text"), shape:"triangle"}
+  };
+
+  var TXMAP={
+    j2:"Os filhos de Jafé são: Gomer, e Magogue, e Madai, e Javã, e Tubal, e Meseque, e Tiras. (Gn 10:2)",
+    j4:"E os filhos de Javã são: Elisá, e Társis, Quitim, e Dodanim. Por estes foram repartidas as ilhas das nações nas suas terras. (Gn 10:4-5)",
+    c6:"E os filhos de Cam são: Cuxe, e Mizraim, e Pute, e Canaã. (Gn 10:6)",
+    c8:"E Cuxe gerou a Ninrode; este começou a ser poderoso na terra. […] E o princípio do seu reino foi Babel, e Ereque, e Acade, e Calné, na terra de Sinar. (Gn 10:8-10)",
+    c15:"E Canaã gerou a Sidom, seu primogênito, e a Hete. (Gn 10:15)",
+    s22:"Os filhos de Sem são: Elão, e Assur, e Arfaxade, e Lude, e Arã. (Gn 10:22)",
+    s25:"E a Héber nasceram dois filhos: o nome de um foi Pelegue, porquanto nos seus dias se repartiu a terra; e o nome do seu irmão foi Joctã. (Gn 10:25)"
+  };
+
+  var N=[
+    {n:"Gômer",s:"J",lon:35,lat:40.3,c:"prob",r:"Gn 10:2",t:"j2",id:"Cimérios — Anatólia / estepe norte",
+      h:"Tronco dos povos do norte. Ligado aos cimérios (Gimirrayu dos anais assírios), que irromperam na Anatólia nos séc. VIII–VII a.C. Pai de Asquenaz, Rifate e Togarma.",rf:["Gn 10:3","1Cr 1:6","Ez 38:6"]},
+    {n:"Magogue",s:"J",lon:45,lat:43,c:"prob",r:"Gn 10:2",t:"j2",id:"Cítia / Cáucaso (tradicional)",
+      h:"Terra do extremo norte. Ezequiel a associa à figura de Gogue; a tradição a identifica com povos das estepes (citas).",rf:["Ez 38:2","Ez 39:6","Ap 20:8"]},
+    {n:"Madai",s:"J",lon:49.5,lat:35,hl:48,hb:34.6,hn:"Média",c:"att",r:"Gn 10:2",t:"j2",id:"Medos — noroeste do Irã",
+      h:"Os medos, atestados desde o séc. IX a.C. nos textos assírios. Fundaram, com a Pérsia, o império que sucedeu a Babilônia.",rf:["2Rs 17:6","Is 13:17","Dn 5:28"]},
+    {n:"Javã",s:"J",lon:26.5,lat:38.2,hl:23.5,hb:38,hn:"Hélade (Gregos)",c:"att",r:"Gn 10:2",t:"j2",id:"Jônia / Gregos do Egeu",
+      h:"Os jônios/gregos (hebr. Yāwān). Os profetas o citam como povo marítimo e comerciante do ocidente distante.",rf:["Is 66:19","Ez 27:13","Dn 8:21","Zc 9:13"]},
+    {n:"Tubal",s:"J",lon:37,lat:39.4,c:"prob",r:"Gn 10:2",t:"j2",id:"Tabal — Anatólia oriental",
+      h:"Povo da Anatólia (Tabal assírio). Par recorrente de Meseque em listas de comércio e guerra.",rf:["Ez 27:13","Ez 38:2","Is 66:19"]},
+    {n:"Meseque",s:"J",lon:33,lat:39.2,c:"prob",r:"Gn 10:2",t:"j2",id:"Mushki / Frígia",
+      h:"Os Mushki (frígios) da Anatólia. Símbolo de povo distante e belicoso nos Salmos e em Ezequiel.",rf:["Sl 120:5","Ez 27:13","Ez 38:2"]},
+    {n:"Tirás",s:"J",lon:27,lat:41,c:"prob",r:"Gn 10:2",t:"j2",id:"Trácios (?) — Egeu norte",
+      h:"Identificação incerta; tradicionalmente os trácios ou povos do mar do Egeu.",rf:["1Cr 1:5"]},
+    {n:"Társis",s:"J",lon:-6,lat:37,c:"prob",r:"Gn 10:4",t:"j4",id:"Tartesso (?) — Ibéria, extremo oeste",
+      h:"Porto do fim do mundo conhecido (provável Tartesso, na Ibéria). Símbolo do comércio marítimo; destino da fuga de Jonas.",rf:["1Rs 10:22","Jn 1:3","Ez 27:12","Sl 72:10"]},
+    {n:"Quitim",s:"J",lon:33,lat:35,c:"att",r:"Gn 10:4",t:"j4",id:"Chipre (Kition)",
+      h:"Chipre (cidade de Kition); depois nome genérico para potências marítimas do ocidente.",rf:["Nm 24:24","Is 23:1","Jr 2:10","Dn 11:30"]},
+    {n:"Rodanim",s:"J",lon:28,lat:36.4,c:"prob",r:"Gn 10:4",t:"j4",id:"Rodes / ilhas do Egeu",
+      h:"Provavelmente Rodes e ilhas do Egeu (grafado Dodanim em parte dos manuscritos).",rf:["1Cr 1:7","Gn 10:4"]},
+
+    {n:"Cuxe",s:"C",lon:32.5,lat:18.5,c:"att",r:"Gn 10:6",t:"c6",id:"Núbia / alto Nilo",
+      h:"A Núbia (Kush dos egípcios), no alto Nilo. Pai de povos africanos e árabes — e de Ninrode.",rf:["Is 18:1","Jr 13:23","Sf 3:10"]},
+    {n:"Mizraim",s:"C",lon:31,lat:27,c:"att",r:"Gn 10:6",t:"c6",id:"Egito",
+      h:"O Egito (forma dual hebraica). Grande potência vizinha e cenário do Êxodo.",rf:["Gn 12:10","Êx 1:8","Is 19:1","Os 11:1"]},
+    {n:"Pute",s:"C",lon:18,lat:30.5,c:"prob",r:"Gn 10:6",t:"c6",id:"Líbia (tradicional)",
+      h:"Tradicionalmente a Líbia; aparece como fornecedor de mercenários a Egito e Tiro.",rf:["Jr 46:9","Ez 27:10","Na 3:9"]},
+    {n:"Canaã",s:"C",lon:35,lat:31.8,c:"att",r:"Gn 10:6",t:"c6",id:"Levante meridional",
+      h:"A terra prometida antes de Israel. Seus povos e cidades dominam a história patriarcal e a conquista; alvo da maldição de Noé.",rf:["Gn 9:25","Gn 12:5","Êx 3:8","Js 3:10"]},
+    {n:"Ninrode",s:"C",lon:44.4,lat:32.5,hl:44.4,hb:32.5,hn:"Babel / Sinar",c:"att",r:"Gn 10:8-10",t:"c8",id:"Babel, Ereque, Acade — Mesopotâmia",
+      h:"Primeiro 'poderoso' da terra e grande caçador. Fundador de Babel, Ereque e Acade, e depois de Nínive — embora listado sob Cam, seu reino é mesopotâmico.",rf:["Gn 10:8-12","1Cr 1:10","Mq 5:6"]},
+    {n:"Sidom",s:"C",lon:35.4,lat:33.55,c:"att",r:"Gn 10:15",t:"c15",id:"Cidade fenícia",
+      h:"Primogênito de Canaã; grande cidade-porto fenícia, par de Tiro no comércio e na idolatria denunciada pelos profetas.",rf:["Gn 10:19","Jz 10:6","1Rs 16:31","Ez 28:21"]},
+    {n:"Hete",s:"C",lon:34,lat:39,hl:34,hb:39.2,hn:"Hatti (Hititas)",c:"att",r:"Gn 10:15",t:"c15",id:"Hititas — Anatólia central",
+      h:"Pai dos heteus. Presentes em Hebrom no tempo de Abraão (compra de Macpela) e, como império hitita, na Anatólia.",rf:["Gn 23:3","Gn 26:34","Nm 13:29","2Rs 7:6"]},
+    {n:"Caftor",s:"C",lon:25,lat:35.2,c:"att",r:"Gn 10:14",t:"c6",id:"Creta (Caftorim)",
+      h:"Creta; origem dos filisteus segundo os profetas (caftorim, descendentes de Mizraim).",rf:["Gn 10:14","Dt 2:23","Jr 47:4","Am 9:7"]},
+    {n:"Sebá",s:"C",lon:43,lat:15,c:"prob",r:"Gn 10:7",t:"c6",id:"Arábia / África oriental (filhos de Cuxe)",
+      h:"Linhagem cuxita ligada à Arábia e ao Chifre da África; Sabá célebre pelo comércio de ouro e incenso.",rf:["Gn 10:7","1Rs 10:1","Sl 72:10","Is 60:6"]},
+
+    {n:"Elão",s:"S",lon:49.5,lat:31.5,hl:48.3,hb:32.2,hn:"Susa (Elam)",c:"att",r:"Gn 10:22",t:"s22",id:"Elamitas — sudoeste do Irã",
+      h:"Os elamitas (capital Susa), potência antiga do planalto iraniano, depois absorvida pela Pérsia.",rf:["Gn 14:1","Is 21:2","Jr 49:34","Dn 8:2"]},
+    {n:"Assur",s:"S",lon:43,lat:35.8,hl:43.1,hb:36.4,hn:"Nínive (Assíria)",c:"att",r:"Gn 10:22",t:"s22",id:"Assíria — alto Tigre",
+      h:"A Assíria (Assur, Nínive, Calá), do alto Tigre. Império que destruiu Samaria em 722 a.C. e deportou as tribos do norte.",rf:["Gn 10:11","2Rs 17:6","Is 10:5","Jn 1:2"]},
+    {n:"Arfaxade",s:"S",lon:44,lat:35,c:"prob",r:"Gn 10:22",t:"s22",id:"Caldeia / norte da Mesopotâmia",
+      h:"Tronco da linha que leva a Héber e a Abraão (Gn 11). Ligado à região da Caldeia / norte mesopotâmico.",rf:["Gn 11:10-26","1Cr 1:17","Lc 3:36"]},
+    {n:"Lude",s:"S",lon:28,lat:38.6,hl:28,hb:38.5,hn:"Lídia (Sardes)",c:"prob",r:"Gn 10:22",t:"s22",id:"Lídia (?) — oeste da Anatólia",
+      h:"Identificação debatida; tradicionalmente a Lídia (capital Sardes), na Anatólia ocidental.",rf:["Is 66:19","Ez 27:10","Ez 30:5"]},
+    {n:"Arã",s:"S",lon:38,lat:35,hl:36.3,hb:33.5,hn:"Damasco (Arameus)",c:"att",r:"Gn 10:22",t:"s22",id:"Arameus — Síria",
+      h:"Os arameus da Síria (Damasco, Padã-Arã). Berço dos parentes de Abraão e da língua aramaica, que se tornaria franca no Oriente.",rf:["Gn 24:10","Gn 28:5","Dt 26:5","2Sm 8:5"]},
+    {n:"Héber",s:"S",lon:39.2,lat:36.4,c:"prob",r:"Gn 10:24",t:"s25",id:"Epônimo dos 'hebreus' (ʿEber)",
+      h:"Epônimo dos 'hebreus' (ʿibri). Em seus dias 'a terra se repartiu' (seu filho Pelegue). Elo entre Sem e Abraão.",rf:["Gn 10:24-25","Gn 11:14","Lc 3:35"]},
+    {n:"Joctã",s:"S",lon:46.5,lat:17,c:"prob",r:"Gn 10:25-29",t:"s25",id:"Tribos do sul da Arábia",
+      h:"Irmão de Pelegue; pai de treze clãs do sul da Arábia (entre eles Sabá, Ofir e Hazarmavé).",rf:["Gn 10:26-29","1Cr 1:19-23"]},
+    {n:"Ofir",s:"S",lon:45,lat:19,c:"prob",r:"Gn 10:29",t:"s25",id:"Arábia / África (debatido)",
+      h:"Região proverbial pelo ouro fino, levado pelas frotas de Salomão. Localização debatida (Arábia, África ou Índia).",rf:["1Rs 9:28","1Rs 10:11","Jó 28:16","Sl 45:9"]},
+    {n:"Havilá",s:"S",lon:43.5,lat:21,c:"prob",r:"Gn 10:29",t:"s25",id:"Arábia ocidental (?)",
+      h:"Terra de ouro e pedras, citada já no relato do Éden; ligada à península arábica.",rf:["Gn 2:11","Gn 25:18","1Sm 15:7"]},
+    {n:"Hazarmavé",s:"S",lon:49,lat:15.5,c:"att",r:"Gn 10:26",t:"s25",id:"Hadramaute — sul da Arábia",
+      h:"O Hadramaute, no sul da Arábia (atual Iêmen), região do incenso.",rf:["Gn 10:26","1Cr 1:20"]}
+  ];
+
+  var svg=document.getElementById("map");
+  var grat=document.getElementById("grat");
+  for(var lo=-10;lo<=60;lo+=10) grat.appendChild(el("line",{class:"grat",x1:xp(lo),y1:yp(48),x2:xp(lo),y2:yp(10)}));
+  for(var la=10;la<=48;la+=10) grat.appendChild(el("line",{class:"grat",x1:xp(-12),y1:yp(la),x2:xp(62),y2:yp(la)}));
+
+  function poly(g,pts){var d="M"+pts.map(function(p){return xp(p[0]).toFixed(1)+","+yp(p[1]).toFixed(1);}).join(" L");g.appendChild(el("path",{class:"river",d:d}));}
+  var rv=document.getElementById("rivers");
+  poly(rv,[[31,30.4],[31,27],[32,24],[32.8,20],[33,16]]);
+  poly(rv,[[38.3,37.1],[39.5,36],[41,35],[43,33.6],[45.5,31.5],[47.3,30.6]]);
+  poly(rv,[[40,37.2],[42,36],[43.5,34.7],[44.6,33],[46,31.3],[47.3,30.6]]);
+
+  var seas=document.getElementById("seas");
+  function sea(lon,lat,txt,rot){var t=el("text",{class:"sea",x:xp(lon),y:yp(lat),"text-anchor":"middle"});if(rot)t.setAttribute("transform","rotate("+rot+" "+xp(lon)+" "+yp(lat)+")");t.textContent=txt;seas.appendChild(t);}
+  sea(19,34.5,"M A R   M E D I T E R R Â N E O");
+  sea(37.6,23,"Mar Vermelho",-62); sea(51,27.5,"Golfo Pérsico",-40);
+  sea(50.5,41.8,"Mar Cáspio"); sea(34,43.2,"Mar Negro");
+
+  var ar=document.getElementById("ararat");
+  ar.appendChild(el("path",{d:"M"+(xp(44.3)-5)+","+(yp(39.7)+4)+" L"+xp(44.3)+","+(yp(39.7)-5)+" L"+(xp(44.3)+5)+","+(yp(39.7)+4)+" Z",fill:"#8a6a3a"}));
+  var art=el("text",{x:xp(44.3)+8,y:yp(39.7)+3});art.textContent="montes de Ararat";ar.appendChild(art);
+
+  // forma por linhagem, centrada em (0,0): círculo (Jafé) · quadrado (Cam) · triângulo (Sem)
+  function makeShape(son,conf){
+    var col=SON[son].col, att=conf==="att";
+    var common={class:"shape",fill:att?col:"#ffffff",stroke:att?"#ffffff":col,
+                "stroke-width":att?1.3:1.8,"pointer-events":"none"};
+    if(!att) common["stroke-dasharray"]="3 2";
+    var s;
+    if(SON[son].shape==="circle") s=el("circle",Object.assign({r:5},common));
+    else if(SON[son].shape==="square") s=el("rect",Object.assign({x:-4.5,y:-4.5,width:9,height:9,rx:1},common));
+    else s=el("path",Object.assign({d:"M0,-5.8 L5.4,4.8 L-5.4,4.8 Z"},common));
+    return s;
+  }
+
+  var nodes=document.getElementById("nodes"), G=[], shown={J:true,C:true,S:true};
+  N.forEach(function(d,i){
+    var g=el("g",{class:"npt"});
+    // alvo interativo com teclado (2.1.1, 4.1.2)
+    var hit=el("circle",{class:"hit",r:13,cx:xp(d.lon),cy:yp(d.lat),fill:"transparent","pointer-events":"all",
+                         tabindex:"0",role:"button",
+                         "aria-label":d.n+", linhagem de "+SON[d.s].name+" — "+d.id+". Abrir card."});
+    var vis=el("g",{transform:"translate("+xp(d.lon)+","+yp(d.lat)+")"});
+    var shape=makeShape(d.s,d.c);
+    var tx=el("text",{class:"nlbl",x:8,y:3.5});tx.textContent=d.n;
+    vis.appendChild(shape);vis.appendChild(tx);
+    g.appendChild(hit);g.appendChild(vis);nodes.appendChild(g);
+    G.push({g:g,hit:hit,vis:vis,t:tx,d:d,px:xp(d.lon),py:yp(d.lat)});
+    g.addEventListener("click",function(){openCard(i);});
+    hit.addEventListener("keydown",function(e){
+      if(e.key==="Enter"||e.key===" "||e.key==="Spacebar"){e.preventDefault();e.stopPropagation();openCard(i);}
+    });
+  });
+  var halo=el("circle",{r:10,fill:"none",stroke:"#8a5f04","stroke-width":2.5,"pointer-events":"none"});
+  halo.style.display="none"; nodes.appendChild(halo);
+
+  var tEl=document.getElementById("time"), epoch=document.getElementById("epoch"), selIdx=-1, lastEpoch="";
+  function placeHalo(){ if(selIdx<0||!shown[N[selIdx].s]){halo.style.display="none";return;} halo.style.display=""; halo.setAttribute("cx",G[selIdx].px); halo.setAttribute("cy",G[selIdx].py); }
+  function update(){
+    var p=(+tEl.value)/100;
+    G.forEach(function(o){
+      var d=o.d, vis=shown[d.s]; o.g.style.display=vis?"":"none";
+      var lon=d.hl!==undefined?d.lon+(d.hl-d.lon)*p:d.lon;
+      var lat=d.hb!==undefined?d.lat+(d.hb-d.lat)*p:d.lat;
+      o.px=xp(lon); o.py=yp(lat);
+      o.hit.setAttribute("cx",o.px); o.hit.setAttribute("cy",o.py);
+      o.vis.setAttribute("transform","translate("+o.px+","+o.py+")");
+      o.t.textContent=(p>0.5&&d.hn)?d.hn:d.n;
+    });
+    var eText=p<0.5?"<b>Dispersão</b> — leitura de Gênesis 10":"<b>Atestação histórica</b> — Idade do Ferro";
+    if(eText!==lastEpoch){epoch.innerHTML=eText;lastEpoch=eText;}
+    tEl.setAttribute("aria-valuetext",p<0.5?"Dispersão — leitura de Gênesis 10":"Atestação histórica — Idade do Ferro");
+    placeHalo();
+  }
+  tEl.addEventListener("input",update);
+
+  [].slice.call(document.querySelectorAll(".layers button")).forEach(function(b){
+    b.addEventListener("click",function(){var s=b.dataset.son;shown[s]=!shown[s];b.setAttribute("aria-pressed",shown[s]);update();});
+  });
+
+  // card + clusters — diálogo não-modal com gestão de foco (2.4.3)
+  var panel=document.getElementById("panel"), backdrop=document.getElementById("backdrop"), lastFocus=null;
+  var curClu=[], curPos=0;
+  var cluBox=document.getElementById("pclu"), ccount=document.getElementById("ccount");
+  document.getElementById("cprev").addEventListener("click",function(){step(-1);});
+  document.getElementById("cnext").addEventListener("click",function(){step(1);});
+  function clusterAt(i){var R=17,arr=[];G.forEach(function(o,k){if(!shown[o.d.s])return;var dx=o.px-G[i].px,dy=o.py-G[i].py;if(dx*dx+dy*dy<=R*R)arr.push(k);});if(arr.indexOf(i)<0)arr.push(i);arr.sort(function(a,b){return a-b;});return arr;}
+  function fillCard(i){
+    var d=N[i], son=SON[d.s];
+    document.getElementById("pname").textContent=d.n;
+    var conf=d.c==="att"?{t:"atestado",bg:"#1d3326",fg:"#7ee0b0"}:{t:"identificação provável",bg:"#3a3322",fg:"#e9c46a"};
+    document.getElementById("ptagwrap").innerHTML=
+      "<span class='ptag' style='background:"+son.col+"26;color:"+son.text+"'>Linhagem de "+son.name+"</span> "+
+      "<span class='ptag' style='background:"+conf.bg+";color:"+conf.fg+"'>"+conf.t+"</span>"+
+      (d.hn?" <span class='ptag' style='background:#22303f;color:#bcd'>hist.: "+d.hn+"</span>":"");
+    document.getElementById("pid").textContent=d.id;
+    document.getElementById("phist").textContent=d.h||"";
+    document.getElementById("prefs").innerHTML=(d.rf||[]).map(function(x){return "<b>"+x+"</b>";}).join("");
+    document.getElementById("pref").textContent=d.r;
+    document.getElementById("ptext").textContent=TXMAP[d.t]||"—";
+    document.getElementById("psrc").innerHTML="Identificação tradicional (debatida) · basemap Natural Earth (DP) · texto Almeida (DP), provisório.";
+    selIdx=i; placeHalo();
+  }
+  function renderClu(){
+    if(curClu.length<2){cluBox.style.display="none";return;}
+    cluBox.style.display="flex";
+    ccount.textContent=(curPos+1)+" / "+curClu.length+" povos próximos";
+  }
+  function step(dlt){curPos=(curPos+dlt+curClu.length)%curClu.length;fillCard(curClu[curPos]);renderClu();}
+  function openCard(i){
+    if(!panel.classList.contains("show")) lastFocus=G[i].hit||document.activeElement;
+    curClu=clusterAt(i);curPos=curClu.indexOf(i);fillCard(i);renderClu();
+    panel.classList.add("show");backdrop.classList.add("show");
+    panel.focus();
+  }
+  function closeCard(){
+    panel.classList.remove("show");backdrop.classList.remove("show");selIdx=-1;placeHalo();
+    if(lastFocus&&lastFocus.focus){lastFocus.focus();} lastFocus=null;
+  }
+  document.getElementById("pclose").addEventListener("click",closeCard);
+  backdrop.addEventListener("click",closeCard);
+  document.addEventListener("keydown",function(e){if(e.key==="Escape")closeCard();else if(panel.classList.contains("show")&&curClu.length>1){if(e.key==="ArrowRight")step(1);else if(e.key==="ArrowLeft")step(-1);}});
+
+  update();
+})();
+</script>
+</body>
+</html>

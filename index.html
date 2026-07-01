@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Atlas Bíblico Interativo — texto, tempo, território e genealogia num só ambiente. Protótipos: cronologias de Gênesis 5 (TM · LXX · PS) e a Tábua das Nações (Gn 10) sobre cartografia do mundo antigo.">
+<title>Atlas Bíblico Interativo — protótipos</title>
+<style>
+  /* ═══ DESIGN TOKENS · Atlas Bíblico Interativo · v1 · WCAG 2.1 AA ═══ */
+  :root{
+    color-scheme:dark;
+    --bg:#0e1218; --panel:#161d27; --panel-2:#131922; --field:#0f1620;
+    --line:#26303d; --line-strong:#5d7183;
+    --ink:#eceae3; --muted:#9aa6b6;
+    --gold1:#e9c46a; --gold2:#d4933c; --teal1:#7ed8c9;
+    --focus:#e9c46a;
+    --jafe-ui:#7d8ef2; --cam-ui:#c97a35; --sem-ui:#2ea87d;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:
+      radial-gradient(1200px 600px at 80% -10%, #1b2a3a 0, transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, #16202b 0, transparent 55%),
+      var(--bg);
+    color:var(--ink); font-family:var(--sans); line-height:1.5; -webkit-font-smoothing:antialiased;
+  }
+  :focus-visible{outline:2px solid var(--focus); outline-offset:3px; border-radius:6px}
+  .wrap{max-width:920px; margin:0 auto; padding:52px 22px 60px}
+  .kicker{color:var(--gold1); font-size:12px; letter-spacing:.2em; text-transform:uppercase; margin-bottom:12px}
+  h1{font-family:var(--serif); font-weight:600; font-size:clamp(26px,4.6vw,42px); margin:0 0 12px; letter-spacing:.2px; max-width:22ch}
+  .sub{color:var(--muted); font-size:15.5px; max-width:62ch; margin:0}
+  .sub b{color:var(--ink); font-weight:600}
+
+  .principles{display:flex; flex-wrap:wrap; gap:10px; margin:26px 0 0}
+  .principles span{font-size:12px; color:var(--muted); background:var(--panel-2); border:1px solid var(--line); border-radius:20px; padding:6px 13px}
+  .principles b{color:var(--gold1); font-weight:600}
+
+  .mods{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:38px 0 0}
+  @media(max-width:720px){.mods{grid-template-columns:1fr}}
+  .mod{display:block; text-decoration:none; color:inherit; background:linear-gradient(180deg,#1a2230,var(--panel-2));
+       border:1px solid var(--line); border-radius:16px; padding:22px 22px 20px; transition:border-color .15s, transform .15s}
+  .mod:hover{border-color:var(--line-strong); transform:translateY(-2px)}
+  .mod .tag{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
+  .mod h2{font-family:var(--serif); font-weight:600; font-size:21px; margin:8px 0 8px; color:var(--ink)}
+  .mod p{color:var(--muted); font-size:13.5px; margin:0 0 16px}
+  .mod .go{color:var(--gold1); font-size:13px; font-weight:600}
+  .glyph{height:74px; margin:4px 0 12px; display:block}
+
+  .road{margin:40px 0 0; padding:16px 18px; background:var(--panel-2); border:1px solid var(--line); border-left:3px solid var(--gold1); border-radius:12px; font-size:13.5px; color:var(--muted)}
+  .road b{color:var(--gold1); font-weight:600}
+  .road .done{color:var(--teal1)}
+
+  footer{margin-top:44px; color:var(--muted); font-size:12.5px; border-top:1px solid var(--line); padding-top:16px; line-height:1.7}
+  footer a{color:var(--muted)}
+  footer a:hover{color:var(--ink)}
+  footer b{color:var(--ink); font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">Atlas Bíblico Interativo · protótipos F0</div>
+    <h1>Texto, tempo, território e genealogia — num só ambiente.</h1>
+    <p class="sub">Estudo interativo da Escritura com a leitura <b>mainstream sempre visível</b> e camadas opcionais por cima: variantes textuais, geografia histórica e atestação arqueológica — cada afirmação com sua <b>proveniência</b> e grau de confiança.</p>
+    <div class="principles" aria-label="Princípios do projeto">
+      <span><b>Espinha canônica</b> — o resto é opcional</span>
+      <span><b>Cronologia plural</b> — TM · LXX · PS como camadas</span>
+      <span><b>Proveniência</b> por afirmação</span>
+      <span><b>Acessível</b> — WCAG 2.1 AA</span>
+    </div>
+  </header>
+
+  <nav class="mods" aria-label="Módulos">
+    <a class="mod" href="genesis5.html">
+      <span class="tag">Módulo 1 · Gênesis 5</span>
+      <svg class="glyph" viewBox="0 0 300 74" role="img" aria-label="Miniatura: barras de vidas em linha do tempo com marco do Dilúvio">
+        <rect x="8"  y="8"  width="150" height="9" rx="4" fill="#edca73"/>
+        <rect x="30" y="22" width="146" height="9" rx="4" fill="#d9a94f"/>
+        <rect x="46" y="36" width="60"  height="9" rx="4" fill="#7ed8c9"/>
+        <rect x="58" y="50" width="152" height="9" rx="4" fill="#cf8f37"/>
+        <line x1="212" y1="4" x2="212" y2="70" stroke="#5aa0d6" stroke-width="2.5"/>
+        <rect x="97" y="20.5" width="7" height="7" transform="rotate(45 100.5 24)" fill="#f4e2b0"/>
+        <rect x="123" y="34.5" width="7" height="7" transform="rotate(45 126.5 38)" fill="#f4e2b0"/>
+      </svg>
+      <h2>As longevidades dos patriarcas</h2>
+      <p>Cada vida como uma barra em <i>Anno Mundi</i>; as três tradições textuais lado a lado, com o Dilúvio se deslocando quase mil anos entre elas — e os <i>cruxes</i> famosos (Matusalém) anotados verso a verso.</p>
+      <span class="go">Abrir a linha do tempo →</span>
+    </a>
+    <a class="mod" href="tabua-nacoes.html">
+      <span class="tag">Módulo 2 · Gênesis 10</span>
+      <svg class="glyph" viewBox="0 0 300 74" role="img" aria-label="Miniatura: mapa com marcadores das três linhagens — círculos, quadrados e triângulos">
+        <path d="M6,52 Q40,30 78,40 T150,34 T226,44 T294,36 L294,70 L6,70 Z" fill="#20303f"/>
+        <path d="M6,54 Q60,44 110,50 T210,48 T294,54" fill="none" stroke="#44789a" stroke-width="1.6" opacity=".8"/>
+        <circle cx="66"  cy="30" r="6" fill="#7d8ef2" stroke="#0e1218" stroke-width="1.4"/>
+        <circle cx="104" cy="46" r="6" fill="none" stroke="#7d8ef2" stroke-width="2" stroke-dasharray="3 2.4"/>
+        <rect x="141" y="24" width="12" height="12" rx="1.5" fill="#c97a35" stroke="#0e1218" stroke-width="1.4"/>
+        <rect x="186" y="42" width="12" height="12" rx="1.5" fill="none" stroke="#c97a35" stroke-width="2" stroke-dasharray="3 2.4"/>
+        <path d="M236,22 l7.5,13 h-15 Z" fill="#2ea87d" stroke="#0e1218" stroke-width="1.4"/>
+        <path d="M268,40 l7.5,13 h-15 Z" fill="none" stroke="#2ea87d" stroke-width="2" stroke-dasharray="3 2.4"/>
+      </svg>
+      <h2>A Tábua das Nações</h2>
+      <p>Os povos descendentes de Noé sobre um mapa físico do mundo antigo, sem fronteiras modernas. Arraste o tempo: da leitura de Gênesis à atestação na Idade do Ferro (Madai→Média, Javã→Hélade…).</p>
+      <span class="go">Abrir o mapa →</span>
+    </a>
+  </nav>
+
+  <p class="road"><b>Roadmap</b> · <span class="done">✓ F0 protótipos</span> → F1 MVP Gênesis 1–11 (grafo de afirmações + três visões sincronizadas: tempo, mapa, genealogia) → F2 Patriarcas (migrações no mapa-tempo) → F3+ Gênesis → Apocalipse.</p>
+
+  <footer>
+    <b>Fontes e licenças:</b> texto bíblico <b>Almeida</b> (domínio público, transcrição provisória) · basemap <b>Natural Earth</b> (domínio público) · identificações tradicionais/debatidas sinalizadas por nível de confiança.
+    <br>Código sob <a href="https://github.com/noedelima/atlas-biblico/blob/main/LICENSE">licença MIT</a> · <a href="https://github.com/noedelima/atlas-biblico">repositório no GitHub</a> · © 2026 Noé de Lima Bezerra.
+  </footer>
+</div>
+</body>
+</html>

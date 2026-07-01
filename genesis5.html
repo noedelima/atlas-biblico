@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gênesis 5 — Longevidades dos Patriarcas (protótipo v03 · AA)</title>
+<style>
+  /* ═══ DESIGN TOKENS · Atlas Bíblico Interativo · v1 ═══
+     Verificados WCAG 2.1 AA (texto ≥4.5:1 · não-texto ≥3:1) — jun/2026 */
+  :root{
+    color-scheme:dark;
+    /* superfícies */
+    --bg:#0e1218; --bg2:#141b24; --panel:#161d27; --panel-2:#131922; --field:#0f1620;
+    /* traços: line = decorativo · line-strong = funcional (≥3:1 sobre panel/bg) */
+    --line:#26303d; --line-strong:#5d7183;
+    /* tinta */
+    --ink:#eceae3; --muted:#9aa6b6;
+    /* marca */
+    --gold1:#e9c46a; --gold2:#d4933c; --teal1:#7ed8c9; --teal2:#46a899;
+    /* dados (camada gráfica) */
+    --flood:#5aa0d6; --conn:#66798e; --marker:#f4e2b0;
+    /* foco */
+    --focus:#e9c46a;
+    /* tipografia */
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:
+      radial-gradient(1200px 600px at 80% -10%, #1b2a3a 0, transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, #16202b 0, transparent 55%),
+      var(--bg);
+    color:var(--ink); font-family:var(--sans); line-height:1.45; -webkit-font-smoothing:antialiased;
+  }
+  /* foco visível universal (2.4.7) */
+  :focus-visible{outline:2px solid var(--focus); outline-offset:2px; border-radius:4px}
+  .wrap{max-width:1080px; margin:0 auto; padding:28px 20px 56px}
+  header h1{font-family:var(--serif); font-weight:600; font-size:clamp(22px,3.4vw,32px); margin:0 0 4px; letter-spacing:.2px}
+  header .sub{color:var(--muted); font-size:14px; max-width:64ch}
+  header .kicker{color:var(--gold1); font-size:12px; letter-spacing:.18em; text-transform:uppercase; margin-bottom:10px}
+
+  .controls{display:flex; flex-wrap:wrap; gap:14px; align-items:center; margin:22px 0 8px}
+  .seg{display:inline-flex; background:var(--panel); border:1px solid var(--line-strong); border-radius:12px; padding:4px; gap:2px}
+  .seg button{appearance:none; border:0; background:transparent; color:var(--muted); font:inherit; font-size:13px; padding:8px 14px; border-radius:9px; cursor:pointer; transition:.18s; white-space:nowrap; min-height:36px}
+  .seg button:hover{color:var(--ink)}
+  .seg button[aria-checked="true"]{background:linear-gradient(180deg,#222c39,#1a2230); color:var(--gold1); box-shadow:inset 0 0 0 1px #36424f}
+  .seg button:focus-visible{outline:2px solid var(--focus); outline-offset:-2px}
+  .legend{display:flex; flex-wrap:wrap; gap:14px; color:var(--muted); font-size:12px; margin-left:auto}
+  .legend span{display:inline-flex; align-items:center; gap:6px}
+  .sw{width:14px; height:9px; border-radius:3px; display:inline-block}
+  .sw.gold{background:linear-gradient(90deg,var(--gold1),var(--gold2))}
+  .sw.teal{background:linear-gradient(90deg,var(--teal1),var(--teal2))}
+  .sw.dia{width:10px;height:10px;border-radius:2px;transform:rotate(45deg);background:var(--marker)}
+  .sw.flood{width:3px;height:14px;border-radius:2px;background:var(--flood)}
+
+  .insight{background:linear-gradient(180deg,#172230,#141b24); border:1px solid var(--line); border-left:3px solid var(--gold1); border-radius:12px; padding:14px 16px; margin:14px 0 4px; font-size:14.5px; min-height:54px}
+  .insight b{color:var(--gold1); font-weight:600}
+  .insight .meta{color:var(--muted); font-size:12.5px; margin-top:6px}
+
+  .hint{color:var(--muted); font-size:12px; margin:10px 2px 0}
+  .hint b{color:var(--gold1); font-weight:600}
+
+  .chartcard{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:8px 6px 4px; margin-top:10px; overflow:hidden}
+  .scroll{overflow-x:auto; -webkit-overflow-scrolling:touch}
+  svg{display:block; width:100%; min-width:740px; height:auto}
+
+  text{font-family:var(--sans)}
+  .axis text{fill:var(--muted); font-size:11px}
+  .axis line{stroke:var(--line-strong)}
+  .rowlabel{fill:var(--ink); font-family:var(--serif); font-size:13px}
+  g.row:hover .rowlabel{fill:var(--gold1)}
+  .bar{cursor:pointer}
+  .marker{fill:var(--marker); stroke:#0e1218; stroke-width:.6}
+  .conn{stroke:var(--conn); stroke-width:1.2; stroke-dasharray:2 3; opacity:.9}
+  .floodline{stroke:var(--flood); stroke-width:2}
+  .floodlbl rect{fill:#10202e; stroke:var(--flood); stroke-opacity:.5}
+  .floodlbl text{fill:#cfe6f8; font-size:11px; font-weight:600}
+  .floodwash{fill:var(--flood); opacity:.05}
+  .enochmark{fill:var(--teal1); font-size:12px}
+  .dim{opacity:.28; transition:opacity .15s}
+  /* foco de teclado nas linhas do SVG (2.4.7): retângulo dourado */
+  .hit{cursor:pointer}
+  .hit:focus{outline:none}
+  .hit:focus-visible{outline:2px solid var(--focus); stroke:var(--focus); stroke-width:2; rx:6}
+
+  details{margin-top:16px; border:1px solid var(--line); border-radius:12px; background:var(--panel-2)}
+  summary{cursor:pointer; padding:12px 16px; color:var(--gold1); font-size:13.5px; list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"› "; color:var(--muted)}
+  details[open] summary::before{content:"⌄ "}
+  .dbody{padding:0 16px 16px; color:var(--muted); font-size:13.5px}
+  .dbody b{color:var(--ink); font-weight:600}
+
+  footer{margin-top:22px; color:var(--muted); font-size:12px; border-top:1px solid var(--line); padding-top:14px}
+  footer .road{color:var(--gold1)}
+
+  /* tooltip rápido (decorativo p/ leitores de tela — conteúdo pleno vive no card) */
+  #tip{position:fixed; z-index:40; pointer-events:none; max-width:280px; background:linear-gradient(180deg,#1a2230,#141b24); border:1px solid #38444f; border-radius:10px; padding:9px 12px; box-shadow:0 12px 30px rgba(0,0,0,.45); opacity:0; transform:translateY(4px); transition:.12s; font-size:12.5px}
+  #tip.show{opacity:1; transform:translateY(0)}
+  #tip .tn{font-family:var(--serif); font-size:15px; color:var(--ink)}
+  #tip .tm{color:var(--muted)}
+  #tip .th{color:var(--gold1)}
+
+  /* card expansível */
+  #backdrop{position:fixed; inset:0; background:rgba(6,9,13,.45); opacity:0; visibility:hidden; transition:.18s; z-index:50}
+  #backdrop.show{opacity:1; visibility:visible}
+  #panel{position:fixed; z-index:60; right:24px; top:90px; width:390px; max-height:calc(100vh - 130px); overflow:auto;
+         background:linear-gradient(180deg,#1a2230,#121922); border:1px solid #38444f; border-radius:16px;
+         box-shadow:0 24px 60px rgba(0,0,0,.55); padding:18px 18px 20px; opacity:0; visibility:hidden; transform:translateY(10px); transition:.2s}
+  #panel.show{opacity:1; visibility:visible; transform:none}
+  #panel:focus{outline:none}
+  #pclose{position:absolute; top:10px; right:10px; width:36px; height:36px; border-radius:9px; border:1px solid var(--line-strong);
+          background:var(--field); color:var(--muted); font-size:20px; line-height:1; cursor:pointer}
+  #pclose:hover{color:var(--ink); border-color:#7a8ea0}
+  .phead{display:flex; justify-content:space-between; gap:12px; align-items:flex-start; padding-right:40px}
+  .pname{font-family:var(--serif); font-size:23px; color:var(--ink); font-weight:400; margin:0}
+  .pmean{color:var(--muted); font-style:italic; font-size:12.5px; margin-top:3px}
+  .pheb{font-family:var(--serif); font-size:26px; color:var(--gold1)}
+  .pgrid{display:grid; grid-template-columns:1fr 1fr; gap:8px 14px; margin:14px 0 4px; font-size:13px}
+  .pgrid .k{color:var(--muted); font-size:11.5px}
+  .pgrid .v{color:var(--ink); font-weight:600}
+  .pnav{display:flex; flex-wrap:wrap; gap:8px; margin:12px 0}
+  .chip{font-size:11.5px; color:var(--ink); background:#22303f; border:1px solid var(--line); border-radius:20px; padding:6px 12px; cursor:pointer; min-height:32px}
+  .chip:hover{border-color:var(--gold1); color:var(--gold1)}
+  .chip span{color:var(--muted)}
+  .ptexthead{color:var(--gold1); font-size:12px; letter-spacing:.04em; text-transform:uppercase; margin:14px 0 6px}
+  .ptext{font-family:var(--serif); font-size:14px; line-height:1.7; color:#e7e4da; background:var(--field); border:1px solid var(--line); border-left:3px solid var(--gold1); border-radius:10px; padding:12px 14px}
+  .pvar{margin-top:10px; font-size:11.5px; color:var(--muted)}
+  .pvar b{color:#cfe0ef; font-weight:600}
+  .psrc{margin-top:12px; padding-top:10px; border-top:1px solid var(--line); font-size:11px; color:var(--muted)}
+  .psrc .tag{display:inline-block; background:#22303f; color:#bcd; border-radius:5px; padding:1px 6px; font-size:10.5px}
+
+  @media(max-width:640px){
+    #tip{display:none}
+    #panel{right:0; left:0; bottom:0; top:auto; width:100%; max-height:80vh; border-radius:16px 16px 0 0; transform:translateY(20px)}
+    #pclose{width:44px; height:44px}
+    .chip{min-height:40px}
+    .seg button{min-height:44px}
+  }
+.crumbs{margin-bottom:14px;font-size:13px}
+.crumbs a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line-strong);padding-bottom:1px}
+.crumbs a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <nav class="crumbs" aria-label="Navegação"><a href="./">← Atlas Bíblico Interativo</a></nav>
+  <div class="kicker">Atlas Bíblico Interativo · módulo 1 · protótipo v03 · AA</div>
+    <h1>Gênesis 5 — As longevidades dos patriarcas antediluvianos</h1>
+    <p class="sub">Cada barra é uma vida em <i>Anno Mundi</i> (anos desde a Criação). O losango marca a idade em que o patriarca gerou o filho citado. Troque a tradição textual e veja a cronologia se reorganizar.</p>
+  </header>
+
+  <div class="controls">
+    <div class="seg" role="radiogroup" aria-label="Tradição textual">
+      <button data-trad="TM"  role="radio" aria-checked="true"  tabindex="0">Massorético (TM)</button>
+      <button data-trad="LXX" role="radio" aria-checked="false" tabindex="-1">Septuaginta (LXX)</button>
+      <button data-trad="PS"  role="radio" aria-checked="false" tabindex="-1">Samaritano (PS)</button>
+    </div>
+    <div class="legend">
+      <span><i class="sw gold"></i> vida</span>
+      <span><i class="sw dia"></i> geração do filho</span>
+      <span><i class="sw teal"></i> Enoque (trasladado)</span>
+      <span><i class="sw flood"></i> Dilúvio</span>
+    </div>
+  </div>
+
+  <div class="insight" id="insight" aria-live="polite"></div>
+  <p class="hint">▸ <b>Clique</b> num nome ou numa barra — ou navegue com <b>Tab</b> e abra com <b>Enter</b> — para ver o card com a transcrição do texto. <b>Esc</b> fecha.</p>
+
+  <div class="chartcard">
+    <div class="scroll">
+      <svg id="chart" viewBox="0 0 1000 440" role="group" aria-label="Linha do tempo das vidas dos patriarcas de Gênesis 5. Cada linha é um botão que abre os detalhes do patriarca."></svg>
+    </div>
+  </div>
+
+  <details>
+    <summary>Por que três colunas? — o princípio de honestidade do projeto</summary>
+    <div class="dbody">
+      <p>Os números de Gn 5 chegaram em <b>três tradições divergentes</b>: Texto Massorético (TM, base da Bíblia Hebraica e da Bíblia de Jerusalém), Septuaginta (LXX, grega) e Pentateuco Samaritano (PS). A LXX soma ~100 anos a quase todas as idades de paternidade; o PS reduz três delas. A data do Dilúvio varia em quase mil anos.</p>
+      <p>São datas <b>relativas</b> (Anno Mundi), não absolutas (a.C.) — a ancoragem absoluta só fica confiável na monarquia, via sincronismos assírios. Por isso a cronologia é tratada como <b>camada selecionável</b>, nunca número único.</p>
+    </div>
+  </details>
+
+  <footer>
+    <span class="road">Próximo módulo:</span> Tábua das Nações (Gn 10) sobre um mapa-múndi · migrações dos patriarcas · referências cruzadas em camadas.
+    <br>Números conferidos em fontes acadêmicas (jun/2026). Transcrição: <b>Almeida (domínio público)</b>, provisória — a Bíblia de Jerusalém (Paulus) entra como <i>overlay privado</i> por direito autoral. Variante da LXX em Matusalém (167/187) anotada no card.
+  </footer>
+</div>
+
+<div id="tip" role="presentation" aria-hidden="true"></div>
+<div id="backdrop" aria-hidden="true"></div>
+<aside id="panel" role="dialog" aria-modal="false" aria-labelledby="pname" tabindex="-1">
+  <button id="pclose" aria-label="Fechar card" title="Fechar">×</button>
+  <div class="phead">
+    <div><h2 class="pname" id="pname"></h2><div class="pmean" id="pmean"></div></div>
+    <div class="pheb" id="pheb" dir="rtl"></div>
+  </div>
+  <div class="pgrid" id="pgrid"></div>
+  <div class="pnav" id="pnav"></div>
+  <div class="ptexthead">Texto referenciado · <span id="pref"></span></div>
+  <div class="ptext" id="ptext"></div>
+  <div class="pvar" id="pvar"></div>
+  <div class="psrc" id="psrc"></div>
+</aside>
+
+<script>
+(function(){
+  "use strict";
+
+  var META = [
+    {name:"Adão",     he:"אָדָם",        mean:"humano; do solo (adamah)",            ref:"Gn 5:3–5"},
+    {name:"Set",      he:"שֵׁת",         mean:"concedido, posto",                    ref:"Gn 5:6–8"},
+    {name:"Enós",     he:"אֱנוֹשׁ",       mean:"homem mortal",                        ref:"Gn 5:9–11"},
+    {name:"Quenã",    he:"קֵינָן",       mean:"possessão; ferreiro (?)",             ref:"Gn 5:12–14"},
+    {name:"Maalalel", he:"מַהֲלַלְאֵל",   mean:"louvor de El",                        ref:"Gn 5:15–17"},
+    {name:"Jared",    he:"יֶרֶד",        mean:"descida",                             ref:"Gn 5:18–20"},
+    {name:"Enoque",   he:"חֲנוֹךְ",       mean:"dedicado, iniciado",                  ref:"Gn 5:21–24", special:true},
+    {name:"Matusalém",he:"מְתוּשֶׁלַח",   mean:"homem do dardo (?); ‘quando morrer, virá’ (leitura tradicional)", ref:"Gn 5:25–27"},
+    {name:"Lameque",  he:"לֶמֶךְ",        mean:"(etimologia incerta)",                ref:"Gn 5:28–31"},
+    {name:"Noé",      he:"נֹחַ",         mean:"descanso, consolo (Gn 5:29)",         ref:"Gn 5:32; 9:29"}
+  ];
+  // Transcrição — Almeida (domínio público), numeração conforme TM
+  var TX = [
+   "E viveu Adão cento e trinta anos, e gerou um filho à sua semelhança, conforme a sua imagem, e chamou o seu nome Sete. E foram os dias de Adão, depois que gerou a Sete, oitocentos anos; e gerou filhos e filhas. E foram todos os dias que Adão viveu novecentos e trinta anos; e morreu.",
+   "E viveu Sete cento e cinco anos, e gerou a Enos. E viveu Sete, depois que gerou a Enos, oitocentos e sete anos; e gerou filhos e filhas. E foram todos os dias de Sete novecentos e doze anos; e morreu.",
+   "E viveu Enos noventa anos, e gerou a Cainã. E viveu Enos, depois que gerou a Cainã, oitocentos e quinze anos; e gerou filhos e filhas. E foram todos os dias de Enos novecentos e cinco anos; e morreu.",
+   "E viveu Cainã setenta anos, e gerou a Maalalel. E viveu Cainã, depois que gerou a Maalalel, oitocentos e quarenta anos; e gerou filhos e filhas. E foram todos os dias de Cainã novecentos e dez anos; e morreu.",
+   "E viveu Maalalel sessenta e cinco anos, e gerou a Jarede. E viveu Maalalel, depois que gerou a Jarede, oitocentos e trinta anos; e gerou filhos e filhas. E foram todos os dias de Maalalel oitocentos e noventa e cinco anos; e morreu.",
+   "E viveu Jarede cento e sessenta e dois anos, e gerou a Enoque. E viveu Jarede, depois que gerou a Enoque, oitocentos anos; e gerou filhos e filhas. E foram todos os dias de Jarede novecentos e sessenta e dois anos; e morreu.",
+   "E viveu Enoque sessenta e cinco anos, e gerou a Matusalém. E andou Enoque com Deus, depois que gerou a Matusalém, trezentos anos; e gerou filhos e filhas. E foram todos os dias de Enoque trezentos e sessenta e cinco anos. E andou Enoque com Deus; e já não apareceu, porquanto Deus para si o tomou.",
+   "E viveu Matusalém cento e oitenta e sete anos, e gerou a Lameque. E viveu Matusalém, depois que gerou a Lameque, setecentos e oitenta e dois anos; e gerou filhos e filhas. E foram todos os dias de Matusalém novecentos e sessenta e nove anos; e morreu.",
+   "E viveu Lameque cento e oitenta e dois anos, e gerou um filho, e chamou o seu nome Noé, dizendo: Este nos consolará acerca de nossas obras e do trabalho de nossas mãos, por causa da terra que o Senhor amaldiçoou. E viveu Lameque, depois que gerou a Noé, quinhentos e noventa e cinco anos; e gerou filhos e filhas. E foram todos os dias de Lameque setecentos e setenta e sete anos; e morreu.",
+   "E era Noé da idade de quinhentos anos, e gerou Noé a Sem, Cão e Jafé. […] E foram todos os dias de Noé novecentos e cinquenta anos; e morreu."
+  ];
+  var TXNOTE = {7:"<b>Variante textual:</b> a LXX recebida (Vaticano) traz Matusalém gerando aos <b>167</b> anos — pelo que ele morreria <b>14 anos após o Dilúvio</b>. O Códice Alexandrino corrige para <b>187</b>, como o TM. Daí a diferença ao alternar para a LXX acima."};
+
+  var TRAD = {
+    TM:  {label:"Texto Massorético",      beget:[130,105,90,70,65,162,65,187,182,500], total:[930,912,905,910,895,962,365,969,777,950]},
+    LXX: {label:"Septuaginta",            beget:[230,205,190,170,165,162,165,167,188,500], total:[930,912,905,910,895,962,365,969,753,950]},
+    PS:  {label:"Pentateuco Samaritano",  beget:[130,105,90,70,65,62,65,67,53,500],     total:[930,912,905,910,895,847,365,720,653,950]}
+  };
+
+  function compute(key){
+    var t=TRAD[key], birth=[0,0,0,0,0,0,0,0,0,0], i;
+    for(i=1;i<10;i++) birth[i]=birth[i-1]+t.beget[i-1];
+    var rows=META.map(function(m,i){
+      return {i:i,name:m.name,he:m.he,mean:m.mean,ref:m.ref,special:!!m.special,
+              beget:t.beget[i],total:t.total[i],birth:birth[i],death:birth[i]+t.total[i],begetAbs:birth[i]+t.beget[i]};
+    });
+    return {key:key,label:t.label,rows:rows,flood:birth[9]+600};
+  }
+  var COMP={TM:compute("TM"),LXX:compute("LXX"),PS:compute("PS")};
+
+  var W=1000, CX0=124, CX1=980, AMMAX=2650, TY0=52, ROWH=33, BARH=17, AY=377;
+  function cy(i){return TY0+i*ROWH;}
+  function xOf(am){return CX0+(am/AMMAX)*(CX1-CX0);}
+  var NS="http://www.w3.org/2000/svg";
+  function el(tag,a){var e=document.createElementNS(NS,tag);if(a)for(var k in a)e.setAttribute(k,a[k]);return e;}
+
+  var svg=document.getElementById("chart");
+  var defs=el("defs");
+  function grad(id,c1,c2){var g=el("linearGradient",{id:id,x1:"0",y1:"0",x2:"1",y2:"0"});
+    g.appendChild(el("stop",{offset:"0","stop-color":c1})); g.appendChild(el("stop",{offset:"1","stop-color":c2})); return g;}
+  defs.appendChild(grad("gGold","#edca73","#cf8f37")); defs.appendChild(grad("gTeal","#8fe0d2","#3f9d8e"));
+  svg.appendChild(defs);
+
+  var wash=el("rect",{class:"floodwash",x:0,y:40,width:0,height:AY-40}); svg.appendChild(wash);
+  var fline=el("line",{class:"floodline",x1:0,y1:36,x2:0,y2:AY}); svg.appendChild(fline);
+  var flg=el("g",{class:"floodlbl"});
+  var frect=el("rect",{x:0,y:24,width:108,height:18,rx:5}); var ftext=el("text",{x:0,y:37,"text-anchor":"middle"});
+  flg.appendChild(frect); flg.appendChild(ftext); svg.appendChild(flg);
+
+  var ax=el("g",{class:"axis"});
+  ax.appendChild(el("line",{x1:CX0,y1:AY,x2:CX1,y2:AY}));
+  for(var a=0;a<=2500;a+=250){var x=xOf(a); ax.appendChild(el("line",{x1:x,y1:AY,x2:x,y2:AY+5}));
+    var tx=el("text",{x:x,y:AY+17,"text-anchor":"middle"}); tx.textContent=a; ax.appendChild(tx);}
+  var axt=el("text",{x:CX1,y:AY+33,"text-anchor":"end"}); axt.textContent="Anno Mundi — anos desde a Criação →"; ax.appendChild(axt);
+  svg.appendChild(ax);
+
+  var conns=[], bars=[], marks=[], hits=[], rowg=[];
+  for(var i=0;i<9;i++){var c=el("line",{class:"conn"}); conns.push(c); svg.appendChild(c);}
+  for(var i=0;i<10;i++){
+    var g=el("g",{class:"row"}); rowg.push(g);
+    var lbl=el("text",{class:"rowlabel",x:CX0-10,y:cy(i)+4,"text-anchor":"end"}); lbl.textContent=META[i].name; g.appendChild(lbl);
+    var bar=el("rect",{class:"bar",rx:5,height:BARH,y:cy(i)-BARH/2,fill:META[i].special?"url(#gTeal)":"url(#gGold)"}); g.appendChild(bar); bars.push(bar);
+    if(META[i].special){var st=el("text",{class:"enochmark",y:cy(i)+4}); st.textContent="✦"; g.appendChild(st); marks._enoch=st;}
+    var dia=el("rect",{class:"marker",width:9,height:9}); g.appendChild(dia); marks.push(dia);
+    // alvo interativo da linha inteira (rótulo + barra): acessível por teclado (2.1.1, 4.1.2)
+    var hit=el("rect",{class:"hit",x:4,y:cy(i)-ROWH/2+2,height:ROWH-4,rx:6,fill:"transparent","pointer-events":"all",
+                       tabindex:"0",role:"button","aria-label":META[i].name+", "+META[i].ref+" — abrir detalhes"});
+    g.appendChild(hit); hits.push(hit);
+    svg.appendChild(g);
+    (function(idx,hitEl){
+      hitEl.addEventListener("mouseenter",function(ev){showTip(idx); posTip(ev); dimOthers(idx,true);});
+      hitEl.addEventListener("mousemove",posTip);
+      hitEl.addEventListener("mouseleave",function(){hideTip(); dimOthers(idx,false);});
+      hitEl.addEventListener("click",function(){openPanel(idx,hitEl);});
+      hitEl.addEventListener("keydown",function(e){
+        if(e.key==="Enter"||e.key===" "||e.key==="Spacebar"){e.preventDefault(); openPanel(idx,hitEl);}
+      });
+      hitEl.addEventListener("focus",function(){showTip(idx); posTipRow(idx); dimOthers(idx,true);});
+      hitEl.addEventListener("blur",function(){hideTip(); dimOthers(idx,false);});
+    })(i,hit);
+  }
+
+  function dimOthers(idx,on){
+    for(var k=0;k<10;k++) rowg[k].classList.toggle("dim", on && k!==idx);
+    for(var k=0;k<9;k++) conns[k].classList.toggle("dim", on && k!==idx && k!==idx-1);
+  }
+
+  function paint(nums,flood){
+    for(var i=0;i<10;i++){
+      var x0=xOf(nums[i].birth), x1=xOf(nums[i].death);
+      bars[i].setAttribute("x",x0); bars[i].setAttribute("width",Math.max(1,x1-x0));
+      // o alvo cobre a linha inteira, do rótulo ao fim da barra
+      hits[i].setAttribute("x",4); hits[i].setAttribute("width",Math.max(CX0,x1)+8-4);
+      var mx=xOf(nums[i].begetAbs);
+      marks[i].setAttribute("x",mx-4.5); marks[i].setAttribute("y",cy(i)-4.5);
+      marks[i].setAttribute("transform","rotate(45 "+mx+" "+cy(i)+")");
+      if(META[i].special && marks._enoch) marks._enoch.setAttribute("x",x1+6);
+    }
+    for(var i=0;i<9;i++){var x=xOf(nums[i+1].birth);
+      conns[i].setAttribute("x1",x); conns[i].setAttribute("x2",x);
+      conns[i].setAttribute("y1",cy(i)+BARH/2); conns[i].setAttribute("y2",cy(i+1)-BARH/2);}
+    var fx=xOf(flood); fline.setAttribute("x1",fx); fline.setAttribute("x2",fx);
+    wash.setAttribute("x",fx); wash.setAttribute("width",Math.max(0,CX1-fx));
+    var clx=Math.max(CX0+54,Math.min(fx,CX1-54)); frect.setAttribute("x",clx-54); ftext.setAttribute("x",clx);
+    ftext.textContent="Dilúvio · AM "+flood;
+  }
+
+  var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var curKey="TM", dispNums=clone(COMP.TM.rows), dispFlood=COMP.TM.flood, raf=null;
+  function clone(rows){return rows.map(function(r){return {birth:r.birth,death:r.death,begetAbs:r.begetAbs};});}
+  function lerp(a,b,p){return a+(b-a)*p;} function ease(p){return p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;}
+
+  function go(key){
+    if(key===curKey) return;
+    var from=clone(dispNums), ff=dispFlood, to=COMP[key].rows, tf=COMP[key].flood, t0=performance.now(), DUR=620;
+    if(raf) cancelAnimationFrame(raf);
+    setActive(key); curKey=key; setInsight(key); hideTip();
+    if(openIdx>=0) fillPanel(openIdx);
+    if(reduce){dispNums=clone(to); dispFlood=tf; paint(dispNums,dispFlood); return;}
+    (function step(now){
+      var p=Math.min(1,(now-t0)/DUR), e=ease(p);
+      for(var i=0;i<10;i++){dispNums[i].birth=lerp(from[i].birth,to[i].birth,e);
+        dispNums[i].death=lerp(from[i].death,to[i].death,e); dispNums[i].begetAbs=lerp(from[i].begetAbs,to[i].begetAbs,e);}
+      dispFlood=lerp(ff,tf,e); paint(dispNums,dispFlood);
+      if(p<1) raf=requestAnimationFrame(step);
+    })(t0);
+  }
+
+  var insEl=document.getElementById("insight");
+  function setInsight(key){
+    var c=COMP[key], m=c.rows[7], delta=m.death-c.flood, msg;
+    if(key==="TM") msg="No <b>Texto Massorético</b>, Matusalém morre <b>exatamente no ano do Dilúvio</b> (AM "+c.flood+").";
+    else if(key==="LXX") msg="A <b>Septuaginta</b> soma ~100 anos às idades de paternidade, empurrando o Dilúvio para AM "+c.flood+". Efeito famoso: <b>Matusalém parece sobreviver "+delta+" anos ao Dilúvio</b>.";
+    else msg="No <b>Pentateuco Samaritano</b>, <b>Jared, Matusalém e Lameque morrem todos no ano do Dilúvio</b> (AM "+c.flood+").";
+    insEl.innerHTML=msg+"<div class='meta'>Tradição: "+c.label+" · Dilúvio em AM "+c.flood+" · datas relativas (Anno Mundi)</div>";
+  }
+
+  // tooltip rápido (aria-hidden: reforço visual; o conteúdo acessível está no card)
+  var tip=document.getElementById("tip");
+  function showTip(i){var d=COMP[curKey].rows[i];
+    tip.innerHTML="<div class='tn'>"+d.name+" <span class='th'>"+d.he+"</span></div><div class='tm'>nasce AM "+d.birth+" · "+(d.special?"trasladado":("morre AM "+d.death))+"</div><div class='tm'>clique ou Enter para abrir →</div>";
+    tip.classList.add("show");}
+  function posTip(ev){var w=tip.offsetWidth||220,h=tip.offsetHeight||60,x=ev.clientX+16,y=ev.clientY+16;
+    if(x+w+14>innerWidth)x=ev.clientX-w-16; if(y+h+14>innerHeight)y=innerHeight-h-14;
+    tip.style.left=x+"px"; tip.style.top=Math.max(14,y)+"px";}
+  function posTipRow(i){var r=hits[i].getBoundingClientRect();
+    posTip({clientX:Math.min(r.left+120,innerWidth-260), clientY:r.top+r.height/2});}
+  function hideTip(){tip.classList.remove("show");}
+
+  // card expansível — diálogo não-modal com gestão de foco (2.4.3)
+  var panel=document.getElementById("panel"), backdrop=document.getElementById("backdrop"), openIdx=-1, lastFocus=null;
+  function num(n){return n.toLocaleString("pt-BR");}
+  function fillPanel(i){
+    var d=COMP[curKey].rows[i];
+    document.getElementById("pname").textContent=d.name;
+    document.getElementById("pmean").textContent=d.mean+" · etimologia tradicional";
+    document.getElementById("pheb").textContent=d.he;
+    document.getElementById("pref").textContent=d.ref;
+    var nasc="AM "+num(d.birth), fim=d.special?"trasladado (Gn 5:24)":("AM "+num(d.death));
+    var gerou=i<9?META[i+1].name:"Sem, Cão e Jafé";
+    document.getElementById("pgrid").innerHTML=
+      cell("Idade ao gerar",num(d.beget)+" anos")+cell("Vida total",d.special?"365 (não morreu)":num(d.total)+" anos")+
+      cell("Nasce",nasc)+cell(d.special?"Fim":"Morre",fim);
+    var nav=document.getElementById("pnav"); nav.innerHTML="";
+    if(i>0) nav.appendChild(chip("◂ pai","",i-1,META[i-1].name));
+    nav.appendChild(chip("gerou ▸","",i<9?i+1:i, gerou));
+    var vt="gerou aos <b>"+num(d.beget)+"</b>, viveu <b>"+(d.special?365:num(d.total))+"</b> — nesta tradição ("+COMP[curKey].label+")";
+    document.getElementById("pvar").innerHTML=vt+(TXNOTE[i]?("<br><br>"+TXNOTE[i]):"");
+    document.getElementById("ptext").textContent=TX[i]||"—";
+    document.getElementById("psrc").innerHTML="<span class='tag'>registro: texto bíblico</span> Almeida (domínio público) · transcrição provisória — versão de estudo (Jerusalém) entra como overlay privado.";
+  }
+  function cell(k,v){return "<div><div class='k'>"+k+"</div><div class='v'>"+v+"</div></div>";}
+  function chip(lead,_,idx,name){var c=document.createElement("button"); c.type="button"; c.className="chip"; c.innerHTML=lead+" <span>"+name+"</span>";
+    c.addEventListener("click",function(){openPanel(idx);}); return c;}
+  function openPanel(i,invoker){
+    if(!panel.classList.contains("show")) lastFocus=invoker||document.activeElement;
+    openIdx=i; fillPanel(i); panel.classList.add("show"); backdrop.classList.add("show"); hideTip(); dimOthers(i,true);
+    panel.focus();
+  }
+  function closePanel(){
+    openIdx=-1; panel.classList.remove("show"); backdrop.classList.remove("show"); dimOthers(0,false);
+    if(lastFocus&&lastFocus.focus){lastFocus.focus();} lastFocus=null;
+  }
+  document.getElementById("pclose").addEventListener("click",closePanel);
+  backdrop.addEventListener("click",closePanel);
+  document.addEventListener("keydown",function(e){if(e.key==="Escape")closePanel();});
+
+  // seletor de tradição: radiogroup com roving tabindex e setas (4.1.2)
+  var btns=[].slice.call(document.querySelectorAll(".seg button"));
+  var ORDER=["TM","LXX","PS"];
+  function setActive(key){btns.forEach(function(b){
+    var on=b.dataset.trad===key;
+    b.setAttribute("aria-checked",on?"true":"false");
+    b.setAttribute("tabindex",on?"0":"-1");
+  });}
+  btns.forEach(function(b,bi){
+    b.addEventListener("click",function(){go(b.dataset.trad);});
+    b.addEventListener("keydown",function(e){
+      var d=0;
+      if(e.key==="ArrowRight"||e.key==="ArrowDown")d=1;
+      else if(e.key==="ArrowLeft"||e.key==="ArrowUp")d=-1;
+      else if(e.key==="Home")d="H"; else if(e.key==="End")d="E"; else return;
+      e.preventDefault();
+      var i=ORDER.indexOf(curKey), n=d==="H"?0:d==="E"?ORDER.length-1:(i+d+ORDER.length)%ORDER.length;
+      go(ORDER[n]);
+      btns[n].focus();
+    });
+  });
+
+  paint(dispNums,dispFlood); setInsight("TM"); setActive("TM");
+})();
+</script>
+</body>
+</html>
