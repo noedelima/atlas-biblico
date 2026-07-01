@@ -4,13 +4,14 @@ Estudo interativo da Escritura que consolida **texto, tempo, território e genea
 
 **Site:** https://noedelima.github.io/atlas-biblico/
 
-## O ambiente de estudo (MVP F1 — Gênesis 1–11)
+## O ambiente de estudo
 
-| Página | O que mostra |
-|---|---|
-| [`atlas.html`](https://noedelima.github.io/atlas-biblico/atlas.html) | A **espinha narrativa**: as doze perícopes de Gn 1–11 em leitura contínua (Almeida), com **paralelos do cânon** por perícope, sincronizadas com **três visões** — **Tempo** (Adão → Abrão em *Anno Mundi*, com Dilúvio e a faixa de Babel nos dias de Pelegue), **Mapa** (do Éden a Harã sobre o mundo antigo, com a rota de Terá Ur → Harã → Canaã) e **Genealogia** (as duas escadas de gerações, Gn 5 e Gn 11). O seletor TM · LXX · PS reorganiza tudo ao vivo. |
+| Módulo | Página | O que mostra |
+|---|---|---|
+| **F1 · Gênesis 1–11** | [`atlas.html`](https://noedelima.github.io/atlas-biblico/atlas.html) | A **espinha narrativa**: as doze perícopes de Gn 1–11 em leitura contínua (Almeida), com **paralelos do cânon** por perícope, sincronizadas com **três visões** — **Tempo** (Adão → Abrão em *Anno Mundi*, com Dilúvio e a faixa de Babel nos dias de Pelegue), **Mapa** (do Éden a Harã, com a rota de Terá) e **Genealogia** (as duas escadas de gerações, Gn 5 e Gn 11). O seletor TM · LXX · PS reorganiza tudo ao vivo. |
+| **F2 · Patriarcas (Gn 12–50)** | [`patriarcas.html`](https://noedelima.github.io/atlas-biblico/patriarcas.html) | As **migrações no mapa-tempo**: as jornadas de **Abraão** (11 etapas, de Ur a Macpela), **Jacó** (10 etapas, ida e volta a Harã — Peniel, o nome Israel — e a descida ao Egito) e **José** (do poço em Dotã ao trono — e os ossos de volta a Siquém, Js 24:32). O texto conduz etapa por etapa; o mapa geral (Eufrates → Nilo), o detalhe de Canaã e a cronologia patriarcal respondem. |
 
-Os dados vivem fora do HTML, em [`dados.js`](dados.js) — o primeiro passo do **grafo de conhecimento**: pessoas, lugares, eventos, perícopes e **Afirmações como cidadãs de primeira classe** (cada identificação/data carrega fonte e confiança: *atestado · provável · debatido · derivado*). Os *cruxes* clássicos estão anotados: Matusalém 167/187 na LXX, o **Cainã (II)** que só existe na LXX (e em Lc 3:36), o nascimento de Sem derivado de Gn 11:10, o crux Terá 70/130 (At 7:4).
+Os dados vivem fora do HTML, em [`dados.js`](dados.js) e [`dados-patriarcas.js`](dados-patriarcas.js) — o **grafo de conhecimento**: pessoas, lugares, eventos, perícopes, jornadas e **Afirmações como cidadãs de primeira classe** (cada identificação/data carrega fonte e confiança: *atestado · provável · debatido · derivado*). Os *cruxes* clássicos estão anotados: Matusalém 167/187 na LXX, o **Cainã (II)** que só existe na LXX (e em Lc 3:36), o nascimento de Sem derivado de Gn 11:10, o crux Terá 70/130 (At 7:4), as idades derivadas de Jacó em Harã.
 
 ## Protótipos F0 (mantidos)
 
@@ -32,9 +33,10 @@ Tudo é **HTML + JS puro, sem dependências e sem build** — abra e use (funcio
 
 - ✅ **F0** — protótipos de prova (Gn 5 · Gn 10)
 - ✅ **F1** — MVP Gênesis 1–11: grafo de conhecimento (`dados.js`) + três visões sincronizadas (tempo, mapa, genealogia) sobre a espinha narrativa
-- **F1.1** — refinamento: gazetteers acadêmicos (Pleiades · OpenBible · STEPBible), texto integral por perícope, mais afirmações estruturadas
-- **F2** — Patriarcas (Gn 12–50): as migrações de Abraão, Isaque e Jacó no mapa-tempo
-- **F3+** — expansão progressiva, Gênesis → Apocalipse
+- ✅ **F2** — MVP Patriarcas (Gn 12–50): as jornadas de Abraão, Jacó e José no mapa-tempo
+- **Refinamento** — gazetteers acadêmicos (Pleiades · OpenBible · STEPBible), texto integral por perícope, Isaque/Ismael/Esaú, mais afirmações estruturadas
+- **F3** — Êxodo: a rota do deserto no mapa-tempo
+- **F4+** — expansão progressiva, Gênesis → Apocalipse
 
 ## Fontes e licenças de conteúdo
 
@@ -44,7 +46,7 @@ Tudo é **HTML + JS puro, sem dependências e sem build** — abra e use (funcio
 | [Natural Earth](https://www.naturalearthdata.com/) | geometria de costas/rios do basemap | Domínio público |
 | Identificações dos povos e lugares | tradicionais/debatidas, sinalizadas por confiança | — |
 
-As identificações históricas são as tradicionais e estão marcadas por grau de confiança; o refinamento contra fontes acadêmicas (gazetteer Pleiades, OpenBible, STEPBible) está planejado para a F1.1. A tradução de estudo (Bíblia de Jerusalém) entra como *overlay privado*, por direito autoral.
+As identificações históricas são as tradicionais e estão marcadas por grau de confiança; o refinamento contra fontes acadêmicas (gazetteer Pleiades, OpenBible, STEPBible) está planejado como fase própria do roadmap. A tradução de estudo (Bíblia de Jerusalém) entra como *overlay privado*, por direito autoral.
 
 ## Licença
 

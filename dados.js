@@ -147,6 +147,7 @@ var PESSOAS = [
    txt:"E viveu Terá setenta anos, e gerou a Abrão, a Naor e a Harã. […] E foram os dias de Terá duzentos e cinco anos; e morreu Terá em Harã."},
   {id:"abrao", nome:"Abrão", he:"אַבְרָם", sig:"pai exaltado", ref:"Gn 11:26; 12:1-4", linha:"sem", pericope:"p12", pai:"tera",
    c:{TM:[100,175],LXX:[100,175],PS:[100,175]}, ponte:"F2",
+   modulo:{href:"patriarcas.html#abraao", label:"seguir a jornada — Patriarcas (F2)"},
    txt:"Ora, o Senhor disse a Abrão: Sai-te da tua terra, e da tua parentela, e da casa de teu pai, para a terra que eu te mostrarei. E far-te-ei uma grande nação, e abençoar-te-ei […] e em ti serão benditas todas as famílias da terra."},
 
   /* fora das linhas numeradas */
@@ -156,9 +157,11 @@ var PESSOAS = [
    txt:"E conheceu Adão a Eva, sua mulher, e ela concebeu e deu à luz a Caim […] Onde está Abel, teu irmão? E ele disse: Não sei; sou eu guardador do meu irmão? […] E saiu Caim de diante da face do Senhor, e habitou na terra de Node, da banda do oriente do Éden."},
   {id:"abel", nome:"Abel", he:"הֶבֶל", sig:"sopro, vapor", ref:"Gn 4:2-10", linha:"caim", pericope:"p4", pai:"adao", c:null,
    txt:"E Abel foi pastor de ovelhas, e Caim foi lavrador da terra. […] E atentou o Senhor para Abel e para a sua oferta. […] A voz do sangue do teu irmão clama a mim desde a terra."},
-  {id:"cam", nome:"Cam", he:"חָם", sig:"quente (?)", ref:"Gn 10:6-20", linha:"noe-filhos", pericope:"p9", pai:"noe", c:null, modulo:"tabua-nacoes.html",
+  {id:"cam", nome:"Cam", he:"חָם", sig:"quente (?)", ref:"Gn 10:6-20", linha:"noe-filhos", pericope:"p9", pai:"noe", c:null,
+   modulo:{href:"tabua-nacoes.html", label:"70 nações — módulo 2"},
    txt:"E os filhos de Cam são: Cuxe, e Mizraim, e Pute, e Canaã."},
-  {id:"jafe", nome:"Jafé", he:"יֶפֶת", sig:"que Ele alargue (Gn 9:27)", ref:"Gn 10:2-5", linha:"noe-filhos", pericope:"p9", pai:"noe", c:null, modulo:"tabua-nacoes.html",
+  {id:"jafe", nome:"Jafé", he:"יֶפֶת", sig:"que Ele alargue (Gn 9:27)", ref:"Gn 10:2-5", linha:"noe-filhos", pericope:"p9", pai:"noe", c:null,
+   modulo:{href:"tabua-nacoes.html", label:"70 nações — módulo 2"},
    txt:"Os filhos de Jafé são: Gomer, e Magogue, e Madai, e Javã, e Tubal, e Meseque, e Tiras."}
 ];
 
@@ -255,7 +258,8 @@ var PERICOPES = [
    resumo:"A família parte de Ur rumo a Canaã e para em Harã. A ponte para Abraão.",
    texto:"E tomou Terá a Abrão, seu filho, e a Ló, filho de Harã, filho de seu filho, e a Sarai, sua nora […] e saíram com eles de Ur dos Caldeus, para irem à terra de Canaã; e vieram até Harã, e habitaram ali.",
    paralelos:[{r:"At 7:2-4",n:"Estêvão: da Mesopotâmia a Harã"},{r:"Js 24:2",n:"“dalém do rio” serviram a outros deuses"},{r:"Ne 9:7",n:"que escolheste a Abrão e o tiraste de Ur"},{r:"Hb 11:8",n:"saiu, sem saber para onde ia"}],
-   pessoas:["tera","abrao"], lugares:["ur","hara","canaa"], evento:"ev-ur"}
+   pessoas:["tera","abrao"], lugares:["ur","hara","canaa"], evento:"ev-ur",
+   modulo:{href:"patriarcas.html#abraao-1", label:"seguir a jornada — módulo Patriarcas (F2)"}}
 ];
 
 /* ── CRONOLOGIA — nascimento/morte em Anno Mundi por tradição ───── */

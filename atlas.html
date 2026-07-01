@@ -238,7 +238,7 @@
 
   <footer>
     <b>Proveniência:</b> texto <b>Almeida</b> (domínio público, transcrição provisória) · cronologias TM · LXX · PS como camadas, em <i>Anno Mundi</i> · identificações geográficas tradicionais com grau de confiança · basemap <b>Natural Earth</b> (domínio público).
-    <br><b>Roadmap:</b> F1 (este módulo) → refinamento com gazetteers acadêmicos (Pleiades · OpenBible · STEPBible) → F2 Patriarcas (Gn 12–50): as migrações de Abraão no mapa-tempo.
+    <br><b>Continue a leitura:</b> <a href="patriarcas.html" style="color:var(--gold1)">as migrações dos Patriarcas (Gn 12–50) →</a> · Roadmap: refinamento com gazetteers acadêmicos (Pleiades · OpenBible · STEPBible) → F3 Êxodo.
   </footer>
 </div>
 
@@ -662,7 +662,7 @@
       if(pai&&A.pessoa(pai)) nav.appendChild(chipBtn("◂ pai <span>"+A.pessoa(pai).nome+"</span>",function(){openCard("pessoa",pai);}));
       if(gera&&A.pessoa(gera)) nav.appendChild(chipBtn("gerou ▸ <span>"+A.pessoa(gera).nome+"</span>",function(){openCard("pessoa",gera);}));
       if(p.pericope) nav.appendChild(chipBtn("ver no texto <span>"+A.pericope(p.pericope).ref+"</span>",function(){closeCard();selectPeri(p.pericope,true);}));
-      if(p.modulo){var a=document.createElement("a");a.className="chip";a.style.textDecoration="none";a.href=p.modulo;a.innerHTML="70 nações <span>módulo 2 →</span>";nav.appendChild(a);}
+      if(p.modulo){var a=document.createElement("a");a.className="chip";a.style.textDecoration="none";a.href=p.modulo.href;a.innerHTML=p.modulo.label+" →";nav.appendChild(a);}
       document.getElementById("ctexthead").textContent="Texto · "+p.ref;
       document.getElementById("ctext").textContent=p.txt||"—";
       var afs=afHtml(p.af);
