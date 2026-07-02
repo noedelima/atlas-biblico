@@ -36,6 +36,23 @@ function check(name, ok, extra) {
       check("16 módulos na landing", links.length === 16, links.join(","));
       const logo = await page.$$eval('img[src="assets/logo.svg"]', (m) => m.length);
       check("logo na landing", logo === 1);
+      const ctas = await page.$$eval(".ctas a.cta", (as) => as.map((a) => a.getAttribute("href")));
+      check("2 chamadas no hero (atlas + biblioteca)",
+        ctas.length === 2 && ctas.includes("atlas.html") && ctas.includes("biblioteca.html"), ctas.join(","));
+      const verso = await page.evaluate(() => ({
+        t: document.getElementById("vtx").textContent.length,
+        r: document.getElementById("vref").textContent,
+        l: document.getElementById("vlink").getAttribute("href")
+      }));
+      check("verso do dia preenchido", verso.t > 20 && /\d/.test(verso.r), JSON.stringify(verso));
+      check("verso → capítulo na biblioteca", /^biblioteca\.html#[A-Za-z]+\.\d+$/.test(verso.l), verso.l);
+      const stats = await page.$$eval(".stats .stat b", (bs) => bs.map((b) => b.textContent));
+      check("faixa de números (73 · 35.794 · 52 · 16)",
+        stats.join("|") === "73|35.794|52|16", stats.join("|"));
+      const secoes = await page.$$eval(".secao h2", (hs) => hs.length);
+      check("4 seções nomeadas", secoes === 4, secoes);
+      const nums = await page.$$eval(".mod .num", (ns) => ns.map((n) => n.textContent).join(""));
+      check("jornada numerada 1–8", nums === "12345678", nums);
     }
 
     if (f === "atlas.html") {

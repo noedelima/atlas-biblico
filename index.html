@@ -21,7 +21,6 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <style>
-  /* ═══ DESIGN TOKENS · Atlas Bíblico Interativo · v1 · WCAG 2.1 AA ═══ */
   :root{
     color-scheme:dark;
     --bg:#0e1218; --panel:#161d27; --panel-2:#131922; --field:#0f1620;
@@ -29,7 +28,6 @@
     --ink:#eceae3; --muted:#9aa6b6;
     --gold1:#e9c46a; --gold2:#d4933c; --teal1:#7ed8c9;
     --focus:#e9c46a;
-    --jafe-ui:#7d8ef2; --cam-ui:#c97a35; --sem-ui:#2ea87d;
     --serif:Georgia,"Times New Roman",serif;
     --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   }
@@ -42,32 +40,75 @@
     color:var(--ink); font-family:var(--sans); line-height:1.5; -webkit-font-smoothing:antialiased;
   }
   :focus-visible{outline:2px solid var(--focus); outline-offset:3px; border-radius:6px}
-  .wrap{max-width:920px; margin:0 auto; padding:52px 22px 60px}
+  .wrap{max-width:980px; margin:0 auto; padding:48px 22px 60px}
   .kicker{color:var(--gold1); font-size:12px; letter-spacing:.2em; text-transform:uppercase; margin-bottom:12px}
-  h1{font-family:var(--serif); font-weight:600; font-size:clamp(26px,4.6vw,42px); margin:0 0 12px; letter-spacing:.2px; max-width:22ch}
-  .sub{color:var(--muted); font-size:15.5px; max-width:62ch; margin:0}
+  h1{font-family:var(--serif); font-weight:600; font-size:clamp(28px,5vw,46px); margin:0 0 14px; letter-spacing:.2px; max-width:20ch}
+  .sub{color:var(--muted); font-size:16px; max-width:60ch; margin:0}
   .sub b{color:var(--ink); font-weight:600}
 
-  .principles{display:flex; flex-wrap:wrap; gap:10px; margin:26px 0 0}
+  .ctas{display:flex; flex-wrap:wrap; gap:12px; margin:26px 0 0}
+  .cta{display:inline-block; text-decoration:none; font-weight:700; font-size:15px; border-radius:12px; padding:12px 22px;
+       color:#0e1218; background:linear-gradient(180deg,var(--gold1),var(--gold2)); box-shadow:0 8px 24px rgba(233,196,106,.18);
+       transition:transform .15s, box-shadow .15s}
+  .cta:hover{transform:translateY(-2px); box-shadow:0 12px 30px rgba(233,196,106,.28)}
+  .cta.alt{color:var(--ink); background:var(--panel-2); border:1px solid var(--line-strong); box-shadow:none}
+  .cta.alt:hover{border-color:var(--gold1)}
+
+  .principles{display:flex; flex-wrap:wrap; gap:10px; margin:24px 0 0}
   .principles span{font-size:12px; color:var(--muted); background:var(--panel-2); border:1px solid var(--line); border-radius:20px; padding:6px 13px}
   .principles b{color:var(--gold1); font-weight:600}
 
-  .mods{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:38px 0 0}
+  /* ── faixa da jornada (hero visual) ── */
+  .faixa{margin:36px 0 0; background:linear-gradient(180deg,#17202d,var(--panel-2)); border:1px solid var(--line); border-radius:16px; padding:14px 10px 6px; overflow:hidden}
+  .faixa{overflow-x:auto}
+  .faixa svg{display:block; width:100%; min-width:680px; height:auto}
+  .rota{stroke:var(--gold1); stroke-width:2.2; fill:none; stroke-linecap:round; stroke-dasharray:7 8}
+  @keyframes flui{to{stroke-dashoffset:-60}}
+  .rota{animation:flui 4.5s linear infinite}
+  @keyframes pulsa{0%,100%{opacity:.55}50%{opacity:1}}
+  .pulso{animation:pulsa 3.2s ease-in-out infinite}
+  @media(prefers-reduced-motion:reduce){.rota,.pulso{animation:none}}
+
+  /* ── verso do dia ── */
+  .verso{margin:36px 0 0; padding:22px 24px 18px; background:var(--panel-2); border:1px solid var(--line); border-left:3px solid var(--gold1); border-radius:14px}
+  .verso .vtx{font-family:var(--serif); font-style:italic; font-size:clamp(17px,2.6vw,21px); line-height:1.55; color:var(--ink); margin:0}
+  .verso .vref{margin:10px 0 0; font-size:13px; color:var(--muted)}
+  .verso .vref b{color:var(--gold1); font-weight:600}
+  .verso .vref a{color:var(--gold1); text-decoration:none; font-weight:600}
+  .verso .vref a:hover{text-decoration:underline}
+
+  /* ── números ── */
+  .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:36px 0 0}
+  @media(max-width:720px){.stats{grid-template-columns:1fr 1fr}}
+  .stat{background:var(--panel-2); border:1px solid var(--line); border-radius:14px; padding:16px 14px 13px; text-align:center}
+  .stat b{display:block; font-family:var(--serif); font-weight:600; font-size:clamp(22px,3.4vw,30px); color:var(--gold1); letter-spacing:.5px}
+  .stat span{font-size:12px; color:var(--muted)}
+
+  /* ── seções ── */
+  .secao{display:flex; align-items:baseline; gap:14px; margin:52px 0 6px}
+  .secao h2{font-family:var(--serif); font-weight:600; font-size:clamp(20px,3vw,26px); margin:0; white-space:nowrap}
+  .secao .fio{flex:1; height:1px; background:linear-gradient(90deg,var(--gold2),transparent)}
+  .lead{color:var(--muted); font-size:14px; margin:2px 0 18px; max-width:70ch}
+
+  .mods{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:0}
   @media(max-width:720px){.mods{grid-template-columns:1fr}}
-  .mod.feature{grid-column:1/-1; border-color:#3b4a5c; background:linear-gradient(180deg,#1d2635,var(--panel-2))}
-  .mod .new{display:inline-block; font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#0e1218; background:var(--gold1); border-radius:5px; padding:2px 7px; margin-left:8px; vertical-align:2px}
+  .mods.tres{grid-template-columns:1fr 1fr 1fr}
+  @media(max-width:840px){.mods.tres{grid-template-columns:1fr}}
   .mod{display:block; text-decoration:none; color:inherit; background:linear-gradient(180deg,#1a2230,var(--panel-2));
        border:1px solid var(--line); border-radius:16px; padding:22px 22px 20px; transition:border-color .15s, transform .15s}
-  .mod:hover{border-color:var(--line-strong); transform:translateY(-2px)}
+  .portas .mod{border-color:#3b4a5c; background:linear-gradient(180deg,#1d2635,var(--panel-2))}
+  .mod:hover{border-color:var(--gold1); transform:translateY(-2px)}
   .mod .tag{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
+  .mod .num{display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; margin-right:8px; border-radius:50%;
+            background:var(--gold1); color:#0e1218; font-weight:700; font-size:11.5px; letter-spacing:0; vertical-align:-4px}
+  .mod .new{display:inline-block; font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#0e1218; background:var(--gold1); border-radius:5px; padding:2px 7px; margin-left:8px; vertical-align:2px}
   .mod h2{font-family:var(--serif); font-weight:600; font-size:21px; margin:8px 0 8px; color:var(--ink)}
   .mod p{color:var(--muted); font-size:13.5px; margin:0 0 16px}
   .mod .go{color:var(--gold1); font-size:13px; font-weight:600}
   .glyph{height:74px; margin:4px 0 12px; display:block}
 
-  .road{margin:40px 0 0; padding:16px 18px; background:var(--panel-2); border:1px solid var(--line); border-left:3px solid var(--gold1); border-radius:12px; font-size:13.5px; color:var(--muted)}
+  .road{margin:44px 0 0; padding:16px 18px; background:var(--panel-2); border:1px solid var(--line); border-left:3px solid var(--gold1); border-radius:12px; font-size:13.5px; color:var(--muted)}
   .road b{color:var(--gold1); font-weight:600}
-  .road .done{color:var(--teal1)}
 
   footer{margin-top:44px; color:var(--muted); font-size:12.5px; border-top:1px solid var(--line); padding-top:16px; line-height:1.7}
   footer a{color:var(--muted)}
@@ -82,37 +123,81 @@
     <div class="kicker">Atlas Bíblico Interativo</div>
     <h1>A Bíblia inteira — no texto, no mapa e no tempo.</h1>
     <p class="sub">Leia a Escritura de <b>Gênesis ao Apocalipse</b> enquanto o mapa, a linha do tempo e a árvore genealógica caminham com o texto. <b>Uma história única</b> — do Éden à nova Jerusalém — com cada povo, cada lugar e cada data no seu ponto da jornada.</p>
+    <div class="ctas">
+      <a class="cta" href="atlas.html">Começar do princípio →</a>
+      <a class="cta alt" href="biblioteca.html">Abrir a Bíblia</a>
+    </div>
     <div class="principles" aria-label="O que você encontra aqui">
       <span><b>73 livros</b> — a Bíblia completa, verso a verso</span>
       <span><b>Mapas</b> do mundo antigo em cada era</span>
       <span><b>Linhas do tempo</b> da Criação ao Apocalipse</span>
       <span><b>Gratuito</b>, aberto e sem cadastro</span>
     </div>
+
+    <div class="faixa" aria-hidden="true">
+      <svg viewBox="0 0 940 168">
+        <path d="M0,118 Q90,96 170,108 T340,100 T520,110 T700,98 T940,108 L940,168 L0,168 Z" fill="#1d2a38"/>
+        <path d="M0,126 Q120,112 240,120 T480,118 T720,114 T940,122" fill="none" stroke="#33465a" stroke-width="1.2" opacity=".7"/>
+        <path class="rota" d="M36,96 C120,58 180,110 248,84 S380,44 452,84 S600,116 668,72 S810,40 886,76"/>
+        <g font-family="Georgia,serif" font-style="italic" font-size="12.5" fill="#9aa6b6">
+          <circle cx="36" cy="96" r="5" fill="#7ed8c9" stroke="#0e1218" stroke-width="1.4"/>
+          <text x="36" y="126" text-anchor="middle">Éden</text>
+          <g class="pulso"><rect x="118" y="62" width="20" height="5.5" fill="#d4933c"/><rect x="121.5" y="56.5" width="13" height="5.5" fill="#cf8f37"/><rect x="125" y="51" width="6" height="5.5" fill="#edca73"/></g>
+          <text x="128" y="46" text-anchor="middle">Babel</text>
+          <circle cx="248" cy="84" r="5" fill="#e9c46a" stroke="#0e1218" stroke-width="1.4"/>
+          <text x="248" y="114" text-anchor="middle">Ur</text>
+          <path d="M363,72 l8,-15 8,15 Z" fill="#8a6a3a"/>
+          <text x="371" y="46" text-anchor="middle">Sinai</text>
+          <path d="M444,84 l3.5,-9 5,7.5 5,-9 5,9 5,-7.5 3.5,9 Z" fill="#e9c46a" stroke="#0e1218" stroke-width="1"/>
+          <text x="455" y="112" text-anchor="middle">Jerusalém</text>
+          <path class="pulso" d="M576,96 l2.6,-7 7,-1.8 -7,-1.8 -2.6,-7 -2.6,7 -7,1.8 7,1.8 Z" fill="#e9c46a"/>
+          <text x="576" y="133" text-anchor="middle">Belém</text>
+          <path d="M668,58 v22 M659,66 h18" stroke="#edca73" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+          <text x="668" y="98" text-anchor="middle">Gólgota</text>
+          <circle cx="778" cy="60" r="5" fill="#7d8ef2" stroke="#0e1218" stroke-width="1.4"/>
+          <text x="778" y="90" text-anchor="middle">Patmos</text>
+          <g class="pulso"><rect x="876" y="66" width="20" height="20" rx="3" fill="none" stroke="#e9c46a" stroke-width="2"/><rect x="882" y="72" width="8" height="8" rx="1.5" fill="#e9c46a"/></g>
+          <text x="886" y="104" text-anchor="middle">nova Jerusalém</text>
+        </g>
+      </svg>
+    </div>
+
+    <figure class="verso" id="verso">
+      <blockquote class="vtx" id="vtx"></blockquote>
+      <figcaption class="vref"><b id="vref"></b> · Bíblia Livre — <a id="vlink" href="biblioteca.html">ler o capítulo inteiro →</a></figcaption>
+    </figure>
+
+    <div class="stats" aria-label="O atlas em números">
+      <div class="stat"><b>73</b><span>livros, a Bíblia completa</span></div>
+      <div class="stat"><b>35.794</b><span>versículos para ler</span></div>
+      <div class="stat"><b>52</b><span>povos rastreados no mapa</span></div>
+      <div class="stat"><b>16</b><span>mapas e linhas do tempo</span></div>
+    </div>
   </header>
 
-  <nav class="mods" aria-label="Módulos">
-    <a class="mod feature" href="atlas.html">
-      <span class="tag">Atlas · Gênesis 1–11</span>
-      <svg class="glyph" viewBox="0 0 300 74" role="img" aria-label="Miniatura: texto, linha do tempo, mapa e genealogia lado a lado">
-        <rect x="6"  y="10" width="86" height="7" rx="3" fill="#9aa6b6" opacity=".7"/>
-        <rect x="6"  y="24" width="70" height="7" rx="3" fill="#9aa6b6" opacity=".45"/>
-        <rect x="6"  y="38" width="80" height="7" rx="3" fill="#9aa6b6" opacity=".45"/>
-        <rect x="6"  y="52" width="58" height="7" rx="3" fill="#9aa6b6" opacity=".45"/>
-        <rect x="112" y="12" width="64" height="8" rx="4" fill="#edca73"/>
-        <rect x="124" y="26" width="58" height="8" rx="4" fill="#d9a94f"/>
-        <rect x="136" y="40" width="30" height="8" rx="4" fill="#7ed8c9"/>
-        <line x1="172" y1="6" x2="172" y2="56" stroke="#5aa0d6" stroke-width="2.2"/>
-        <path d="M200,52 Q222,34 246,42 T294,36 L294,66 L200,66 Z" fill="#20303f"/>
-        <rect x="222" y="30" width="8" height="8" transform="rotate(45 226 34)" fill="#e9c46a"/>
-        <rect x="252" y="42" width="8" height="8" transform="rotate(45 256 46)" fill="none" stroke="#e9c46a" stroke-width="1.6" stroke-dasharray="2.5 2"/>
-        <circle cx="206" cy="14" r="4" fill="#7d8ef2"/><line x1="206" y1="18" x2="206" y2="26" stroke="#66798e"/>
-        <circle cx="206" cy="30" r="4" fill="#2ea87d"/>
+  <section aria-label="Comece por aqui">
+    <div class="secao"><h2>Comece por aqui</h2><div class="fio"></div></div>
+    <p class="lead">Três portas de entrada: ler a Bíblia inteira, ver a história inteira de uma vez — ou mergulhar fundo no princípio de tudo.</p>
+    <nav class="mods tres portas" aria-label="Portas de entrada">
+      <a class="mod" href="biblioteca.html">
+      <span class="tag">A biblioteca · 73 livros</span>
+      <svg class="glyph" viewBox="0 0 300 74" role="img" aria-label="Miniatura: um livro aberto entre estantes">
+        <line x1="10" y1="64" x2="290" y2="64" stroke="#5d7183" stroke-width="3" stroke-linecap="round"/>
+        <rect x="18"  y="34" width="13" height="30" rx="2" fill="#7d8ef2" stroke="#0e1218" stroke-width="1.2"/>
+        <rect x="35"  y="26" width="16" height="38" rx="2" fill="#e9c46a" stroke="#0e1218" stroke-width="1.2"/>
+        <rect x="55"  y="38" width="12" height="26" rx="2" fill="#2ea87d" stroke="#0e1218" stroke-width="1.2"/>
+        <rect x="233" y="30" width="14" height="34" rx="2" fill="#2ea87d" stroke="#0e1218" stroke-width="1.2"/>
+        <rect x="251" y="24" width="17" height="40" rx="2" fill="#e9c46a" stroke="#0e1218" stroke-width="1.2"/>
+        <rect x="272" y="36" width="12" height="28" rx="2" fill="#7d8ef2" stroke="#0e1218" stroke-width="1.2"/>
+        <path d="M150,20 C132,10 108,10 96,16 L96,58 C108,52 132,52 150,60 C168,52 192,52 204,58 L204,16 C192,10 168,10 150,20 Z" fill="#f4efdf" stroke="#0e1218" stroke-width="1.6"/>
+        <path d="M150,20 L150,60" stroke="#c9b98a" stroke-width="1.4"/>
+        <path d="M104,24 h36 M104,32 h36 M104,40 h36 M160,24 h36 M160,32 h36 M160,40 h36" stroke="#8a7b52" stroke-width="1.1"/>
       </svg>
-      <h2>O ambiente de estudo: texto · tempo · mapa · genealogia</h2>
-      <p>As doze perícopes de Gn 1–11 em leitura contínua, com paralelos do cânon, sincronizadas com três visões — linha do tempo (Adão → Abrão, com Dilúvio e Babel), mapa do mundo antigo (do Éden a Harã) e árvore genealógica. Tudo nas três tradições antigas do texto — e cada lugar e cada data mostram o quanto são seguros.</p>
-      <span class="go">Abrir o atlas →</span>
+      <h2>A biblioteca — a Bíblia inteira, livro a livro</h2>
+      <p><b>73 livros · 35.794 versículos</b> para ler de ponta a ponta — incluindo os <b>deuterocanônicos</b> do cânon católico (Tobias, Judite, 1–2 Macabeus, Sabedoria, Eclesiástico, Baruc) e as adições gregas de Ester e de Daniel. Escolha o livro e o capítulo, e a seta segue de Gênesis ao Apocalipse sem sair da página.</p>
+      <span class="go">Abrir a biblioteca →</span>
     </a>
-    <a class="mod feature" href="panorama.html">
+      <a class="mod" href="panorama.html">
       <span class="tag">Panorama · a Bíblia inteira</span>
       <svg class="glyph" viewBox="0 0 300 74" role="img" aria-label="Miniatura: a linha do tempo inteira do Antigo Testamento, com eras e a costura">
         <rect x="8"  y="30" width="52" height="16" rx="5" fill="#e9c46a"/>
@@ -133,26 +218,36 @@
       <p>Da Criação à nova Jerusalém, numa linha só: as <b>eras clicáveis</b> do AT e do NT, os profetas posicionados, e a <b>costura</b> entre o tempo relativo (Anno Mundi) e as âncoras absolutas (a.C. → d.C.) — declarada, como tudo aqui.</p>
       <span class="go">Ver o panorama →</span>
     </a>
-    <a class="mod feature" href="biblioteca.html">
-      <span class="tag">A biblioteca · 73 livros</span>
-      <svg class="glyph" viewBox="0 0 300 74" role="img" aria-label="Miniatura: um livro aberto entre estantes">
-        <line x1="10" y1="64" x2="290" y2="64" stroke="#5d7183" stroke-width="3" stroke-linecap="round"/>
-        <rect x="18"  y="34" width="13" height="30" rx="2" fill="#7d8ef2" stroke="#0e1218" stroke-width="1.2"/>
-        <rect x="35"  y="26" width="16" height="38" rx="2" fill="#e9c46a" stroke="#0e1218" stroke-width="1.2"/>
-        <rect x="55"  y="38" width="12" height="26" rx="2" fill="#2ea87d" stroke="#0e1218" stroke-width="1.2"/>
-        <rect x="233" y="30" width="14" height="34" rx="2" fill="#2ea87d" stroke="#0e1218" stroke-width="1.2"/>
-        <rect x="251" y="24" width="17" height="40" rx="2" fill="#e9c46a" stroke="#0e1218" stroke-width="1.2"/>
-        <rect x="272" y="36" width="12" height="28" rx="2" fill="#7d8ef2" stroke="#0e1218" stroke-width="1.2"/>
-        <path d="M150,20 C132,10 108,10 96,16 L96,58 C108,52 132,52 150,60 C168,52 192,52 204,58 L204,16 C192,10 168,10 150,20 Z" fill="#f4efdf" stroke="#0e1218" stroke-width="1.6"/>
-        <path d="M150,20 L150,60" stroke="#c9b98a" stroke-width="1.4"/>
-        <path d="M104,24 h36 M104,32 h36 M104,40 h36 M160,24 h36 M160,32 h36 M160,40 h36" stroke="#8a7b52" stroke-width="1.1"/>
+      <a class="mod" href="atlas.html">
+      <span class="tag">Atlas · Gênesis 1–11</span>
+      <svg class="glyph" viewBox="0 0 300 74" role="img" aria-label="Miniatura: texto, linha do tempo, mapa e genealogia lado a lado">
+        <rect x="6"  y="10" width="86" height="7" rx="3" fill="#9aa6b6" opacity=".7"/>
+        <rect x="6"  y="24" width="70" height="7" rx="3" fill="#9aa6b6" opacity=".45"/>
+        <rect x="6"  y="38" width="80" height="7" rx="3" fill="#9aa6b6" opacity=".45"/>
+        <rect x="6"  y="52" width="58" height="7" rx="3" fill="#9aa6b6" opacity=".45"/>
+        <rect x="112" y="12" width="64" height="8" rx="4" fill="#edca73"/>
+        <rect x="124" y="26" width="58" height="8" rx="4" fill="#d9a94f"/>
+        <rect x="136" y="40" width="30" height="8" rx="4" fill="#7ed8c9"/>
+        <line x1="172" y1="6" x2="172" y2="56" stroke="#5aa0d6" stroke-width="2.2"/>
+        <path d="M200,52 Q222,34 246,42 T294,36 L294,66 L200,66 Z" fill="#20303f"/>
+        <rect x="222" y="30" width="8" height="8" transform="rotate(45 226 34)" fill="#e9c46a"/>
+        <rect x="252" y="42" width="8" height="8" transform="rotate(45 256 46)" fill="none" stroke="#e9c46a" stroke-width="1.6" stroke-dasharray="2.5 2"/>
+        <circle cx="206" cy="14" r="4" fill="#7d8ef2"/><line x1="206" y1="18" x2="206" y2="26" stroke="#66798e"/>
+        <circle cx="206" cy="30" r="4" fill="#2ea87d"/>
       </svg>
-      <h2>A biblioteca — a Bíblia inteira, livro a livro</h2>
-      <p><b>73 livros · 35.794 versículos</b> para ler de ponta a ponta — incluindo os <b>deuterocanônicos</b> do cânon católico (Tobias, Judite, 1–2 Macabeus, Sabedoria, Eclesiástico, Baruc) e as adições gregas de Ester e de Daniel. Escolha o livro e o capítulo, e a seta segue de Gênesis ao Apocalipse sem sair da página.</p>
-      <span class="go">Abrir a biblioteca →</span>
+      <h2>O ambiente de estudo: texto · tempo · mapa · genealogia</h2>
+      <p>As doze perícopes de Gn 1–11 em leitura contínua, com paralelos do cânon, sincronizadas com três visões — linha do tempo (Adão → Abrão, com Dilúvio e Babel), mapa do mundo antigo (do Éden a Harã) e árvore genealógica. Tudo nas três tradições antigas do texto — e cada lugar e cada data mostram o quanto são seguros.</p>
+      <span class="go">Abrir o atlas →</span>
     </a>
-    <a class="mod" href="patriarcas.html">
-      <span class="tag">Patriarcas · Gn 12–50</span>
+    </nav>
+  </section>
+
+  <section aria-label="A jornada">
+    <div class="secao"><h2>A jornada, capítulo a capítulo</h2><div class="fio"></div></div>
+    <p class="lead">A história em oito etapas — siga na ordem, do chamado de Abraão aos confins da terra, ou entre por onde a curiosidade chamar.</p>
+    <nav class="mods" aria-label="Módulos da jornada">
+      <a class="mod" href="patriarcas.html">
+      <span class="tag"><span class="num">1</span>Patriarcas · Gn 12–50</span>
       <svg class="glyph" viewBox="0 0 300 74" role="img" aria-label="Miniatura: rota de jornada sobre o mapa, com estações e cronologia">
         <path d="M6,50 Q60,28 120,38 T240,30 T294,40 L294,70 L6,70 Z" fill="#20303f"/>
         <path d="M262,22 Q220,16 180,26 T96,36 Q60,42 34,54" fill="none" stroke="#e9c46a" stroke-width="2" stroke-linecap="round"/>
@@ -166,8 +261,8 @@
       <p>As jornadas de <b>Abraão</b>, <b>Jacó</b> e <b>José</b> etapa por etapa: o texto conduz, o mapa (visão geral + Canaã em detalhe) e a cronologia patriarcal respondem. De Ur ao Egito — e os ossos de José de volta a Siquém.</p>
       <span class="go">Seguir as jornadas →</span>
     </a>
-    <a class="mod" href="exodo.html">
-      <span class="tag">Êxodo</span>
+      <a class="mod" href="exodo.html">
+      <span class="tag"><span class="num">2</span>Êxodo</span>
       <svg class="glyph" viewBox="0 0 300 74" role="img" aria-label="Miniatura: rota do deserto com o mar se abrindo e o monte Sinai">
         <path d="M6,46 Q50,30 100,40 T200,34 T294,44 L294,70 L6,70 Z" fill="#20303f"/>
         <path d="M30,26 Q70,40 110,48 T190,52 Q230,52 262,40" fill="none" stroke="#e9c46a" stroke-width="2" stroke-linecap="round"/>
@@ -182,8 +277,8 @@
       <p>Da noite da Páscoa às planícies de Moabe em <b>18 etapas</b>: o mar se abre, o Sinai fala, Cades espera 38 anos, Moisés vê a terra do Nebo. Texto integral, mapa com confiança por estação e a cronologia dos 40 anos.</p>
       <span class="go">Atravessar o deserto →</span>
     </a>
-    <a class="mod" href="conquista.html">
-      <span class="tag">Conquista e Juízes · Js–Jz</span>
+      <a class="mod" href="conquista.html">
+      <span class="tag"><span class="num">3</span>Conquista e Juízes · Js–Jz</span>
       <svg class="glyph" viewBox="0 0 300 74" role="img" aria-label="Miniatura: mapa de Canaã com setas de campanha e o ciclo dos juízes">
         <path d="M6,44 Q60,30 120,38 T240,28 T294,38 L294,70 L6,70 Z" fill="#20303f"/>
         <path d="M60,52 L110,40" stroke="#e9c46a" stroke-width="2" stroke-linecap="round"/>
@@ -204,8 +299,8 @@
       <p>Da travessia do Jordão ao <i>“não havia rei em Israel”</i>: Jericó, o sol detido em Gibeão, a terra repartida entre as <b>doze tribos</b> (camada no mapa) e o <b>ciclo dos juízes</b> — de Otniel a Sansão, com os debates arqueológicos declarados.</p>
       <span class="go">Entrar na terra →</span>
     </a>
-    <a class="mod" href="monarquia.html">
-      <span class="tag">Rute · Samuel · a monarquia</span>
+      <a class="mod" href="monarquia.html">
+      <span class="tag"><span class="num">4</span>Rute · Samuel · a monarquia</span>
       <svg class="glyph" viewBox="0 0 300 74" role="img" aria-label="Miniatura: espigas, a arca peregrina e a coroa da cidade de Davi">
         <path d="M6,48 Q60,32 120,40 T240,32 T294,42 L294,70 L6,70 Z" fill="#20303f"/>
         <path d="M36,58 q-2,-16 6,-24 M42,52 q-8,-2 -12,-8 M42,44 q8,-2 10,-9" stroke="#e9c46a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
@@ -220,8 +315,8 @@
       <p>Das espigas de Belém à <b>cidade de Davi</b>: Rute e a linhagem do Messias, a arca peregrina (Siló → Asdode → Quiriate-Jearim), Saul, o vale de Elá — e a promessa do trono eterno (2Sm 7).</p>
       <span class="go">Seguir até Jerusalém →</span>
     </a>
-    <a class="mod" href="reis.html">
-      <span class="tag">Salomão · o reino dividido · 1–2Rs</span>
+      <a class="mod" href="reis.html">
+      <span class="tag"><span class="num">5</span>Salomão · o reino dividido · 1–2Rs</span>
       <svg class="glyph" viewBox="0 0 300 74" role="img" aria-label="Miniatura: o Templo, a fronteira dos dois reinos e a linha das datas ancoradas">
         <path d="M6,46 Q60,32 120,40 T240,32 T294,42 L294,70 L6,70 Z" fill="#20303f"/>
         <rect x="36" y="30" width="34" height="22" fill="#d4933c"/>
@@ -237,8 +332,8 @@
       <p>Do <b>ano 480</b> (1Rs 6:1) à queda de Jerusalém: a glória enche a casa, o reino se parte em Siquém, Elias no Carmelo — e a cronologia do atlas <b>ancora em datas a.C.</b> pelos sincronismos assírios (Qarqar, o obelisco negro, 722, 701, 586).</p>
       <span class="go">Entrar no reino →</span>
     </a>
-    <a class="mod" href="exilio.html">
-      <span class="tag">Exílio e retorno · Dn–Ml</span>
+      <a class="mod" href="exilio.html">
+      <span class="tag"><span class="num">6</span>Exílio e retorno · Dn–Ml</span>
       <svg class="glyph" viewBox="0 0 300 74" role="img" aria-label="Miniatura: rota de ida e volta entre Jerusalém e a Babilônia, com o zigurate">
         <path d="M6,46 Q60,32 120,40 T240,32 T294,42 L294,70 L6,70 Z" fill="#20303f"/>
         <rect x="216" y="38" width="30" height="7" fill="#d4933c"/><rect x="221" y="31" width="20" height="7" fill="#cf8f37"/><rect x="226" y="24" width="10" height="7" fill="#edca73"/>
@@ -251,8 +346,8 @@
       <p>De Jerusalém à <b>Babilônia</b> e de volta: Daniel e a fornalha, Ezequiel junto ao Quebar, o edito de Ciro, Ester em <b>Susã</b>, os muros de Neemias — e <b>Malaquias</b>, o último verso do AT, esperando o sol da justiça.</p>
       <span class="go">Atravessar o exílio →</span>
     </a>
-    <a class="mod" href="evangelhos.html">
-      <span class="tag">Os Evangelhos · Mt–Jo</span>
+      <a class="mod" href="evangelhos.html">
+      <span class="tag"><span class="num">7</span>Os Evangelhos · Mt–Jo</span>
       <svg class="glyph" viewBox="0 0 300 74" role="img" aria-label="Miniatura: o lago da Galileia, a estrela de Belém e a cruz fora da muralha">
         <path d="M6,46 Q60,32 120,40 T240,32 T294,42 L294,70 L6,70 Z" fill="#20303f"/>
         <ellipse cx="216" cy="26" rx="26" ry="16" fill="#44789a" opacity=".8"/>
@@ -267,8 +362,8 @@
       <p>De Belém à ascensão: a Galileia de Cafarnaum e do lago, a <b>semana da Paixão</b> com o esquema de Jerusalém, o túmulo vazio — e a cronologia cruzando o <b>a.C./d.C.</b> com os cruxes declarados (o censo, Betsaida, Gólgota, 30×33).</p>
       <span class="go">Atravessar o silêncio →</span>
     </a>
-    <a class="mod" href="atos.html">
-      <span class="tag">Atos · Apocalipse</span>
+      <a class="mod" href="atos.html">
+      <span class="tag"><span class="num">8</span>Atos · Apocalipse</span>
       <svg class="glyph" viewBox="0 0 300 74" role="img" aria-label="Miniatura: as rotas pelo Mediterrâneo e o candelabro das sete igrejas">
         <path d="M6,40 Q40,28 80,36 T160,30 T240,38 T294,32 L294,70 L6,70 Z" fill="#20303f"/>
         <path d="M258,52 Q200,20 150,30 T60,26 Q36,26 22,32" stroke="#7d8ef2" stroke-width="1.8" fill="none"/>
@@ -284,25 +379,14 @@
       <p>Pentecostes reverte Babel; Paulo cruza o <b>Mediterrâneo</b> (com a âncora de Gálio em Corinto, 51/52 d.C.); e de Patmos, as <b>sete igrejas</b> e a nova Jerusalém — onde o rio do Éden volta a correr. <b>O cânon se fecha.</b></p>
       <span class="go">Fechar o círculo →</span>
     </a>
-    <a class="mod" href="cartas.html">
-      <span class="tag">As cartas · Rm–Jd</span>
-      <svg class="glyph" viewBox="0 0 300 74" role="img" aria-label="Miniatura: setas de cartas cruzando o mar, de uma cidade para várias, e um envelope">
-        <path d="M6,44 Q50,30 100,38 T200,32 T294,40 L294,70 L6,70 Z" fill="#20303f"/>
-        <path d="M40,30 Q120,6 206,20" stroke="#e9c46a" stroke-width="1.8" fill="none"/>
-        <path d="M40,30 Q140,36 240,46" stroke="#7d8ef2" stroke-width="1.8" fill="none" stroke-dasharray="4 3"/>
-        <path d="M40,30 Q104,54 164,54" stroke="#2ea87d" stroke-width="1.8" fill="none" stroke-dasharray="4 3"/>
-        <circle cx="40" cy="30" r="4.5" fill="#e9c46a" stroke="#0e1218" stroke-width="1.2"/>
-        <circle cx="206" cy="20" r="3.6" fill="#e9c46a" stroke="#0e1218" stroke-width="1"/>
-        <circle cx="240" cy="46" r="3.6" fill="#7d8ef2" stroke="#0e1218" stroke-width="1"/>
-        <circle cx="164" cy="54" r="3.6" fill="#2ea87d" stroke="#0e1218" stroke-width="1"/>
-        <rect x="252" y="6" width="36" height="24" rx="3" fill="none" stroke="#e9c46a" stroke-width="1.8"/>
-        <path d="M252,8 l18,13 18,-13" stroke="#e9c46a" stroke-width="1.8" fill="none"/>
-      </svg>
-      <h2>As cartas — o correio do evangelho</h2>
-      <p>As <b>21 cartas</b>, de Romanos a Judas, como setas no Mediterrâneo: de onde partiram, para quem foram — as datas na âncora de <b>Gálio</b>, a Dispersão de 1 Pedro como camada, e o texto integral de todas. <b>O Novo Testamento está completo.</b></p>
-      <span class="go">Abrir o correio →</span>
-    </a>
-    <a class="mod" href="escritos.html">
+    </nav>
+  </section>
+
+  <section aria-label="As vozes">
+    <div class="secao"><h2>As vozes dentro da história</h2><div class="fio"></div></div>
+    <p class="lead">A poesia, os profetas e as cartas não contam a história — falam de dentro dela. Cada voz no seu lugar da linha do tempo.</p>
+    <nav class="mods tres" aria-label="Módulos das vozes">
+      <a class="mod" href="escritos.html">
       <span class="tag">Os Escritos · Jó–Lm</span>
       <svg class="glyph" viewBox="0 0 300 74" role="img" aria-label="Miniatura: uma estante com seis livros de alturas diferentes">
         <line x1="20" y1="62" x2="280" y2="62" stroke="#5d7183" stroke-width="3" stroke-linecap="round"/>
@@ -319,7 +403,7 @@
       <p>Jó, <b>Salmos</b>, Provérbios, Eclesiastes, Cantares e Lamentações em antologia com texto integral — e a <b>ancoragem</b> de cada livro na linha do tempo declarada: 586 firme para Lamentações, títulos davídicos debatidos, Jó <b>sem data</b>, dito assim.</p>
       <span class="go">Abrir a estante →</span>
     </a>
-    <a class="mod" href="profetas.html">
+      <a class="mod" href="profetas.html">
       <span class="tag">Os profetas · Is–Ml</span>
       <svg class="glyph" viewBox="0 0 300 74" role="img" aria-label="Miniatura: barras de vozes numa linha do tempo com âncoras">
         <line x1="14" y1="62" x2="286" y2="62" stroke="#5d7183" stroke-width="2"/>
@@ -337,7 +421,32 @@
       <p>Treze vozes, de <b>Jonas</b> a <b>Joel</b>, ancoradas na linha dos reis pelos títulos e sincronismos — <b>722, 612, 586, 520</b> firmes nos registros, Obadias e Joel declarados em aberto. Com o texto integral dos treze. <b>O AT fecha.</b></p>
       <span class="go">Ouvir as vozes →</span>
     </a>
-    <a class="mod" href="genesis5.html">
+      <a class="mod" href="cartas.html">
+      <span class="tag">As cartas · Rm–Jd</span>
+      <svg class="glyph" viewBox="0 0 300 74" role="img" aria-label="Miniatura: setas de cartas cruzando o mar, de uma cidade para várias, e um envelope">
+        <path d="M6,44 Q50,30 100,38 T200,32 T294,40 L294,70 L6,70 Z" fill="#20303f"/>
+        <path d="M40,30 Q120,6 206,20" stroke="#e9c46a" stroke-width="1.8" fill="none"/>
+        <path d="M40,30 Q140,36 240,46" stroke="#7d8ef2" stroke-width="1.8" fill="none" stroke-dasharray="4 3"/>
+        <path d="M40,30 Q104,54 164,54" stroke="#2ea87d" stroke-width="1.8" fill="none" stroke-dasharray="4 3"/>
+        <circle cx="40" cy="30" r="4.5" fill="#e9c46a" stroke="#0e1218" stroke-width="1.2"/>
+        <circle cx="206" cy="20" r="3.6" fill="#e9c46a" stroke="#0e1218" stroke-width="1"/>
+        <circle cx="240" cy="46" r="3.6" fill="#7d8ef2" stroke="#0e1218" stroke-width="1"/>
+        <circle cx="164" cy="54" r="3.6" fill="#2ea87d" stroke="#0e1218" stroke-width="1"/>
+        <rect x="252" y="6" width="36" height="24" rx="3" fill="none" stroke="#e9c46a" stroke-width="1.8"/>
+        <path d="M252,8 l18,13 18,-13" stroke="#e9c46a" stroke-width="1.8" fill="none"/>
+      </svg>
+      <h2>As cartas — o correio do evangelho</h2>
+      <p>As <b>21 cartas</b>, de Romanos a Judas, como setas no Mediterrâneo: de onde partiram, para quem foram — as datas na âncora de <b>Gálio</b>, a Dispersão de 1 Pedro como camada, e o texto integral de todas. <b>O Novo Testamento está completo.</b></p>
+      <span class="go">Abrir o correio →</span>
+    </a>
+    </nav>
+  </section>
+
+  <section aria-label="Estudos">
+    <div class="secao"><h2>Para ir mais fundo</h2><div class="fio"></div></div>
+    <p class="lead">Dois estudos para quem quer abrir o capô: as cronologias comparadas de Gênesis 5 e o rastro dos 70 povos de Gênesis 10 pela história.</p>
+    <nav class="mods" aria-label="Estudos">
+      <a class="mod" href="genesis5.html">
       <span class="tag">Estudo · Gênesis 5</span>
       <svg class="glyph" viewBox="0 0 300 74" role="img" aria-label="Miniatura: barras de vidas em linha do tempo com marco do Dilúvio">
         <rect x="8"  y="8"  width="150" height="9" rx="4" fill="#edca73"/>
@@ -352,7 +461,7 @@
       <p>Cada vida como uma barra em <i>Anno Mundi</i>; as três tradições textuais lado a lado, com o Dilúvio se deslocando quase mil anos entre elas — e os <i>cruxes</i> famosos (Matusalém) anotados verso a verso.</p>
       <span class="go">Abrir a linha do tempo →</span>
     </a>
-    <a class="mod" href="tabua-nacoes.html">
+      <a class="mod" href="tabua-nacoes.html">
       <span class="tag">A Tábua das Nações · Gn 10<span class="new">renovado</span></span>
       <svg class="glyph" viewBox="0 0 300 74" role="img" aria-label="Miniatura: mapa com marcadores das três linhagens — círculos, quadrados e triângulos">
         <path d="M6,52 Q40,30 78,40 T150,34 T226,44 T294,36 L294,70 L6,70 Z" fill="#20303f"/>
@@ -368,14 +477,40 @@
       <p><b>52 povos por cinco períodos</b> — com a <b>árvore genealógica</b> clicável de Noé aos povos-irmãos, da dispersão de Babel ao horizonte profético: os nomes que mudam (Gômer→cimérios, Madai→Média, Quitim→Roma), as <b>migrações</b> no mapa, e as referências de cada época clicáveis na biblioteca — até a coalizão de Gogue e a bênção do Egito e da Assíria, com os debates declarados.</p>
       <span class="go">Rastrear as nações →</span>
     </a>
-  </nav>
+    </nav>
+  </section>
 
   <p class="road">O atlas cobre a <b>Bíblia inteira</b>: doze módulos narrativos — de Gênesis 1–11 ao Apocalipse —, o panorama que costura tudo numa linha do tempo, e a biblioteca com o texto integral dos 73 livros. E um compromisso com a honestidade: cada lugar e cada data mostram o quanto são seguros — <i>atestado · provável · debatido · derivado</i>.</p>
 
   <footer>
-    <b>Fontes e licenças:</b> texto bíblico <b>Bíblia Livre</b> (BLIVRE, CC-BY 3.0 BR) · basemap <b>Natural Earth</b> (domínio público) · identificações com nível de confiança declarado, sítios greco-romanos com referência ao gazetteer <b>Pleiades</b>.
+    <b>Fontes e licenças:</b> texto bíblico <b>Bíblia Livre</b> (BLIVRE, CC-BY 3.0 BR) e <b>Figueiredo</b> (Vulgata, 1778–90; ed. 1950, domínio público) · basemap <b>Natural Earth</b> (domínio público) · identificações com nível de confiança declarado, sítios greco-romanos com referência ao gazetteer <b>Pleiades</b>.
     <br>Código sob <a href="https://github.com/noedelima/atlas-biblico/blob/main/LICENSE">licença MIT</a> · <a href="https://github.com/noedelima/atlas-biblico">repositório no GitHub</a> · © 2026 Noé de Lima Bezerra.
   </footer>
 </div>
+<script>
+(function(){
+  "use strict";
+  var VERSOS = [
+    ["No princípio criou Deus os céus e a terra.", "Gênesis 1:1", "Gn.1"],
+    ["O SENHOR é meu pastor, nada me faltará.", "Salmo 23:1", "Sl.23"],
+    ["Tua palavra é lâmpada para meus pés e luz para meu caminho.", "Salmo 119:105", "Sl.119"],
+    ["No princípio era a Palavra, e a Palavra estava junto de Deus, e a Palavra era Deus.", "João 1:1", "Jo.1"],
+    ["A erva se seca, as flores caem; porém a palavra do nosso Deus continua firme para sempre.", "Isaías 40:8", "Is.40"],
+    ["Eu sou a luz do mundo; quem me seguir não andará em trevas, mas terá luz de vida.", "João 8:12", "Jo.8"],
+    ["Deus é nosso refúgio e força; socorro oportuno nas angústias.", "Salmo 46:1", "Sl.46"],
+    ["Confia no SENHOR com todo o teu coração; e não te apoies em teu próprio entendimento.", "Provérbios 3:5", "Pv.3"],
+    ["Vinde a mim todos vós que estais cansados e sobrecarregados, e eu vos farei descansar.", "Mateus 11:28", "Mt.11"],
+    ["Não temas, porque eu estou contigo; não te assombres, porque eu sou teu Deus.", "Isaías 41:10", "Is.41"],
+    ["Levanto meus olhos aos montes. De onde virá meu socorro?", "Salmo 121:1", "Sl.121"],
+    ["Eis que eu faço novas todas as coisas.", "Apocalipse 21:5", "Ap.21"]
+  ];
+  var hoje = new Date();
+  var dia = Math.floor((hoje - new Date(hoje.getFullYear(), 0, 0)) / 864e5);
+  var v = VERSOS[dia % VERSOS.length];
+  document.getElementById("vtx").textContent = "\u201C" + v[0] + "\u201D";
+  document.getElementById("vref").textContent = v[1];
+  document.getElementById("vlink").href = "biblioteca.html#" + v[2];
+})();
+</script>
 </body>
 </html>
