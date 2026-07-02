@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Atlas Bíblico Interativo — o panorama do Antigo Testamento: uma linha do tempo única, da Criação (Anno Mundi) às âncoras absolutas (a.C.), com as eras clicáveis, os profetas posicionados e a costura cronológica declarada.">
-<title>Panorama do Antigo Testamento — o atlas inteiro numa linha</title>
+<meta name="description" content="Atlas Bíblico Interativo — o panorama da Bíblia inteira: uma linha do tempo única, da Criação (Anno Mundi) à nova Jerusalém (d.C.), com as eras clicáveis, os profetas posicionados, a faixa do NT e das cartas, e a costura cronológica declarada.">
+<title>Panorama — a Bíblia inteira numa linha</title>
 <link rel="icon" href="assets/icone.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/icon-180.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Atlas Bíblico Interativo">
 <meta property="og:locale" content="pt_BR">
-<meta property="og:title" content="Panorama do Antigo Testamento">
+<meta property="og:title" content="Panorama — a Bíblia, costurada">
 <meta property="og:description" content="Da Criação à espera de Malaquias, numa linha só: eras clicáveis, profetas posicionados, e a costura entre o Anno Mundi e as datas a.C. — declarada.">
 <meta property="og:url" content="https://noedelima.github.io/atlas-biblico/panorama.html">
 <meta property="og:image" content="https://noedelima.github.io/atlas-biblico/assets/og.png">
@@ -90,15 +90,15 @@
 <div class="wrap">
   <header>
     <nav class="crumbs" aria-label="Navegação"><a href="./">← Atlas Bíblico Interativo</a></nav>
-    <div class="kicker">Atlas Bíblico Interativo · Panorama · Antigo Testamento</div>
+    <div class="kicker">Atlas Bíblico Interativo · Panorama · a Bíblia inteira</div>
     <h1>A Bíblia, costurada — da Criação à nova Jerusalém</h1>
     <p class="sub">Todo o arco narrativo do atlas numa linha só: à esquerda, o tempo <b>relativo</b> (<i>Anno Mundi</i> — plural nos módulos: TM · LXX · PS); à direita, as <b>âncoras absolutas</b> (a.C.) dos sincronismos assírios, babilônicos e persas. No meio, a <b>costura</b> — onde a cronologia é honestamente aberta. Clique numa era para abrir o módulo; os losangos azuis posicionam os profetas.</p>
   </header>
 
   <div class="mapcard">
-    <div class="maphead">Da Criação a Malaquias · nove eras clicáveis</div>
+    <div class="maphead">Da Criação à nova Jerusalém · as eras clicáveis — e as cartas</div>
     <div class="scroll">
-      <svg id="pan" class="pan" viewBox="0 0 1000 470" role="group" aria-label="Linha do tempo da Bíblia inteira com as eras clicáveis, da Criação ao pós-exílio, os profetas posicionados, e o Novo Testamento — Evangelhos e Atos ao Apocalipse."></svg>
+      <svg id="pan" class="pan" viewBox="0 0 1000 496" role="group" aria-label="Linha do tempo da Bíblia inteira com as eras clicáveis, da Criação ao pós-exílio, os profetas posicionados, e o Novo Testamento — Evangelhos, Atos ao Apocalipse e a faixa das cartas."></svg>
     </div>
     <p class="viewnote" id="nota1"></p>
     <p class="viewnote" id="nota2"></p>
@@ -114,12 +114,13 @@
     <a href="exilio.html"><b>7</b> Exílio e retorno</a>
     <a href="evangelhos.html"><b>8</b> Os Evangelhos</a>
     <a href="atos.html"><b>9</b> Atos · Apocalipse</a>
+    <a href="cartas.html"><b>10</b> As cartas (Rm–Jd)</a>
     <a href="genesis5.html"><b>+</b> Gn 5 (protótipo)</a>
     <a href="tabua-nacoes.html"><b>+</b> Tábua das Nações (protótipo)</a>
   </nav>
 
   <footer>
-    <b>O que este panorama afirma — e o que não afirma:</b> as eras são portas de navegação, não uma cronologia fechada; o <i>Anno Mundi</i> é sempre plural (TM · LXX · PS), o período dos juízes fica declaradamente em aberto, e as datas absolutas só começam nos sincronismos da monarquia. Os <b>Escritos</b> (Jó · Salmos · Provérbios · Eclesiastes · Cantares · Lamentações · Joel…) não têm ancoragem narrativa única — entram como camadas temáticas no roadmap.
+    <b>O que este panorama afirma — e o que não afirma:</b> as eras são portas de navegação, não uma cronologia fechada; o <i>Anno Mundi</i> é sempre plural (TM · LXX · PS), o período dos juízes fica declaradamente em aberto, e as datas absolutas só começam nos sincronismos da monarquia. Os <b>Escritos</b> (Jó · Salmos · Provérbios · Eclesiastes · Cantares · Lamentações · Joel…) não têm ancoragem narrativa única — entram como camadas temáticas no roadmap. As <b>cartas</b> (Rm–Jd) já entraram: são o módulo 10, desenhadas como setas sobre as cidades de Atos.
     <br><b>O círculo:</b> o rio e a árvore do primeiro mapa (Gn 2) voltam no último (Ap 22) — Gênesis → Apocalipse, completo.
   </footer>
 </div>
@@ -236,7 +237,14 @@
     var t2=el("text",{class:"eranome",x:e.x+e.w/2,y:YN+14,"text-anchor":"middle","font-weight":"400"}); t2.textContent=e.sub; a.appendChild(t2);
     svg.appendChild(a);
   });
-  var fim=el("text",{class:"tick",x:B0+406,y:YN+38,"text-anchor":"end","font-style":"italic"}); fim.textContent="→ a nova Jerusalém (Ap 21–22) — o rio do Éden outra vez"; svg.appendChild(fim);
+  (function(){
+    var a=el("a",{href:"cartas.html",class:"era",role:"link","aria-label":"As cartas, Romanos a Judas — abrir o módulo"});
+    a.appendChild(el("rect",{x:B0,y:YN+28,width:406,height:24,rx:8,fill:"none",stroke:"#7d8ef2","stroke-dasharray":"5 4"}));
+    var t=el("text",{x:B0+203,y:YN+44,"text-anchor":"middle","font-size":"12.5",fill:"#9fc6ea"});
+    t.textContent="✉ as cartas · Rm–Jd — sobre as mesmas cidades"; a.appendChild(t);
+    svg.appendChild(a);
+  })();
+  var fim=el("text",{class:"tick",x:B0+406,y:YN+70,"text-anchor":"end","font-style":"italic"}); fim.textContent="→ a nova Jerusalém (Ap 21–22) — o rio do Éden outra vez"; svg.appendChild(fim);
 
   document.getElementById("nota1").innerHTML=
     "<span class='confchip conf-deb'>debatido</span><b>A costura</b> — a passagem do tempo relativo às datas absolutas depende de duas pontes declaradas: a cronologia dos juízes (somas maiores que o intervalo — sobreposições prováveis) e o ano 480 de 1Rs 6:1 (leitura direta × leitura simbólica). O atlas mostra as duas pontas sem forçar a solda.";
