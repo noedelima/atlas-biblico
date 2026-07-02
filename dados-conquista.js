@@ -135,7 +135,7 @@ var ETAPAS = [
   {perna:"juizes", lugar:"zora", ref:"Jz 13:24-25", leitura:"Jz 13:2-5,24-25; 16:28-30", titulo:"Sansão — de Zorá a Gaza",
    nota:"O nazireu do vale de Soreque: Timna, Léhi, Gaza — força e fraqueza, até o templo de Dagom."},
   {perna:"juizes", lugar:"belem", ref:"Jz 21:25", leitura:"Jz 21:25", titulo:"“Não havia rei em Israel” (→ F5)", futura:true,
-   nota:"O livro fecha em anarquia — e a esperança sai de Belém: nos dias dos juízes, a família de Rute parte para Moabe, e de Belém virá o rei. A ponte para Rute, Samuel e a monarquia."}
+   nota:"O livro fecha em anarquia — e a esperança sai de Belém: nos dias dos juízes, a família de Rute parte para Moabe, e de Belém virá o rei. <a href='monarquia.html' style='color:#e9c46a'>Seguir Rute, Samuel e a monarquia →</a>"}
 ];
 
 /* o ciclo dos juízes (Jz 2:11-19) — diagrama */
