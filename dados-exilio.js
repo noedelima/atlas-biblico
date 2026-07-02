@@ -95,7 +95,7 @@ var ETAPAS = [
   {perna:"muros", lugar:"jerusalem", ref:"Ne 8:8", leitura:"Ne 8:1-12", titulo:"A Lei lida na praça",
    nota:"O eco do Ebal e de Josias: o livro aberto, o povo em pé, o sentido explicado — ‘e a alegria do SENHOR é a vossa força’."},
   {perna:"muros", lugar:"jerusalem", ref:"Ml 4:5-6", leitura:"Ml 3:1-4; 4:1-6", titulo:"O sol da justiça — Malaquias (→ NT)", futura:true,
-   nota:"O Antigo Testamento fecha esperando: ‘eis que eu vos envio o profeta Elias’. Seguem-se ~400 anos sem profeta — até um homem vestido de pelos de camelo junto ao Jordão (Mt 11:13-14). A ponte para o Novo Testamento."}
+   nota:"O Antigo Testamento fecha esperando: ‘eis que eu vos envio o profeta Elias’. Seguem-se ~400 anos sem profeta — até um homem vestido de pelos de camelo junto ao Jordão (Mt 11:13-14). <a href='evangelhos.html' style='color:#e9c46a'>Atravessar o silêncio — os Evangelhos →</a>"}
 ];
 
 /* âncoras do período (a.C.) */
