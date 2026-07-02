@@ -129,7 +129,7 @@
 
   var totC=0, totV=0; B.forEach(function(l){totC+=l.c; totV+=l.v;});
   document.getElementById("subst").innerHTML=
-    "<b>"+B.length+" livros · "+totC.toLocaleString("pt-BR")+" capítulos · "+totV.toLocaleString("pt-BR")+" versículos</b> — a Bíblia inteira, com os sete deuterocanônicos do cânon católico (borda tracejada na estante). Escolha um livro e um capítulo; o texto carrega sob demanda. No fim de cada livro, a seta segue para o próximo: dá para ir de Gênesis ao Apocalipse sem sair da página.";
+    "<b>"+B.filter(function(l){return !l.ad;}).length+" livros · "+totC.toLocaleString("pt-BR")+" capítulos · "+totV.toLocaleString("pt-BR")+" versículos</b> — a Bíblia inteira, com os sete deuterocanônicos do cânon católico (borda tracejada na estante) e as adições gregas de Ester e de Daniel. Escolha um livro e um capítulo; o texto carrega sob demanda. No fim de cada livro, a seta segue para o próximo: dá para ir de Gênesis ao Apocalipse sem sair da página.";
 
   /* estante */
   var shelf=document.getElementById("shelf");
@@ -161,7 +161,12 @@
     document.head.appendChild(s);
   }
 
-  var curS=null, curC=1;
+  function chaves(l){
+    if(l.ks) return l.ks;
+    var a=[]; for(var i=1;i<=l.c;i++) a.push(String(i));
+    return a;
+  }
+  var curS=null, curC="1";
   var rtitle=document.getElementById("rtitle"), rmeta=document.getElementById("rmeta"),
       capnav=document.getElementById("capnav"), rtexto=document.getElementById("rtexto"),
       bprev=document.getElementById("bprev"), bnext=document.getElementById("bnext");
@@ -171,29 +176,33 @@
     rtitle.innerHTML=l.n+(l.d?"<span class='dcchip'>deuterocanônico</span>":"");
     rmeta.textContent=SEC[l.g]+" · "+l.c+" capítulo"+(l.c>1?"s":"")+" · "+l.v.toLocaleString("pt-BR")+" versículos · capítulo "+curC;
     capnav.textContent="";
-    for(var c=1;c<=l.c;c++)(function(c){
+    var ks=chaves(l);
+    ks.forEach(function(c){
       var b=document.createElement("button");
       b.type="button"; b.className="cap"; b.textContent=c;
       b.setAttribute("aria-pressed",c===curC?"true":"false");
       b.addEventListener("click",function(){abrir(curS,c,false);});
       capnav.appendChild(b);
-    })(c);
-    var arr=lv.caps[String(curC)]||[];
+    });
+    var arr=lv.caps[curC]||[];
     var h="<p>"+arr.map(function(t,i){return "<sup>"+(i+1)+"</sup>"+t;}).join(" ")+"</p>";
     var fonte=l.fonte||(T.META.nome+" ("+T.META.sigla+") · "+T.META.nota+" · "+T.META.licenca);
     h+="<div class='fonte'>"+l.n+" "+curC+" · "+fonte+"</div>";
     rtexto.innerHTML=h;
     Object.keys(bkBtns).forEach(function(s){bkBtns[s].setAttribute("aria-pressed",s===curS?"true":"false");});
-    var first=l.idx===0&&curC===1, last=l.idx===B.length-1&&curC===l.c;
+    var ki=ks.indexOf(curC);
+    var first=l.idx===0&&ki===0, last=l.idx===B.length-1&&ki===ks.length-1;
     bprev.disabled=first; bnext.disabled=last;
-    bprev.textContent=(curC===1&&!first)?"◂ "+B[l.idx-1].n+" "+B[l.idx-1].c:"◂ capítulo anterior";
-    bnext.textContent=(curC===l.c&&!last)?B[l.idx+1].n+" 1 ▸":"próximo capítulo ▸";
+    var lp=B[l.idx-1], ln=B[l.idx+1];
+    bprev.textContent=(ki===0&&!first)?"◂ "+lp.n+" "+chaves(lp)[chaves(lp).length-1]:"◂ capítulo anterior";
+    bnext.textContent=(ki===ks.length-1&&!last)?ln.n+" "+chaves(ln)[0]+" ▸":"próximo capítulo ▸";
     if(history.replaceState) history.replaceState(null,"","#"+encodeURIComponent(curS)+"."+curC);
   }
 
   function abrir(sigla,cap,scrollTop){
     var l=porSigla[sigla]; if(!l) return;
-    cap=Math.min(Math.max(1,cap|0||1),l.c);
+    var ks=chaves(l); cap=String(cap);
+    if(ks.indexOf(cap)===-1) cap=ks[0];
     rtitle.textContent=l.n; rmeta.textContent="carregando…";
     carregar(sigla,function(ok){
       if(!ok){rmeta.textContent="não foi possível carregar o livro"; return;}
@@ -204,18 +213,20 @@
 
   bprev.addEventListener("click",function(){
     var l=porSigla[curS]; if(!l) return;
-    if(curC>1) abrir(curS,curC-1,false);
-    else if(l.idx>0) abrir(B[l.idx-1].s,B[l.idx-1].c,false);
+    var ks=chaves(l), ki=ks.indexOf(curC);
+    if(ki>0) abrir(curS,ks[ki-1],false);
+    else if(l.idx>0){var lp=B[l.idx-1]; abrir(lp.s,chaves(lp)[chaves(lp).length-1],false);}
   });
   bnext.addEventListener("click",function(){
     var l=porSigla[curS]; if(!l) return;
-    if(curC<l.c) abrir(curS,curC+1,false);
-    else if(l.idx<B.length-1) abrir(B[l.idx+1].s,1,false);
+    var ks=chaves(l), ki=ks.indexOf(curC);
+    if(ki<ks.length-1) abrir(curS,ks[ki+1],false);
+    else if(l.idx<B.length-1){var ln=B[l.idx+1]; abrir(ln.s,chaves(ln)[0],false);}
   });
 
   function doHash(){
     var m=decodeURIComponent(location.hash).match(/^#(.+)\.(\d+)$/);
-    if(m&&porSigla[m[1]]){abrir(m[1],parseInt(m[2],10),false); return true;}
+    if(m&&porSigla[m[1]]){abrir(m[1],m[2],false); return true;}
     return false;
   }
   window.addEventListener("hashchange",doHash);
