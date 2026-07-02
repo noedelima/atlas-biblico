@@ -8,7 +8,7 @@ const { chromium } = require("playwright");
 
 const ROOT = path.resolve(__dirname, "..");
 const url = (f) => "file://" + path.join(ROOT, f);
-const PAGES = ["index.html", "atlas.html", "patriarcas.html", "exodo.html", "conquista.html", "monarquia.html", "genesis5.html", "tabua-nacoes.html"];
+const PAGES = ["index.html", "atlas.html", "patriarcas.html", "exodo.html", "conquista.html", "monarquia.html", "reis.html", "genesis5.html", "tabua-nacoes.html"];
 
 let failures = 0;
 function check(name, ok, extra) {
@@ -33,7 +33,7 @@ function check(name, ok, extra) {
 
     if (f === "index.html") {
       const links = await page.$$eval(".mods a.mod", (as) => as.map((a) => a.getAttribute("href")));
-      check("7 módulos na landing", links.length === 7, links.join(","));
+      check("8 módulos na landing", links.length === 8, links.join(","));
       const logo = await page.$$eval('img[src="assets/logo.svg"]', (m) => m.length);
       check("logo na landing", logo === 1);
     }
@@ -169,6 +169,38 @@ function check(name, ok, extra) {
         perna: document.querySelector('.seg button[aria-checked="true"]')?.dataset.p
       }));
       check("deep link #e19 → a promessa (fio Davi)", fim.on === "1" && fim.perna === "davi", JSON.stringify(fim));
+      check("console limpo após interações", errors.length === 0, errors.join(" | "));
+    }
+
+    if (f === "reis.html") {
+      const dados = await page.evaluate(() => ({
+        etapas: window.REIS.ETAPAS.length,
+        porPerna: window.REIS.PERNAS.map((p) => window.REIS.ETAPAS.filter((e) => e.perna === p.id).length),
+        livros: window.TEXTO.livros().join(","),
+        ancora: (window.TEXTO.passagem("1Rs 6:1") || [])[0]?.versos[0]?.t.includes("quatrocentos oitenta"),
+        fim: (window.TEXTO.passagem("2Rs 25:27-30") || []).reduce((s, g) => s + g.versos.length, 0),
+        ancoras: window.REIS.ANCORAS.eventos.length
+      }));
+      check("16 etapas em 3 atos (5·6·5)", dados.etapas === 16 && dados.porPerna.join(",") === "5,6,5",
+        JSON.stringify(dados.porPerna));
+      check("livros 1Rs·2Rs carregados", dados.livros === "1Rs,2Rs", dados.livros);
+      check("texto: 1Rs 6:1 traz o ano 480", dados.ancora === true);
+      check("texto: 2Rs 25:27-30 = 4 versos", dados.fim === 4, dados.fim);
+      check("7 âncoras absolutas (a.C.)", dados.ancoras === 7, dados.ancoras);
+      // e6 (divisão) acende a camada dos dois reinos
+      await page.evaluate(() => { location.hash = "#e6"; });
+      await page.waitForTimeout(300);
+      const reinosOn = await page.evaluate(() =>
+        document.getElementById("btnreinos").getAttribute("aria-pressed") === "true");
+      check("camada Israel/Judá acende na divisão (e6)", reinosOn);
+      // e16 (exílio) acende a seta para a Babilônia
+      await page.evaluate(() => { location.hash = "#e16"; });
+      await page.waitForTimeout(300);
+      const fim2 = await page.evaluate(() => ({
+        on: document.querySelector('[data-gi="15"]')?.dataset.on,
+        perna: document.querySelector('.seg button[aria-checked="true"]')?.dataset.p
+      }));
+      check("deep link #e16 → o exílio (ato 3)", fim2.on === "1" && fim2.perna === "juda", JSON.stringify(fim2));
       check("console limpo após interações", errors.length === 0, errors.join(" | "));
     }
 
