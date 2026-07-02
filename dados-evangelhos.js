@@ -128,7 +128,7 @@ var ETAPAS = [
   {perna:"paixao", lugar:"tumulo", ref:"Mt 28:5-6", leitura:"Mt 28:1-10", titulo:"O túmulo vazio",
    nota:"'Não está aqui: ressuscitou.' No caminho de volta, Emaús (Lc 24:13-35) — cuja localização é tão debatida quanto o coração dos dois discípulos era lento."},
   {perna:"paixao", lugar:"oliveiras", ref:"Lc 24:50-51", leitura:"Lc 24:44-53", titulo:"A ascensão — e a promessa (→ Atos)", futura:true,
-   nota:"'Sereis minhas testemunhas… até os confins da terra' (At 1:8). A grande comissão (Mt 28:18-20) arma a ponte: o próximo mapa é o Mediterrâneo inteiro."}
+   nota:"'Sereis minhas testemunhas… até os confins da terra' (At 1:8). A grande comissão (Mt 28:18-20) arma a ponte. <a href='atos.html' style='color:#e9c46a'>Seguir até os confins — Atos e o Apocalipse →</a>"}
 ];
 
 /* a cronologia cruzando a fronteira a.C./d.C. */
