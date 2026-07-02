@@ -40,6 +40,7 @@ Os dados vivem fora do HTML, em [`dados.js`](dados.js), [`dados-patriarcas.js`](
 2. **Proveniência por afirmação** — nada é anônimo: cada identificação carrega fonte e confiança (cheio = atestado · tracejado = provável/debatido).
 3. **Cronologia plural** — TM, LXX e PS são camadas, nunca um número único; datas em *Anno Mundi*.
 4. **Acessibilidade** — WCAG 2.1 AA: operação completa por teclado (Tab/Enter/Esc/setas), leitor de tela, contraste verificado, formas além de cor, `prefers-reduced-motion`.
+5. **Dois registros de texto** — especificação (este README, PRs, prompts) e copy (o que o visitante lê) não se misturam: os textos das páginas seguem o [guia de voz](GUIA-DE-VOZ.md).
 
 O site é **HTML + JS puro, sem build e sem dependências em runtime** — abra e use (funciona até de `file://`). O repositório tem **CI**: um teste de fumaça com navegador real ([`tests/smoke.js`](tests/smoke.js), Playwright/Chromium) roda a cada PR e valida console limpo, as cronologias das três tradições, o parser do texto integral e as jornadas.
 
