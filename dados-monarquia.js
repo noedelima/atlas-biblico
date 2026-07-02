@@ -127,7 +127,7 @@ var ETAPAS = [
   {perna:"davi", lugar:"jerusalem", ref:"2Sm 5:9-10", leitura:"2Sm 5:6-12; 6:12-15", titulo:"A cidade de Davi",
    nota:"A fortaleza jebusita vira capital de todas as tribos — neutra, central, sua. E a arca sobe, dançando (2Sm 6)."},
   {perna:"davi", lugar:"jerusalem", ref:"2Sm 7:12-16", leitura:"2Sm 7:1-17", titulo:"“O teu trono será firme para sempre”", futura:true,
-   nota:"Davi quer construir uma casa para Deus; Deus promete uma casa a Davi. A aliança davídica é a ponte para Salomão, o Templo — e o Filho de Davi (Lc 1:32-33). → F6"}
+   nota:"Davi quer construir uma casa para Deus; Deus promete uma casa a Davi. A aliança davídica é a ponte para Salomão, o Templo — e o Filho de Davi (Lc 1:32-33). <a href='reis.html' style='color:#e9c46a'>Seguir Salomão e o reino →</a>"}
 ];
 
 /* a linhagem de Rute a Davi (Rt 4:18-22 · Mt 1:3-6) */

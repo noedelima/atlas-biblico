@@ -3,25 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Atlas Bíblico Interativo — F5: Rute, Samuel e a monarquia. Das espigas de Belém à cidade de Davi: a arca peregrina, Saul e a subida de Davi, com texto integral e proveniência por identificação.">
-<title>Rute · Samuel · a monarquia — F5</title>
+<meta name="description" content="Atlas Bíblico Interativo — F6: Salomão e o Templo, o reino dividido. Do ano 480 à queda de Jerusalém: 1–2 Reis com texto integral, o mapa dos dois reinos e as âncoras absolutas (a.C.) dos sincronismos assírios.">
+<title>Salomão e o Templo · o reino dividido — F6</title>
 <link rel="icon" href="assets/icone.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/icon-180.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Atlas Bíblico Interativo">
 <meta property="og:locale" content="pt_BR">
-<meta property="og:title" content="Rute · Samuel · a monarquia (F5)">
-<meta property="og:description" content="Das espigas de Belém à cidade de Davi: Rute, a arca peregrina, Saul e a promessa do trono eterno — com texto integral.">
-<meta property="og:url" content="https://noedelima.github.io/atlas-biblico/monarquia.html">
+<meta property="og:title" content="Salomão e o Templo · o reino dividido (F6)">
+<meta property="og:description" content="Do ano 480 à queda de Jerusalém: o Templo, os dois reinos, Elias e Eliseu — e as âncoras absolutas da cronologia (a.C.).">
+<meta property="og:url" content="https://noedelima.github.io/atlas-biblico/reis.html">
 <meta property="og:image" content="https://noedelima.github.io/atlas-biblico/assets/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<script src="dados-monarquia.js"></script>
+<script src="dados-reis.js"></script>
 <script src="texto/core.js"></script>
-<script src="texto/rute.js"></script>
-<script src="texto/1samuel.js"></script>
-<script src="texto/2samuel.js"></script>
+<script src="texto/1reis.js"></script>
+<script src="texto/2reis.js"></script>
 <style>
   /* ═══ DESIGN TOKENS · Atlas Bíblico Interativo · v1 · WCAG 2.1 AA ═══ */
   :root{
@@ -122,6 +121,17 @@
   .hit:focus-visible{outline:2px solid var(--halo); stroke:var(--halo); stroke-width:2.5}
   text{font-family:var(--sans)}
 
+  .reino{font-size:15px;font-style:italic;font-family:var(--serif);fill:#6b4f2a;paint-order:stroke;stroke:#f3f5ec;stroke-width:2.5px;pointer-events:none;letter-spacing:.22em}
+  .front{fill:none;stroke:#8a5f04;stroke-width:1.6;stroke-dasharray:7 5}
+  .maphead2{display:flex; align-items:center; gap:12px}
+  .maphead2 button{appearance:none; margin-left:auto; font:inherit; font-size:11px; letter-spacing:.05em; color:var(--muted); background:var(--field); border:1px solid var(--line-strong); border-radius:8px; padding:5px 11px; cursor:pointer; min-height:30px; text-transform:none}
+  .maphead2 button:hover{color:var(--ink)}
+  .maphead2 button[aria-pressed="true"]{color:var(--gold1); border-color:var(--gold2)}
+  .anc .axis text{fill:var(--muted); font-size:10.5px}
+  .anc .axis line{stroke:var(--line-strong)}
+  .anc .ev{stroke:#0e1218; stroke-width:.6}
+  .anc .evlbl{fill:var(--muted); font-size:9.5px}
+  .anc .evln{stroke:#66798e; stroke-width:.8; stroke-dasharray:2 2}
   .linh .lnode rect{fill:#1a2230; stroke:var(--line-strong); stroke-width:1.2}
   .linh .ln{fill:var(--ink); font-family:var(--serif); font-size:15px}
   .linh .ls{fill:var(--muted); font-size:10px}
@@ -140,17 +150,17 @@
 <body>
 <div class="wrap">
   <header>
-    <nav class="crumbs" aria-label="Navegação"><a href="./">← Atlas Bíblico Interativo</a> · <a href="conquista.html">Conquista e Juízes</a></nav>
-    <div class="kicker">Atlas Bíblico Interativo · F5 · Rute · Samuel · a monarquia · AA</div>
-    <h1>Rute, Samuel e a monarquia — de Belém à cidade de Davi</h1>
-    <p class="sub">Três fios que se trançam: <b>Rute</b> (a moabita que entra na linhagem do Messias), <b>Samuel e a arca</b> (de Siló a Mispa, com a arca peregrina) e <b>Saul e Davi</b> (do vale de Elá à cidade de Davi — e à promessa do trono eterno). Texto integral, mapa e as identificações com sua confiança.</p>
+    <nav class="crumbs" aria-label="Navegação"><a href="./">← Atlas Bíblico Interativo</a> · <a href="monarquia.html">a monarquia</a></nav>
+    <div class="kicker">Atlas Bíblico Interativo · F6 · Salomão · o reino dividido · AA</div>
+    <h1>Salomão e o Templo — e o reino que se partiu</h1>
+    <p class="sub">Três atos de 1–2 Reis: <b>Salomão</b> (do coração que ouve à glória enchendo a casa — e à queda), <b>o reino dividido</b> (Israel e Judá, Elias e Eliseu, a queda de Samaria) e <b>Judá até o exílio</b> (o cerco de 701, o livro achado, Megido, 586). É aqui que a cronologia do atlas <b>ancora em datas absolutas</b>, pelos sincronismos assírios e babilônicos.</p>
   </header>
 
   <div class="controls">
     <div class="seg" role="radiogroup" aria-label="Fio narrativo">
-      <button data-p="rute"   role="radio" aria-checked="true"  tabindex="0"><span class="dot" style="background:#e9c46a" aria-hidden="true"></span>Rute</button>
-      <button data-p="samuel" role="radio" aria-checked="false" tabindex="-1"><span class="dot" style="background:#7d8ef2" aria-hidden="true"></span>Samuel e a arca</button>
-      <button data-p="davi"   role="radio" aria-checked="false" tabindex="-1"><span class="dot" style="background:#2ea87d" aria-hidden="true"></span>Saul e Davi</button>
+      <button data-p="salomao"  role="radio" aria-checked="true"  tabindex="0"><span class="dot" style="background:#e9c46a" aria-hidden="true"></span>Salomão</button>
+      <button data-p="dividido" role="radio" aria-checked="false" tabindex="-1"><span class="dot" style="background:#7d8ef2" aria-hidden="true"></span>O reino dividido</button>
+      <button data-p="juda"     role="radio" aria-checked="false" tabindex="-1"><span class="dot" style="background:#2ea87d" aria-hidden="true"></span>Judá até o exílio</button>
     </div>
     <div class="insight" id="insight" aria-live="polite"></div>
   </div>
@@ -163,32 +173,35 @@
 
     <section aria-label="Mapa e a linhagem">
       <div class="mapcard">
-        <div class="maphead">De Moabe ao mar — Rt · 1–2Sm</div>
-        <div class="scroll">
-          <svg id="mapa" class="map" viewBox="0 0 1000 560" role="group" aria-label="Mapa de Canaã com os lugares de Rute, Samuel, Saul e Davi. Cada lugar é um botão que leva à etapa correspondente."></svg>
+        <div class="maphead maphead2">Os dois reinos — 1–2Rs
+          <button id="btnreinos" type="button" aria-pressed="false">◈ mostrar Israel e Judá</button>
         </div>
-        <p class="viewnote"><b>● cheio</b> = identificação atestada · <b>○ tracejado</b> = provável/debatida · cor = fio narrativo · trecho pontilhado = etapa futura (a promessa).</p>
+        <div class="scroll">
+          <svg id="mapa" class="map" viewBox="0 0 1000 560" role="group" aria-label="Mapa de Canaã com os lugares de Primeiro e Segundo Reis. Uma camada opcional mostra os dois reinos, Israel e Judá; uma seta pontilhada aponta o exílio para a Babilônia."></svg>
+        </div>
+        <p class="viewnote"><b>● cheio</b> = identificação atestada · <b>○ tracejado</b> = provável/debatida · cor = ato · seta pontilhada = o exílio (→ Babilônia).</p>
+        <p class="viewnote" id="reinosnote" hidden></p>
       </div>
-      <div class="mapcard linh">
-        <div class="maphead">A linhagem · Rt 4:18-22 → Mt 1</div>
+      <div class="mapcard anc">
+        <div class="maphead">As âncoras absolutas · a.C.</div>
         <div class="scroll">
-          <svg id="linhagem" class="map" viewBox="0 0 1000 150" role="img" aria-label="A linhagem de Rute a Davi: Salmom e Raabe, Boaz e Rute, Obede, Jessé, Davi."></svg>
+          <svg id="ancoras" class="map" viewBox="0 0 1000 175" role="img" aria-label="Linha do tempo em anos antes de Cristo: a divisão do reino por volta de 931, Qarqar em 853, Jeú no obelisco negro em 841, a queda de Samaria em 722, o cerco de Senaqueribe em 701, o livro achado em 622 e a queda de Jerusalém em 586."></svg>
         </div>
-        <p class="viewnote" id="linhnote"></p>
+        <p class="viewnote" id="ancnote"></p>
       </div>
     </section>
   </div>
 
   <footer>
-    <b>Proveniência:</b> texto integral <b>Bíblia Livre</b> (BLIVRE, CC-BY 3.0 BR) · identificações com confiança por sítio · crux textual de 1Sm 13:1 declarado (reinado de Saul via At 13:21) · basemap <b>Natural Earth</b> (domínio público).
-    <br><b>Veio de:</b> <a href="conquista.html" style="color:var(--gold1)">Conquista e Juízes</a> — “não havia rei em Israel”… até agora. <b>Continue a leitura:</b> <a href="reis.html" style="color:var(--gold1)">Salomão e o Templo · o reino dividido (F6) →</a>
+    <b>Proveniência:</b> texto integral <b>Bíblia Livre</b> (BLIVRE, CC-BY 3.0 BR) · identificações com confiança por sítio · âncoras absolutas pelos sincronismos assírios/babilônicos · a âncora interna de 1Rs 6:1 (ano 480) declarada como debatida · basemap <b>Natural Earth</b> (domínio público).
+    <br><b>Veio de:</b> <a href="monarquia.html" style="color:var(--gold1)">Rute · Samuel · a monarquia</a> — a promessa de 2Sm 7 vira pedra e cedro. <b>Roadmap:</b> F7 Exílio e retorno.
   </footer>
 </div>
 
 <script>
 (function(){
   "use strict";
-  var M=window.MONARQUIA, T=window.TEXTO;
+  var M=window.REIS, T=window.TEXTO;
   var NS="http://www.w3.org/2000/svg";
   function el(t,a){var e=document.createElementNS(NS,t);if(a)for(var k in a)e.setAttribute(k,a[k]);return e;}
   var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -243,6 +256,37 @@
     sea(35.95,32.85,"Genesaré");
   })();
 
+  /* camada dos dois reinos (opcional) */
+  var reinosG=el("g"); reinosG.style.display="none"; mapa.appendChild(reinosG);
+  (function(){
+    var d="M"+M.REINOS.fronteira.map(function(p){return xp(p[0]).toFixed(1)+","+yp(p[1]).toFixed(1);}).join(" L");
+    reinosG.appendChild(el("path",{class:"front",d:d}));
+    M.REINOS.rotulos.forEach(function(r){
+      var t=el("text",{class:"reino",x:xp(r.lon),y:yp(r.lat),"text-anchor":"middle"});
+      t.textContent=r.n; reinosG.appendChild(t);
+    });
+  })();
+  var reinosOn=false;
+  function setReinos(on){
+    reinosOn=on;
+    reinosG.style.display=on?"":"none";
+    var b=document.getElementById("btnreinos");
+    b.setAttribute("aria-pressed",on?"true":"false");
+    var note=document.getElementById("reinosnote");
+    note.hidden=!on;
+    if(on){var a=M.af(M.REINOS.af);
+      note.innerHTML="<span class='confchip conf-der'>derivado</span><b>"+M.FONTES[a.fonte].nome+"</b> — "+a.txt;}
+  }
+  document.getElementById("btnreinos").addEventListener("click",function(){setReinos(!reinosOn);});
+
+  /* a seta do exílio: de Jerusalém para além da borda (→ Babilônia) */
+  var exilio=el("g");
+  var exd="M"+xp(35.23)+","+yp(31.77)+" L"+xp(35.9)+","+yp(32.1)+" L"+xp(37.2)+","+yp(32.6)+" L"+xp(38.6)+","+yp(33.0);
+  var exPath=el("path",{d:exd,fill:"none",stroke:"#8a5f04","stroke-width":2,"stroke-dasharray":"3 6","stroke-linecap":"round"});
+  exilio.appendChild(exPath);
+  var exLbl=el("text",{class:"sea",x:xp(37.0),y:yp(32.75)}); exLbl.textContent="→ Babilônia"; exilio.appendChild(exLbl);
+  exilio.setAttribute("opacity",".35"); mapa.appendChild(exilio);
+
   var rotasG=el("g"); mapa.appendChild(rotasG);
   var nodesG=el("g"); mapa.appendChild(nodesG);
   var halo=el("circle",{r:11,fill:"none",stroke:"#8a5f04","stroke-width":2.6,"pointer-events":"none"});
@@ -266,7 +310,7 @@
     pts[l.id]={g:g,shp:shp,hit:hit,x:xp(l.lon),y:yp(l.lat)};
   });
 
-  var cur=0, curPerna="rute";
+  var cur=0, curPerna="salomao";
 
   function idxGlobais(pernaId){
     var out=[]; M.ETAPAS.forEach(function(et,i){if(et.perna===pernaId)out.push(i);}); return out;
@@ -316,6 +360,7 @@
     var o=pts[M.ETAPAS[cur].lugar];
     halo.style.display=""; halo.setAttribute("cx",o.x); halo.setAttribute("cy",o.y);
     halo.setAttribute("stroke",M.perna(curPerna).cor);
+    exilio.setAttribute("opacity",M.ETAPAS[cur].exilio?"1":".35");
   }
 
   /* leitura integral */
@@ -346,7 +391,7 @@
       var head=document.createElement("button");
       head.className="phead"; head.setAttribute("aria-expanded","false");
       head.innerHTML="<span class='pref'>Etapa "+(gi+1)+" · "+et.ref+"</span>"+
-        "<span class='ptit'>"+et.titulo+(et.futura?" <span style='font-size:11px;color:var(--muted)'>· a promessa adiante</span>":"")+"</span>"+
+        "<span class='ptit'>"+et.titulo+(et.futura?" <span style='font-size:11px;color:var(--muted)'>· rumo ao exílio</span>":"")+"</span>"+
         "<span class='plug'>em <b>"+l.nome+"</b> — "+l.idl+"</span>";
       head.addEventListener("click",function(){selectEtapa(gi,false);});
       art.appendChild(head);
@@ -382,7 +427,7 @@
   }
 
   var btns=[].slice.call(document.querySelectorAll(".seg button"));
-  var ORDER=["rute","samuel","davi"];
+  var ORDER=["salomao","dividido","juda"];
   function setActive(id){btns.forEach(function(b){
     var on=b.dataset.p===id;
     b.setAttribute("aria-checked",on?"true":"false");
@@ -403,6 +448,7 @@
       var art=spine.querySelector("[data-gi='"+gi+"']");
       if(art) art.scrollIntoView({behavior:reduce?"auto":"smooth",block:"nearest"});
     }
+    if(M.ETAPAS[gi].ref==="1Rs 12:16"&&!reinosOn) setReinos(true);
     if(history.replaceState) history.replaceState(null,"","#e"+(gi+1));
     setInsight(); paintMapa();
   }
@@ -433,25 +479,33 @@
     });
   });
 
-  /* a linhagem de Rute a Davi */
+  /* as âncoras absolutas (a.C.) */
   (function(){
-    var svg=document.getElementById("linhagem");
-    var n=M.LINHAGEM.length, BW=150, BH=56, GAP=(1000-80-n*BW)/(n-1), Y=70;
-    M.LINHAGEM.forEach(function(c,i){
-      var x=40+i*(BW+GAP);
-      var g=el("g",{class:"lnode"});
-      g.appendChild(el("rect",{x:x,y:Y-BH/2,width:BW,height:BH,rx:11}));
-      var t1=el("text",{class:"ln",x:x+BW/2,y:Y-4,"text-anchor":"middle"}); t1.textContent=c.n;
-      var t2=el("text",{class:"ls",x:x+BW/2,y:Y+16,"text-anchor":"middle"}); t2.textContent=c.s;
-      g.appendChild(t1); g.appendChild(t2); svg.appendChild(g);
-      if(i<n-1) svg.appendChild(el("path",{class:"larr",d:"M"+(x+BW+3)+","+Y+" H"+(x+BW+GAP-8)}));
+    var svg=document.getElementById("ancoras"), A=M.ANCORAS;
+    var X0=70, X1=950, Y=88;
+    function x(t){return X0+(A.min-t)/(A.min-A.max)*(X1-X0);}
+    var ax=el("g",{class:"axis"});
+    ax.appendChild(el("line",{x1:X0,y1:Y+40,x2:X1,y2:Y+40}));
+    for(var a=A.min;a>=A.max;a-=50){
+      ax.appendChild(el("line",{x1:x(a),y1:Y+40,x2:x(a),y2:Y+45}));
+      if(a%100===0){var t=el("text",{x:x(a),y:Y+58,"text-anchor":"middle"}); t.textContent=a; ax.appendChild(t);}
+    }
+    var t2=el("text",{class:"evlbl",x:X1,y:Y+72,"text-anchor":"end"}); t2.textContent="anos a.C. →"; ax.appendChild(t2);
+    svg.appendChild(ax);
+    svg.appendChild(el("line",{x1:x(931),y1:Y,x2:x(586),y2:Y,stroke:"#66798e","stroke-width":2}));
+    A.eventos.forEach(function(ev,k){
+      var ex=x(ev.t), up=k%2===0, ly=up?Y-26:Y+22;
+      svg.appendChild(el("line",{class:"evln",x1:ex,y1:Y+(up?-7:7),x2:ex,y2:ly+(up?4:-9)}));
+      var att=ev.conf==="att";
+      var d=el("rect",{class:"ev",x:ex-4,y:Y-4,width:8,height:8,transform:"rotate(45 "+ex+" "+Y+")",
+                       fill:att?"#f4e2b0":"#0e1218",stroke:att?"#0e1218":"#e9c46a","stroke-width":att?.6:1.6});
+      svg.appendChild(d);
+      var t=el("text",{class:"evlbl",x:ex,y:ly+(up?0:6),"text-anchor":"middle"}); t.textContent=ev.t+" · "+ev.txt; svg.appendChild(t);
     });
-    var t=el("text",{class:"lt",x:500,y:126,"text-anchor":"middle"});
-    t.textContent="…e de Davi, pela mesma linhagem, o Cristo (Mt 1:6,16)"; svg.appendChild(t);
-    var a=M.af("a-linhagem"), r=M.af("a-reinados");
-    document.getElementById("linhnote").innerHTML=
+    var a=M.af(A.af), b=M.af("a-1rs61");
+    document.getElementById("ancnote").innerHTML=
       "<span class='confchip conf-att'>atestado</span><b>"+M.FONTES[a.fonte].nome+"</b> — "+a.txt+
-      "<br><span class='confchip conf-der'>derivado</span><b>"+M.FONTES[r.fonte].nome+"</b> — "+r.txt;
+      "<br><span class='confchip conf-deb'>debatido</span><b>"+M.FONTES[b.fonte].nome+"</b> — "+b.txt;
   })();
 
   /* init + deep link (#eN) */
