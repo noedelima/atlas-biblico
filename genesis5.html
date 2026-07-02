@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Gênesis 5 — Longevidades dos Patriarcas (protótipo v03 · AA)</title>
+<title>Gênesis 5 — as longevidades dos Patriarcas</title>
 <link rel="icon" href="assets/icone.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/icon-180.png">
 <meta name="theme-color" content="#0e1218">
@@ -162,7 +162,7 @@
 <div class="wrap">
   <header>
     <nav class="crumbs" aria-label="Navegação"><a href="./">← Atlas Bíblico Interativo</a></nav>
-  <div class="kicker">Atlas Bíblico Interativo · módulo 1 · protótipo v03 · AA</div>
+  <div class="kicker">Atlas Bíblico Interativo · Estudo · Gênesis 5</div>
     <h1>Gênesis 5 — As longevidades dos patriarcas antediluvianos</h1>
     <p class="sub">Cada barra é uma vida em <i>Anno Mundi</i> (anos desde a Criação). O losango marca a idade em que o patriarca gerou o filho citado. Troque a tradição textual e veja a cronologia se reorganizar.</p>
   </header>
@@ -407,7 +407,7 @@
     var vt="gerou aos <b>"+num(d.beget)+"</b>, viveu <b>"+(d.special?365:num(d.total))+"</b> — nesta tradição ("+COMP[curKey].label+")";
     document.getElementById("pvar").innerHTML=vt+(TXNOTE[i]?("<br><br>"+TXNOTE[i]):"");
     document.getElementById("ptext").textContent=TX[i]||"—";
-    document.getElementById("psrc").innerHTML="<span class='tag'>registro: texto bíblico</span> Almeida (domínio público) · transcrição provisória — versão de estudo (Jerusalém) entra como overlay privado.";
+    document.getElementById("psrc").innerHTML="<span class='tag'>registro: texto bíblico</span> Almeida (domínio público).";
   }
   function cell(k,v){return "<div><div class='k'>"+k+"</div><div class='v'>"+v+"</div></div>";}
   function chip(lead,_,idx,name){var c=document.createElement("button"); c.type="button"; c.className="chip"; c.innerHTML=lead+" <span>"+name+"</span>";
