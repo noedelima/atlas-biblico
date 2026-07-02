@@ -32,7 +32,7 @@ Os dados vivem fora do HTML, em [`dados.js`](dados.js), [`dados-patriarcas.js`](
 | Módulo | Página | O que mostra |
 |---|---|---|
 | 1 · Gênesis 5 | [`genesis5.html`](https://noedelima.github.io/atlas-biblico/genesis5.html) | Longevidades dos patriarcas antediluvianos em *Anno Mundi*, com as três tradições textuais como camadas e os *cruxes* clássicos anotados |
-| 2 · Gênesis 10 | [`tabua-nacoes.html`](https://noedelima.github.io/atlas-biblico/tabua-nacoes.html) | A Tábua das Nações (~29 dos 70 povos) sobre mapa físico do mundo antigo; controle de tempo desliza da leitura de Gênesis à atestação na Idade do Ferro |
+| **A Tábua das Nações** | [`tabua-nacoes.html`](https://noedelima.github.io/atlas-biblico/tabua-nacoes.html) | **40 povos rastreados por cinco períodos** — a dispersão (Gn 10–11), os patriarcas, os reinos e os profetas, os impérios, e o **horizonte profético**. Cada povo tem sua **evolução de nomenclatura** (Gômer→cimérios, Madai→Média→Medo-Pérsia, Quitim→Chipre→Roma…), migração no mapa e **referências por período clicáveis na biblioteca**; o horizonte marca por cor o papel de cada nação nas profecias abertas (coalizão de Gogue · os que questionam · promessas de bênção · símbolos), com os debates (Rôs, Magogue) declarados. Inclui os povos-irmãos: Ismael, Midiã, Edom, Moabe, Amom, Amaleque. |
 
 ## Princípios
 

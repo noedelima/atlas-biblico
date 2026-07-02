@@ -447,6 +447,34 @@ function check(name, ok, extra) {
       check("console limpo após interações", errors.length === 0, errors.join(" | "));
     }
 
+    if (f === "tabua-nacoes.html") {
+      const dados = await page.evaluate(() => ({
+        povos: window.NACOES.POVOS.length,
+        periodos: window.NACOES.PERIODOS.length,
+        comHorizonte: window.NACOES.POVOS.filter((p) => p.per.horizonte).length,
+        quitimRoma: window.NACOES.povo("quitim").per.imperios.nome.includes("Roma"),
+        madaiMedia: window.NACOES.povo("madai").per.reinos.nome === "Média"
+      }));
+      check("40 povos em 5 períodos", dados.povos === 40 && dados.periodos === 5,
+        dados.povos + "/" + dados.periodos);
+      check("povos com horizonte profético", dados.comHorizonte >= 18, dados.comHorizonte);
+      check("nomenclatura evolui (Quitim→Roma, Madai→Média)", dados.quitimRoma && dados.madaiMedia);
+      await page.evaluate(() => { location.hash = "#horizonte"; });
+      await page.waitForTimeout(300);
+      const rings = await page.$$eval("#nodes .papel-ring", (r) => r.length);
+      check("anéis de papel no horizonte", rings >= 15, rings);
+      await page.evaluate(() => {
+        const hits = [...document.querySelectorAll(".hit")];
+        const q = hits.find((h) => h.getAttribute("aria-label").includes("Magogue"));
+        q.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      });
+      await page.waitForTimeout(250);
+      const refs = await page.$$eval("#pevo .evorefs a", (as) => as.map((a) => a.getAttribute("href")));
+      check("card de Magogue com refs → biblioteca", refs.length >= 4 && refs.every((h) => h.startsWith("biblioteca.html#")),
+        refs.join(","));
+      check("console limpo após interações", errors.length === 0, errors.join(" | "));
+    }
+
     const og = await page.$$eval('meta[property="og:title"]', (m) => m.length);
     check("meta Open Graph presente", og === 1);
     const man = await page.$$eval('link[rel="manifest"]', (m) => m.length);
