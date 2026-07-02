@@ -229,7 +229,10 @@
   /* o silêncio, adiante */
   var sil=el("text",{class:"tick",x:B1,y:YP+2,"text-anchor":"start"}); sil.textContent="→"; svg.appendChild(sil);
   var sil2=el("text",{class:"proflbl",x:B1-2,y:YP+64,"text-anchor":"end","font-style":"italic"});
-  sil2.textContent="…e ~400 anos de silêncio, até o Jordão (Mt 3)"; svg.appendChild(sil2);
+  sil2.textContent="…e ~400 anos sem profeta, até o Jordão (Mt 3) —"; svg.appendChild(sil2);
+  var mac=el("a",{href:"biblioteca.html#1Mc.2",class:"era",role:"link","aria-label":"Os Macabeus — abrir 1 Macabeus 2 na biblioteca"});
+  var mact=el("text",{class:"proflbl",x:B1-2,y:YP+78,"text-anchor":"end",fill:"#9fc6ea"});
+  mact.textContent="mas não mudos: os Macabeus (Modin, 167 a.C.) ⇢"; mac.appendChild(mact); svg.appendChild(mac);
 
   /* …e o Novo Testamento */
   var YN=418;
