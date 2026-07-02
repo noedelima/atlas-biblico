@@ -7,6 +7,9 @@
 <title>Atos · as viagens · o Apocalipse — F9</title>
 <link rel="icon" href="assets/icone.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/icon-180.png">
+<meta name="theme-color" content="#0e1218">
+<link rel="manifest" href="manifest.webmanifest">
+<script>if("serviceWorker" in navigator&&location.protocol==="https:")addEventListener("load",function(){navigator.serviceWorker.register("sw.js")});</script>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Atlas Bíblico Interativo">
 <meta property="og:locale" content="pt_BR">
@@ -81,6 +84,7 @@
   .pnota{color:var(--muted); font-size:12.5px; margin:0 0 10px}
   .ident{font-size:12px; color:var(--muted); background:var(--field); border:1px solid var(--line); border-radius:9px; padding:8px 10px; line-height:1.55}
   .ident b{color:#cfe0ef; font-weight:600}
+  .ident a{color:var(--gold1)}
   .confchip{display:inline-block; font-size:10px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; border-radius:5px; padding:1px 7px; margin-right:6px}
   .conf-att{background:#1d3326; color:#7ee0b0}
   .conf-prob{background:#3a3322; color:#e9c46a}
@@ -384,7 +388,8 @@
       if(et.nota) h+="<p class='pnota'>"+et.nota+"</p>";
       h+=leituraHtml(et.leitura||et.ref);
       var a=X.af(l.af);
-      h+="<div class='ident'>"+confChip(l.conf)+"<b>"+X.FONTES[a.fonte].nome+"</b> — "+a.txt+"</div>";
+      h+="<div class='ident'>"+confChip(l.conf)+"<b>"+X.FONTES[a.fonte].nome+"</b> — "+a.txt+
+         (l.pl?" · <a href='https://pleiades.stoa.org/places/"+l.pl+"' target='_blank' rel='noopener'>Pleiades "+l.pl+" ↗</a>":"")+"</div>";
       body.innerHTML=h;
       var nav=document.createElement("div"); nav.className="pnav";
       var bPrev=document.createElement("button"); bPrev.type="button"; bPrev.className="chip"; bPrev.textContent="◂ etapa anterior";

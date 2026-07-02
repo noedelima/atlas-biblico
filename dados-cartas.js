@@ -51,15 +51,15 @@ var AF = [
 
 /* lugares — ldx/ldy: rótulo no mapa */
 var LUG = [
-  {id:"roma",        nome:"Roma",        lon:12.49, lat:41.89, conf:"att",  idl:"para onde Romanos foi — e de onde a prisão escreve", af:"a-roma-cartas", ldx:12, ldy:-2},
-  {id:"corinto",     nome:"Corinto",     lon:22.93, lat:37.94, conf:"att",  idl:"de onde Romanos partiu", af:"a-corinto-cartas", ldx:-58, ldy:-4},
-  {id:"tessalonica", nome:"Tessalônica", lon:22.94, lat:40.64, conf:"att",  idl:"a via Egnácia — a carta mais antiga", af:"a-tessalonica", ldx:-84, ldy:-4},
-  {id:"filipos",     nome:"Filipos",     lon:24.29, lat:41.01, conf:"att",  idl:"a igreja da alegria", af:"a-prisao", ldx:8, ldy:-6},
+  {id:"roma",        nome:"Roma",        lon:12.49, lat:41.89, pl:423025, conf:"att",  idl:"para onde Romanos foi — e de onde a prisão escreve", af:"a-roma-cartas", ldx:12, ldy:-2},
+  {id:"corinto",     nome:"Corinto",     lon:22.88, lat:37.91, pl:570182, conf:"att",  idl:"de onde Romanos partiu", af:"a-corinto-cartas", ldx:-58, ldy:-4},
+  {id:"tessalonica", nome:"Tessalônica", lon:22.95, lat:40.63, pl:491741, conf:"att",  idl:"a via Egnácia — a carta mais antiga", af:"a-tessalonica", ldx:-84, ldy:-4},
+  {id:"filipos",     nome:"Filipos",     lon:24.28, lat:41.01, pl:501482, conf:"att",  idl:"a igreja da alegria", af:"a-prisao", ldx:8, ldy:-6},
   {id:"galacia",     nome:"Galácia",     lon:32.20, lat:39.20, conf:"deb",  idl:"as igrejas da região — norte × sul", af:"a-galacia", ldx:10, ldy:2},
-  {id:"efeso",       nome:"Éfeso",       lon:27.34, lat:37.94, conf:"att",  idl:"a cidade mais endereçada do NT", af:"a-efeso-cartas", ldx:10, ldy:10},
-  {id:"colossos",    nome:"Colossos",    lon:29.26, lat:37.79, conf:"att",  idl:"no vale do Lico — nunca visitada (Cl 2:1)", af:"a-colossos", ldx:10, ldy:6},
-  {id:"creta",       nome:"Creta",       lon:24.95, lat:35.20, conf:"att",  idl:"a ilha de Tito", af:"a-creta", ldx:-8, ldy:16},
-  {id:"jerusalem",   nome:"Jerusalém",   lon:35.23, lat:31.77, conf:"att",  idl:"Tiago — 'às doze tribos da Dispersão'", af:"a-tiago", ldx:12, ldy:6}
+  {id:"efeso",       nome:"Éfeso",       lon:27.34, lat:37.94, pl:599612, conf:"att",  idl:"a cidade mais endereçada do NT", af:"a-efeso-cartas", ldx:10, ldy:10},
+  {id:"colossos",    nome:"Colossos",    lon:29.26, lat:37.79, pl:638811, conf:"att",  idl:"no vale do Lico — nunca visitada (Cl 2:1)", af:"a-colossos", ldx:10, ldy:6},
+  {id:"creta",       nome:"Creta",       lon:25.07, lat:35.21, pl:589748, conf:"att",  idl:"a ilha de Tito", af:"a-creta", ldx:-8, ldy:16},
+  {id:"jerusalem",   nome:"Jerusalém",   lon:35.23, lat:31.77, pl:687928, conf:"att",  idl:"Tiago — 'às doze tribos da Dispersão'", af:"a-tiago", ldx:12, ldy:6}
 ];
 
 /* a Dispersão (1Pe 1:1) — camada: as cinco províncias */

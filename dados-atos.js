@@ -53,19 +53,19 @@ var AF = [
 
 /* lugares — ldx/ldy: rótulo no mapa */
 var LUG = [
-  {id:"jerusalem", nome:"Jerusalém",  lon:35.23, lat:31.77, conf:"att",  idl:"Pentecostes · o concílio", af:"a-pentecostes", ldx:12, ldy:6},
-  {id:"samaria",   nome:"Samaria",    lon:35.20, lat:32.28, conf:"att",  idl:"a primeira fronteira", af:"a-samaria-at", ldx:-58, ldy:-4},
-  {id:"damasco",   nome:"Damasco",    lon:36.31, lat:33.51, conf:"att",  idl:"a rua Direita", af:"a-damasco", ldx:12, ldy:-2},
-  {id:"cesareia",  nome:"Cesareia",   lon:34.89, lat:32.50, conf:"att",  idl:"o porto — a pedra de Pilatos", af:"a-cesareia-at", ldx:-64, ldy:-6},
-  {id:"antioquia", nome:"Antioquia",  lon:36.16, lat:36.20, conf:"att",  idl:"onde 'cristãos' nasceu (At 11:26)", af:"a-antioquia", ldx:12, ldy:-2},
-  {id:"listra",    nome:"Listra",     lon:32.45, lat:37.58, conf:"prob", idl:"Licaônia — 'deuses ou homens?'", af:"a-listra", ldy:-8},
-  {id:"filipos",   nome:"Filipos",    lon:24.29, lat:41.01, conf:"att",  idl:"a porta da Europa", af:"a-filipos", ldy:-8},
-  {id:"atenas",    nome:"Atenas",     lon:23.73, lat:37.98, conf:"att",  idl:"o Areópago", af:"a-atenas", ldx:10, ldy:12},
-  {id:"corinto",   nome:"Corinto",    lon:22.93, lat:37.94, conf:"att",  idl:"o bema — e a âncora de Gálio", af:"a-corinto", ldx:-58, ldy:-4},
-  {id:"efeso",     nome:"Éfeso",      lon:27.34, lat:37.94, conf:"att",  idl:"o teatro de At 19", af:"a-efeso-at", ldx:10, ldy:10},
-  {id:"malta",     nome:"Malta",      lon:14.40, lat:35.90, conf:"prob", idl:"Melita — o naufrágio", af:"a-malta", ldy:-8},
-  {id:"roma",      nome:"Roma",       lon:12.49, lat:41.89, conf:"att",  idl:"'sem impedimento algum'", af:"a-roma", ldx:12, ldy:-2},
-  {id:"patmos",    nome:"Patmos",     lon:26.55, lat:37.31, conf:"att",  idl:"a ilha da visão", af:"a-patmos", ldx:-52, ldy:10}
+  {id:"jerusalem", nome:"Jerusalém",  lon:35.23, lat:31.77, pl:687928, conf:"att",  idl:"Pentecostes · o concílio", af:"a-pentecostes", ldx:12, ldy:6},
+  {id:"samaria",   nome:"Samaria",    lon:35.19, lat:32.28, pl:678370, conf:"att",  idl:"a primeira fronteira", af:"a-samaria-at", ldx:-58, ldy:-4},
+  {id:"damasco",   nome:"Damasco",    lon:36.31, lat:33.51, pl:678106, conf:"att",  idl:"a rua Direita", af:"a-damasco", ldx:12, ldy:-2},
+  {id:"cesareia",  nome:"Cesareia",   lon:34.89, lat:32.50, pl:678401, conf:"att",  idl:"o porto — a pedra de Pilatos", af:"a-cesareia-at", ldx:-64, ldy:-6},
+  {id:"antioquia", nome:"Antioquia",  lon:36.18, lat:36.22, pl:658381, conf:"att",  idl:"onde 'cristãos' nasceu (At 11:26)", af:"a-antioquia", ldx:12, ldy:-2},
+  {id:"listra",    nome:"Listra",     lon:32.34, lat:37.59, pl:648699, conf:"prob", idl:"Licaônia — 'deuses ou homens?'", af:"a-listra", ldy:-8},
+  {id:"filipos",   nome:"Filipos",    lon:24.28, lat:41.01, pl:501482, conf:"att",  idl:"a porta da Europa", af:"a-filipos", ldy:-8},
+  {id:"atenas",    nome:"Atenas",     lon:23.72, lat:37.97, pl:579885, conf:"att",  idl:"o Areópago", af:"a-atenas", ldx:10, ldy:12},
+  {id:"corinto",   nome:"Corinto",    lon:22.88, lat:37.91, pl:570182, conf:"att",  idl:"o bema — e a âncora de Gálio", af:"a-corinto", ldx:-58, ldy:-4},
+  {id:"efeso",     nome:"Éfeso",      lon:27.34, lat:37.94, pl:599612, conf:"att",  idl:"o teatro de At 19", af:"a-efeso-at", ldx:10, ldy:10},
+  {id:"malta",     nome:"Malta",      lon:14.41, lat:35.90, pl:462311, conf:"prob", idl:"Melita — o naufrágio", af:"a-malta", ldy:-8},
+  {id:"roma",      nome:"Roma",       lon:12.49, lat:41.89, pl:423025, conf:"att",  idl:"'sem impedimento algum'", af:"a-roma", ldx:12, ldy:-2},
+  {id:"patmos",    nome:"Patmos",     lon:26.56, lat:37.33, pl:599872, conf:"att",  idl:"a ilha da visão", af:"a-patmos", ldx:-52, ldy:10}
 ];
 
 /* as sete igrejas (Ap 2–3) — camada */

@@ -8,7 +8,7 @@ const { chromium } = require("playwright");
 
 const ROOT = path.resolve(__dirname, "..");
 const url = (f) => "file://" + path.join(ROOT, f);
-const PAGES = ["index.html", "atlas.html", "patriarcas.html", "exodo.html", "conquista.html", "monarquia.html", "reis.html", "exilio.html", "panorama.html", "evangelhos.html", "atos.html", "cartas.html", "escritos.html", "genesis5.html", "tabua-nacoes.html"];
+const PAGES = ["index.html", "atlas.html", "patriarcas.html", "exodo.html", "conquista.html", "monarquia.html", "reis.html", "exilio.html", "panorama.html", "evangelhos.html", "atos.html", "cartas.html", "escritos.html", "profetas.html", "biblioteca.html", "genesis5.html", "tabua-nacoes.html"];
 
 let failures = 0;
 function check(name, ok, extra) {
@@ -33,7 +33,7 @@ function check(name, ok, extra) {
 
     if (f === "index.html") {
       const links = await page.$$eval(".mods a.mod", (as) => as.map((a) => a.getAttribute("href")));
-      check("14 módulos na landing", links.length === 14, links.join(","));
+      check("16 módulos na landing", links.length === 16, links.join(","));
       const logo = await page.$$eval('img[src="assets/logo.svg"]', (m) => m.length);
       check("logo na landing", logo === 1);
     }
@@ -240,7 +240,7 @@ function check(name, ok, extra) {
       const cartasBand = await page.$$eval('#pan a.era[href="cartas.html"]', (as) => as.length);
       check("faixa das cartas no panorama", cartasBand === 1, cartasBand);
       const caps = await page.$$eval(".caps a", (as) => as.length);
-      check("navegação em capítulos (13 links)", caps === 13, caps);
+      check("navegação em capítulos (15 links)", caps === 15, caps);
     }
 
     if (f === "evangelhos.html") {
@@ -338,6 +338,65 @@ function check(name, ok, extra) {
       check("console limpo após interações", errors.length === 0, errors.join(" | "));
     }
 
+    if (f === "profetas.html") {
+      const dados = await page.evaluate(() => ({
+        etapas: window.PROFETAS.ETAPAS.length,
+        porPerna: window.PROFETAS.PERNAS.map((p) => window.PROFETAS.ETAPAS.filter((e) => e.perna === p.id).length),
+        vozes: window.PROFETAS.VOZES.length,
+        nLivros: window.TEXTO.livros().length,
+        isCaps: Object.keys(window.TEXTO.livro("Is").caps).length,
+        obadias: (window.TEXTO.passagem("Ob 1") || []).reduce((s, g) => s + g.versos.length, 0),
+        fe: (window.TEXTO.passagem("Hc 2:4") || [])[0]?.versos[0]?.t.includes("justo viverá"),
+        aguas: (window.TEXTO.passagem("Am 5:24") || [])[0]?.versos[0]?.t.includes("águas"),
+        semData: window.PROFETAS.VOZES.filter((v) => v.ini === null).length
+      }));
+      check("13 etapas em 3 grupos (3·7·3)", dados.etapas === 13 && dados.porPerna.join(",") === "3,7,3",
+        JSON.stringify(dados.porPerna));
+      check("13 vozes · 13 livros carregados", dados.vozes === 13 && dados.nLivros === 13,
+        dados.vozes + "/" + dados.nLivros);
+      check("Isaías completo (66 capítulos)", dados.isCaps === 66, dados.isCaps);
+      check("texto: Ob 1 = 21 versos (o livro mais curto do AT)", dados.obadias === 21, dados.obadias);
+      check("texto: Hc 2:4 — 'o justo viverá'", dados.fe === true);
+      check("texto: Am 5:24 — 'como as águas'", dados.aguas === true);
+      check("Joel declarado sem data", dados.semData === 1, dados.semData);
+      const rows = await page.$$eval("#vozes .vozrow", (r) => r.length);
+      check("13 vozes clicáveis na linha", rows === 13, rows);
+      await page.evaluate(() => { location.hash = "#e13"; });
+      await page.waitForTimeout(300);
+      const fim = await page.evaluate(() => ({
+        on: document.querySelector('[data-gi="12"]')?.dataset.on,
+        perna: document.querySelector('.seg button[aria-checked="true"]')?.dataset.p
+      }));
+      check("deep link #e13 → Joel (do retorno)", fim.on === "1" && fim.perna === "retorno", JSON.stringify(fim));
+      check("console limpo após interações", errors.length === 0, errors.join(" | "));
+    }
+
+    if (f === "biblioteca.html") {
+      const manifesto = await page.evaluate(() => ({
+        livros: window.BIBLIOTECA.length,
+        caps: window.BIBLIOTECA.reduce((s, l) => s + l.c, 0),
+        versos: window.BIBLIOTECA.reduce((s, l) => s + l.v, 0)
+      }));
+      check("66 livros no manifesto", manifesto.livros === 66, manifesto.livros);
+      check("1.189 capítulos", manifesto.caps === 1189, manifesto.caps);
+      check("31.102 versículos — a Bíblia inteira", manifesto.versos === 31102, manifesto.versos);
+      const estante = await page.$$eval("#shelf .bk", (b) => b.length);
+      check("estante com 66 livros clicáveis", estante === 66, estante);
+      // deep link → carga sob demanda
+      await page.evaluate(() => { location.hash = "#Jo.1"; });
+      await page.waitForTimeout(700);
+      const jo1 = await page.evaluate(() => document.getElementById("rtexto").textContent);
+      check("Jo 1 carrega sob demanda — 'a Palavra'", jo1.includes("Palavra"), jo1.slice(0, 60));
+      // fim de Malaquias → Mateus 1 (a costura dos Testamentos)
+      await page.evaluate(() => { location.hash = "#Ml.4"; });
+      await page.waitForTimeout(700);
+      await page.click("#bnext");
+      await page.waitForTimeout(700);
+      const titulo = await page.evaluate(() => document.getElementById("rtitle").textContent);
+      check("Ml 4 → próximo → Mateus (a costura)", titulo === "Mateus", titulo);
+      check("console limpo após interações", errors.length === 0, errors.join(" | "));
+    }
+
     if (f === "escritos.html") {
       const dados = await page.evaluate(() => ({
         etapas: window.ESCRITOS.ETAPAS.length,
@@ -374,6 +433,8 @@ function check(name, ok, extra) {
 
     const og = await page.$$eval('meta[property="og:title"]', (m) => m.length);
     check("meta Open Graph presente", og === 1);
+    const man = await page.$$eval('link[rel="manifest"]', (m) => m.length);
+    check("manifest PWA presente", man === 1);
     const icone = await page.$$eval('link[rel="icon"][href="assets/icone.svg"]', (m) => m.length);
     check("favicon vetorial", icone === 1);
   }
