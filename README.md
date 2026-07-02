@@ -10,10 +10,11 @@ Estudo interativo da Escritura que consolida **texto, tempo, território e genea
 |---|---|---|
 | **F1 · Gênesis 1–11** | [`atlas.html`](https://noedelima.github.io/atlas-biblico/atlas.html) | A **espinha narrativa**: as doze perícopes de Gn 1–11 em leitura contínua (Almeida), com **paralelos do cânon** por perícope, sincronizadas com **três visões** — **Tempo** (Adão → Abrão em *Anno Mundi*, com Dilúvio e a faixa de Babel nos dias de Pelegue), **Mapa** (do Éden a Harã, com a rota de Terá) e **Genealogia** (as duas escadas de gerações, Gn 5 e Gn 11). O seletor TM · LXX · PS reorganiza tudo ao vivo. |
 | **F2 · Patriarcas (Gn 12–50)** | [`patriarcas.html`](https://noedelima.github.io/atlas-biblico/patriarcas.html) | As **migrações no mapa-tempo**: as jornadas de **Abraão** (11 etapas, de Ur a Macpela), **Jacó** (10 etapas, ida e volta a Harã — Peniel, o nome Israel — e a descida ao Egito) e **José** (do poço em Dotã ao trono — e os ossos de volta a Siquém, Js 24:32). O texto conduz etapa por etapa; o mapa geral (Eufrates → Nilo), o detalhe de Canaã e a cronologia patriarcal respondem. |
+| **F3 · Êxodo** | [`exodo.html`](https://noedelima.github.io/atlas-biblico/exodo.html) | A **rota do deserto** em três pernas e **18 etapas**: a saída (da Páscoa ao Sinai), a aliança no monte, e o caminho de Cades ao Nebo. Texto **integral** por etapa, mapa Egito–Sinai–Moabe com confiança por estação (a rota é a geografia mais debatida da Bíblia — e o atlas diz isso) e a **cronologia dos 40 anos** com eixo quebrado nos ~38 anos de silêncio narrativo (Dt 2:14). |
 
-Os dados vivem fora do HTML, em [`dados.js`](dados.js) e [`dados-patriarcas.js`](dados-patriarcas.js) — o **grafo de conhecimento**: pessoas, lugares, eventos, perícopes, jornadas e **Afirmações como cidadãs de primeira classe** (cada identificação/data carrega fonte e confiança: *atestado · provável · debatido · derivado*). Os *cruxes* clássicos estão anotados: Matusalém 167/187 na LXX, o **Cainã (II)** que só existe na LXX (e em Lc 3:36), o nascimento de Sem derivado de Gn 11:10, o crux Terá 70/130 (At 7:4), as idades derivadas de Jacó em Harã.
+Os dados vivem fora do HTML, em [`dados.js`](dados.js), [`dados-patriarcas.js`](dados-patriarcas.js) e [`dados-exodo.js`](dados-exodo.js) — o **grafo de conhecimento**: pessoas, lugares, eventos, perícopes, jornadas e **Afirmações como cidadãs de primeira classe** (cada identificação/data carrega fonte e confiança: *atestado · provável · debatido · derivado*). Os *cruxes* clássicos estão anotados: Matusalém 167/187 na LXX, o **Cainã (II)** que só existe na LXX (e em Lc 3:36), o nascimento de Sem derivado de Gn 11:10, o crux Terá 70/130 (At 7:4), as idades derivadas de Jacó em Harã.
 
-**Texto integral**: [`dados-texto.js`](dados-texto.js) traz **Gênesis completo** (1.533 versículos, Bíblia Livre — revisão moderna e livre da Almeida, CC-BY 3.0 BR) com um parser de referências (`"Gn 1:1–2:3"`, `"Gn 23:19; 25:8-10"`, `"Gn 22:2,14"`…). Cada perícope do atlas, cada etapa das jornadas e cada card de entidade oferecem **“Ler o texto completo”** com numeração de versículos.
+**Texto integral**: o diretório [`texto/`](texto/) é o corpus — [`core.js`](texto/core.js) (registro de livros + parser de referências: `"Gn 1:1–2:3"`, `"Nm 13:17-33; 14:26-35"`, `"Gn 22:2,14"`…) e um arquivo por livro. Hoje: **Gênesis, Êxodo, Números, Deuteronômio e Josué completos** (5.651 versículos, Bíblia Livre — revisão moderna e livre da Almeida, CC-BY 3.0 BR); cada página carrega só os livros de que precisa. Cada perícope, etapa e card oferece **“Ler o texto completo”** com numeração de versículos.
 
 ## Protótipos F0 (mantidos)
 
@@ -36,15 +37,16 @@ O site é **HTML + JS puro, sem build e sem dependências em runtime** — abra 
 - ✅ **F0** — protótipos de prova (Gn 5 · Gn 10)
 - ✅ **F1** — MVP Gênesis 1–11: grafo de conhecimento (`dados.js`) + três visões sincronizadas (tempo, mapa, genealogia) sobre a espinha narrativa
 - ✅ **F2** — MVP Patriarcas (Gn 12–50): as jornadas de Abraão, Jacó e José no mapa-tempo
-- **Refinamento** — gazetteers acadêmicos (Pleiades · OpenBible · STEPBible), texto integral por perícope, Isaque/Ismael/Esaú, mais afirmações estruturadas
-- **F3** — Êxodo: a rota do deserto no mapa-tempo
-- **F4+** — expansão progressiva, Gênesis → Apocalipse
+- ✅ **F3** — MVP Êxodo: a rota do deserto (Egito → Sinai → Cades → Moabe), com a cronologia dos 40 anos
+- **Refinamento** — gazetteers acadêmicos (Pleiades · OpenBible · STEPBible), Isaque/Ismael/Esaú, mais afirmações estruturadas
+- **F4** — Conquista e Juízes
+- **F5+** — expansão progressiva, Gênesis → Apocalipse
 
 ## Fontes e licenças de conteúdo
 
 | Fonte | Uso | Licença |
 |---|---|---|
-| [Bíblia Livre](https://sites.google.com/site/biblialivre/) (BLIVRE) | **texto integral** de Gênesis (+ Js 24:32), via eBible/getBible | CC-BY 3.0 BR |
+| [Bíblia Livre](https://sites.google.com/site/biblialivre/) (BLIVRE) | **texto integral** de Gn · Êx · Nm · Dt · Js, via eBible/getBible | CC-BY 3.0 BR |
 | Bíblia Almeida (edição em domínio público) | trechos em destaque nas perícopes e cards | Domínio público |
 | [Natural Earth](https://www.naturalearthdata.com/) | geometria de costas/rios do basemap | Domínio público |
 | Identificações dos povos e lugares | tradicionais/debatidas, sinalizadas por confiança | — |

@@ -3,22 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Atlas Bíblico Interativo — F2: as migrações dos Patriarcas (Gn 12–50). As jornadas de Abraão, Jacó e José etapa por etapa, no mapa do mundo antigo e na cronologia, com identificações de proveniência explícita.">
-<title>Patriarcas — as migrações (Gn 12–50) · F2</title>
+<meta name="description" content="Atlas Bíblico Interativo — F3: o Êxodo. A rota do deserto em três pernas e dezoito etapas, do Egito às planícies de Moabe, com texto integral, mapa e a cronologia dos quarenta anos.">
+<title>O Êxodo — a rota do deserto · F3</title>
 <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="%230e1218"/><rect x="21" y="21" width="22" height="22" transform="rotate(45 32 32)" fill="%23e9c46a"/><rect x="26.5" y="26.5" width="11" height="11" transform="rotate(45 32 32)" fill="%230e1218"/></svg>'>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Atlas Bíblico Interativo">
 <meta property="og:locale" content="pt_BR">
-<meta property="og:title" content="As migrações dos Patriarcas — Gn 12–50">
-<meta property="og:description" content="As jornadas de Abraão, Jacó e José etapa por etapa, com texto integral, no mapa do mundo antigo e na cronologia patriarcal.">
-<meta property="og:url" content="https://noedelima.github.io/atlas-biblico/patriarcas.html">
+<meta property="og:title" content="O Êxodo — a rota do deserto (F3)">
+<meta property="og:description" content="Do Egito às planícies de Moabe em dezoito etapas: a Páscoa, o mar, o Sinai, Cades e o Nebo — com texto integral e a cronologia dos quarenta anos.">
+<meta property="og:url" content="https://noedelima.github.io/atlas-biblico/exodo.html">
 <meta property="og:image" content="https://noedelima.github.io/atlas-biblico/assets/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<script src="dados-patriarcas.js"></script>
+<script src="dados-exodo.js"></script>
 <script src="texto/core.js"></script>
-<script src="texto/genesis.js"></script>
+<script src="texto/exodo.js"></script>
+<script src="texto/numeros.js"></script>
+<script src="texto/deuteronomio.js"></script>
 <script src="texto/josue.js"></script>
 <style>
   /* ═══ DESIGN TOKENS · Atlas Bíblico Interativo · v1 · WCAG 2.1 AA ═══ */
@@ -76,6 +78,7 @@
   .plug b{color:var(--ink); font-weight:600}
   .pbody{padding:0 14px 13px}
   .ptexto{font-family:var(--serif); font-size:14px; line-height:1.7; color:#e7e4da; background:var(--field); border:1px solid var(--line); border-left:3px solid var(--gold1); border-radius:10px; padding:11px 13px; margin:2px 0 10px}
+  .ptexto sup{color:var(--gold1); font-size:10px; margin-right:2px; font-weight:600}
   .pnota{color:var(--muted); font-size:12.5px; margin:0 0 10px}
   .pidade{display:inline-block; font-size:11px; font-weight:600; color:#cfe6f8; background:#10202e; border:1px solid #2e5063; border-radius:6px; padding:2px 8px; margin:0 0 10px}
   .ident{font-size:12px; color:var(--muted); background:var(--field); border:1px solid var(--line); border-radius:9px; padding:8px 10px; line-height:1.55}
@@ -85,7 +88,6 @@
   .conf-prob{background:#3a3322; color:#e9c46a}
   .conf-deb{background:#3a2731; color:#f0a8c0}
   .conf-der{background:#22303f; color:#9fc6ea}
-  /* leitura integral (Bíblia Livre) */
   details.leitura{margin:2px 0 10px; border:1px solid var(--line); border-radius:10px; background:var(--field)}
   details.leitura summary{cursor:pointer; padding:9px 13px; color:var(--gold1); font-size:12.5px; list-style:none}
   details.leitura summary::-webkit-details-marker{display:none}
@@ -96,7 +98,6 @@
   .versos sup{color:var(--gold1); font-size:10px; margin-right:2px; font-weight:600}
   .versos h4{font-family:var(--sans); color:var(--muted); font-size:11px; letter-spacing:.1em; text-transform:uppercase; margin:10px 0 4px; font-weight:600}
   .versos .fonte{color:var(--muted); font-size:11px; font-family:var(--sans); margin-top:8px}
-
   .pnav{display:flex; gap:8px; margin-top:10px}
   .chip{font-size:11.5px; color:var(--ink); background:#22303f; border:1px solid var(--line); border-radius:20px; padding:5px 11px; cursor:pointer; min-height:30px; appearance:none; font-family:inherit}
   .chip:hover{border-color:var(--gold1); color:var(--gold1)}
@@ -109,7 +110,7 @@
   svg.map{display:block; width:100%; min-width:680px; height:auto}
   .viewnote{color:var(--muted); font-size:11.5px; margin:8px 8px 6px}
   .viewnote b{color:var(--gold1)}
-  .coast{fill:url(#pLand); stroke:#93a59a; stroke-width:1; vector-effect:non-scaling-stroke}
+  .coast{fill:url(#eLand); stroke:#93a59a; stroke-width:1; vector-effect:non-scaling-stroke}
   .grat{stroke:#9fb4c2;stroke-width:.5;opacity:.45}
   .riveru{stroke:var(--river); stroke-width:1.5; fill:none; opacity:.95; vector-effect:non-scaling-stroke; stroke-linecap:round}
   .sea{fill:var(--sea-label);font-style:italic;font-size:11px;font-family:var(--serif);letter-spacing:.04em}
@@ -121,16 +122,16 @@
   .hit{cursor:pointer}
   .hit:focus{outline:none}
   .hit:focus-visible{outline:2px solid var(--halo); stroke:var(--halo); stroke-width:2.5}
-  .regiao rect{fill:none; stroke:#8a5f04; stroke-width:1.4; stroke-dasharray:6 4}
-  .regiao text{font-size:10.5px; fill:#6b4f2a; font-style:italic; font-family:var(--serif)}
   text{font-family:var(--sans)}
 
   .chrono .axis text{fill:var(--muted); font-size:10.5px}
   .chrono .axis line{stroke:var(--line-strong)}
-  .chrono .vlbl{fill:var(--ink); font-family:var(--serif); font-size:12.5px}
   .chrono .ev{fill:#f4e2b0; stroke:#0e1218; stroke-width:.6}
   .chrono .evlbl{fill:var(--muted); font-size:9.5px}
   .chrono .evln{stroke:#66798e; stroke-width:.8; stroke-dasharray:2 2}
+  .chrono .banda{fill:var(--gold1); opacity:.06}
+  .chrono .quebra{stroke:var(--line-strong); stroke-width:1.4}
+  .chrono .qlbl{fill:var(--gold1); font-size:10.5px; font-weight:600}
 
   footer{margin-top:26px; color:var(--muted); font-size:12px; border-top:1px solid var(--line); padding-top:14px; line-height:1.7}
   footer b{color:var(--ink)}
@@ -144,45 +145,40 @@
 <body>
 <div class="wrap">
   <header>
-    <nav class="crumbs" aria-label="Navegação"><a href="./">← Atlas Bíblico Interativo</a> · <a href="atlas.html">atlas Gn 1–11</a></nav>
-    <div class="kicker">Atlas Bíblico Interativo · F2 · Patriarcas · Gn 12–50 · AA</div>
-    <h1>As migrações dos Patriarcas — o mapa-tempo de Gn 12–50</h1>
-    <p class="sub">Três jornadas, etapa por etapa: <b>Abraão</b> (de Ur a Hebrom), <b>Jacó</b> (ida e volta a Harã — e a descida ao Egito) e <b>José</b> (do poço em Dotã ao trono). O texto à esquerda conduz; o mapa e a cronologia respondem. Cada identificação carrega <b>fonte e grau de confiança</b>.</p>
+    <nav class="crumbs" aria-label="Navegação"><a href="./">← Atlas Bíblico Interativo</a> · <a href="patriarcas.html">Patriarcas</a></nav>
+    <div class="kicker">Atlas Bíblico Interativo · F3 · Êxodo · AA</div>
+    <h1>O Êxodo — a rota do deserto, do Egito a Moabe</h1>
+    <p class="sub">Três pernas e dezoito etapas: <b>a saída</b> (da Páscoa ao monte), <b>o Sinai</b> (a aliança) e <b>o caminho da terra</b> (de Cades ao Nebo). O texto conduz — integral, versículo a versículo; o mapa e a cronologia dos quarenta anos respondem. A rota é a geografia mais debatida da Bíblia, e o atlas diz isso em cada estação.</p>
   </header>
 
   <div class="controls">
-    <div class="seg" role="radiogroup" aria-label="Jornada">
-      <button data-j="abraao" role="radio" aria-checked="true"  tabindex="0"><span class="dot" style="background:#e9c46a" aria-hidden="true"></span>Abraão</button>
-      <button data-j="jaco"   role="radio" aria-checked="false" tabindex="-1"><span class="dot" style="background:#7d8ef2" aria-hidden="true"></span>Jacó</button>
-      <button data-j="jose"   role="radio" aria-checked="false" tabindex="-1"><span class="dot" style="background:#2ea87d" aria-hidden="true"></span>José</button>
+    <div class="seg" role="radiogroup" aria-label="Perna da jornada">
+      <button data-p="saida" role="radio" aria-checked="true"  tabindex="0"><span class="dot" style="background:#e9c46a" aria-hidden="true"></span>A saída</button>
+      <button data-p="sinai" role="radio" aria-checked="false" tabindex="-1"><span class="dot" style="background:#7d8ef2" aria-hidden="true"></span>No Sinai</button>
+      <button data-p="terra" role="radio" aria-checked="false" tabindex="-1"><span class="dot" style="background:#2ea87d" aria-hidden="true"></span>Rumo à terra</button>
     </div>
     <div class="insight" id="insight" aria-live="polite"></div>
   </div>
 
   <div class="main">
-    <section aria-label="Etapas da jornada">
-      <div class="spinehead" id="spinehead">A jornada, etapa por etapa</div>
+    <section aria-label="Etapas da rota">
+      <div class="spinehead" id="spinehead">A rota, etapa por etapa</div>
       <div id="spine"></div>
     </section>
 
-    <section aria-label="Mapas e cronologia">
+    <section aria-label="Mapa e cronologia">
       <div class="mapcard">
-        <div class="maphead">Visão geral · do Eufrates ao Nilo</div>
+        <div class="maphead">Do delta do Nilo às planícies de Moabe</div>
         <div class="scroll">
-          <svg id="mapG" class="map" viewBox="0 0 1000 480" role="group" aria-label="Mapa geral do Crescente Fértil com a rota da jornada selecionada. Canaã aparece como região destacada, detalhada no mapa abaixo."></svg>
+          <svg id="mapa" class="map" viewBox="0 0 1000 520" role="group" aria-label="Mapa do Egito, do Sinai e da Transjordânia com a rota do Êxodo. Cada estação é um botão que leva à etapa correspondente no texto."></svg>
         </div>
-      </div>
-      <div class="mapcard">
-        <div class="maphead">Canaã em detalhe</div>
-        <div class="scroll">
-          <svg id="mapD" class="map" viewBox="0 0 1000 400" role="group" aria-label="Mapa de Canaã em detalhe, com as estações da jornada selecionada. Cada estação é um botão que leva à etapa correspondente no texto."></svg>
-        </div>
-        <p class="viewnote"><b>● cheio</b> = identificação atestada · <b>○ tracejado</b> = provável/debatida · trecho pontilhado = etapa futura (além de Gênesis).</p>
+        <p class="viewnote"><b>● cheio</b> = identificação atestada · <b>○ tracejado</b> = provável/debatida · cor = perna da jornada · trecho pontilhado = etapa futura (além do Pentateuco).</p>
+        <p class="viewnote" id="rotanote"></p>
       </div>
       <div class="mapcard chrono">
-        <div class="maphead">Cronologia patriarcal · Anno Mundi (TM)</div>
+        <div class="maphead">Os quarenta anos · tempo interno da narrativa</div>
         <div class="scroll">
-          <svg id="chrono" class="map" viewBox="0 0 1000 250" role="img" aria-label="Cronologia das vidas de Abraão (AM 1948 a 2123), Isaque (2048 a 2228), Jacó (2108 a 2255) e José (2199 a 2309), com os eventos das jornadas marcados."></svg>
+          <svg id="chrono" class="map" viewBox="0 0 1000 170" role="img" aria-label="Linha do tempo dos quarenta anos do deserto, com eixo quebrado nos trinta e oito anos entre Cades e o Zerede. Eventos: saída, Sinai, espias, Meribá, morte de Arão, Moabe e travessia do Jordão."></svg>
         </div>
         <p class="viewnote" id="chrononote"></p>
       </div>
@@ -190,243 +186,186 @@
   </div>
 
   <footer>
-    <b>Proveniência:</b> trechos em destaque: <b>Almeida</b> (domínio público) · texto integral: <b>Bíblia Livre</b> (BLIVRE, CC-BY 3.0 BR) · identificações tradicionais com grau de confiança · cronologia ancorada no <b>TM</b> (ver o <a href="atlas.html" style="color:var(--gold1)">atlas Gn 1–11</a>), derivações marcadas · basemap <b>Natural Earth</b> (domínio público).
-    <br><b>Continue a leitura:</b> <a href="exodo.html" style="color:var(--gold1)">o Êxodo — a rota do deserto (F3) →</a> · Roadmap: Isaque em Gerar, Ismael, Esaú/Edom · overlay de fontes acadêmicas (Pleiades).
+    <b>Proveniência:</b> texto integral <b>Bíblia Livre</b> (BLIVRE, CC-BY 3.0 BR) · rota tradicional do sul com confiança por estação (grande parte é <i>debatida</i> — e o atlas mostra) · cronologia pelo tempo interno da narrativa · basemap <b>Natural Earth</b> (domínio público).
+    <br><b>Veio de:</b> <a href="patriarcas.html" style="color:var(--gold1)">as migrações dos Patriarcas</a> — os ossos de José atravessam este mapa (Êx 13:19 → Js 24:32). <b>Roadmap:</b> F4 Conquista e Juízes.
   </footer>
 </div>
 
 <script>
 (function(){
   "use strict";
-  var P=window.PATRIARCAS;
+  var E=window.EXODO, T=window.TEXTO;
   var NS="http://www.w3.org/2000/svg";
   function el(t,a){var e=document.createElementNS(NS,t);if(a)for(var k in a)e.setAttribute(k,a[k]);return e;}
   var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* projeção-base (a mesma dos demais módulos) e vistas derivadas */
+  /* projeção-base e vista única */
   function xp0(lon){return 30+(lon+12)*12.702;} function yp0(lat){return 30+(48-lat)*14.667;}
-  function makeView(svg,W,H,cLon,cLat,s){
-    var tx=W/2-s*xp0(cLon), ty=H/2-s*yp0(cLat);
-    return {
-      svg:svg, W:W, H:H, s:s,
-      xp:function(lon){return tx+s*xp0(lon);},
-      yp:function(lat){return ty+s*yp0(lat);},
-      tf:"translate("+tx+","+ty+") scale("+s+")"
-    };
-  }
+  var W=1000, H=520, S=5.2, CLON=33.4, CLAT=30.2;
+  var TX=W/2-S*xp0(CLON), TY=H/2-S*yp0(CLAT);
+  function xp(lon){return TX+S*xp0(lon);} function yp(lat){return TY+S*yp0(lat);}
 
-  var CANAA=["siquem","betel","moria","belem","hebrom","gerar","berseba","peniel","dota"];
-  var GERAL=["ur","hara","egito","gosen"];
-
-  var mapG=document.getElementById("mapG"), mapD=document.getElementById("mapD");
-  var VG=makeView(mapG,1000,480,38.5,33,2.15);
-  var VD=makeView(mapD,1000,400,34.9,31.7,8.5);
-
-  /* defs compartilhados (referenciados por URL no mesmo documento) */
+  var mapa=document.getElementById("mapa");
   var defs=el("defs");
-  var gw=el("linearGradient",{id:"pWater",x1:"0",y1:"0",x2:"0",y2:"1"});
+  var gw=el("linearGradient",{id:"eWater",x1:"0",y1:"0",x2:"0",y2:"1"});
   gw.appendChild(el("stop",{offset:"0","stop-color":"#c8e2ef"})); gw.appendChild(el("stop",{offset:"1","stop-color":"#a6cde0"}));
-  var gl=el("linearGradient",{id:"pLand",x1:"0",y1:"0",x2:"0",y2:"1"});
+  var gl=el("linearGradient",{id:"eLand",x1:"0",y1:"0",x2:"0",y2:"1"});
   gl.appendChild(el("stop",{offset:"0","stop-color":"#dde6c6"})); gl.appendChild(el("stop",{offset:"1","stop-color":"#e9dcba"}));
   defs.appendChild(gw); defs.appendChild(gl);
+  E.PERNAS.forEach(function(p){
+    var mk=el("marker",{id:"earr-"+p.id,viewBox:"0 0 10 10",refX:"8",refY:"5",markerWidth:"5",markerHeight:"5",orient:"auto-start-reverse"});
+    mk.appendChild(el("path",{d:"M0,0 L10,5 L0,10 Z",fill:p.cor}));
+    defs.appendChild(mk);
+  });
   var COAST="M34.0,321.2 L44.0,311.1 L50.3,307.2 L60.9,295.0 L57.8,276.7 L64.3,256.4 L72.5,246.5 L94.6,233.7 L107.1,209.5 L116.5,209.6 L124.1,215.8 L136.2,214.8 L154.9,218.2 L167.1,210.2 L180.8,207.6 L188.8,201.6 L201.1,197.1 L243.6,193.3 L250.0,195.5 L262.0,189.7 L275.5,189.6 L280.7,193.0 L289.4,192.1 L303.2,186.2 L312.1,188.0 L311.7,195.4 L322.5,190.0 L323.4,192.8 L317.1,200.0 L317.0,206.8 L321.4,210.4 L319.7,223.1 L311.3,230.5 L313.8,238.5 L320.3,238.7 L323.5,245.7 L328.4,248.0 L343.3,253.0 L348.6,251.8 L359.2,254.2 L376.1,260.8 L382.0,273.8 L411.3,282.8 L424.9,290.1 L431.1,286.3 L437.1,279.5 L434.2,268.3 L438.2,261.2 L447.3,254.3 L456.1,252.3 L473.2,255.3 L477.6,261.9 L499.0,266.1 L502.1,271.0 L519.0,270.7 L549.7,281.2 L564.7,272.4 L575.9,271.2 L584.9,273.0 L588.4,280.3 L591.3,275.5 L601.5,279.0 L611.4,279.8 L617.7,276.1 L621.4,271.3 L620.5,270.5 L623.9,263.6 L626.4,252.5 L633.1,236.7 L639.7,225.9 L638.5,214.7 L641.6,208.6 L636.9,202.0 L641.7,196.5 L634.0,197.7 L623.4,194.3 L614.6,202.8 L595.4,204.4 L585.1,196.6 L571.4,196.1 L568.5,202.1 L559.7,203.9 L547.4,196.1 L533.5,196.3 L526.0,181.8 L516.7,173.6 L522.9,162.2 L514.8,155.2 L528.9,141.2 L548.5,140.6 L553.8,129.4 L578.0,131.4 L593.3,121.9 L608.1,117.7 L629.1,117.4 L651.3,127.8 L669.5,133.4 L684.3,131.2 L695.2,132.5 L710.2,124.8 L712.1,118.5 L709.0,108.5 L701.6,103.1 L694.6,101.4 L673.7,84.6 L659.2,79.0 L648.3,70.4 L657.5,68.1 L668.1,55.8 L661.0,50.0 L679.7,44.0 L679.3,40.8 L657.8,44.3 L649.3,49.1 L637.5,49.9 L626.5,55.3 L627.3,64.4 L633.5,68.0 L646.4,67.1 L643.9,72.3 L630.0,74.9 L612.8,83.4 L605.7,80.4 L608.5,73.5 L594.7,69.2 L596.9,66.4 L609.1,61.5 L605.4,58.2 L585.6,54.4 L584.8,49.0 L573.0,50.8 L568.3,58.9 L558.4,69.7 L558.7,73.5 L552.6,76.6 L548.7,75.3 L545.2,93.0 L538.6,99.0 L533.9,109.5 L539.5,123.5 L550.6,128.3 L548.3,131.9 L533.2,132.7 L517.2,145.1 L513.2,138.3 L513.4,135.2 L499.0,133.4 L483.6,137.3 L492.5,145.5 L486.0,147.9 L478.9,147.9 L472.2,140.4 L469.8,143.6 L472.7,152.3 L479.0,159.2 L474.2,162.4 L487.6,173.4 L487.8,181.7 L476.0,177.8 L479.8,185.3 L471.7,186.9 L476.5,199.8 L468.1,200.0 L457.7,193.6 L450.7,172.1 L439.2,157.0 L438.4,152.8 L436.2,151.8 L436.0,148.6 L428.9,143.7 L427.8,136.7 L430.6,122.1 L422.3,113.9 L404.8,105.5 L397.5,100.3 L385.9,95.9 L375.2,85.1 L377.7,84.0 L371.9,77.8 L371.7,72.9 L363.5,70.6 L359.6,76.9 L355.9,72.0 L356.2,66.9 L359.5,65.3 L349.3,63.2 L339.0,68.4 L339.7,75.7 L338.2,79.9 L342.3,87.3 L354.2,94.7 L360.6,106.8 L374.8,118.7 L384.7,118.6 L387.8,121.8 L384.3,124.7 L405.0,134.5 L415.8,142.1 L417.2,144.9 L414.8,150.1 L407.7,143.3 L396.7,140.8 L391.4,150.3 L400.5,155.8 L399.0,163.4 L393.7,164.3 L386.9,176.9 L381.6,178.0 L384.3,165.7 L387.0,162.5 L378.2,146.6 L372.9,144.8 L369.2,138.5 L361.0,135.8 L355.5,129.9 L346.1,129.0 L336.2,122.3 L315.9,104.3 L312.0,89.8 L295.3,83.3 L289.5,85.3 L282.1,92.1 L276.9,93.2 L265.4,101.4 L240.3,97.5 L221.8,102.2 L220.4,111.1 L221.0,119.6 L209.0,129.4 L192.7,132.5 L191.6,137.4 L183.8,145.5 L178.9,157.5 L183.8,165.8 L176.5,172.4 L173.7,181.9 L164.2,184.8 L155.2,196.1 L126.9,196.1 L119.0,201.2 L114.1,206.8 L107.9,205.6 L103.2,200.6 L99.6,192.2 L87.7,189.9 L82.6,193.7 L75.9,191.6 L69.4,193.3 L71.3,181.8 L70.1,172.8 L64.5,171.4 L61.4,165.9 L62.4,156.3 L67.5,150.9 L71.0,136.2 L70.8,130.0 L67.7,119.8 L68.3,109.3 L63.1,102.9 L81.1,92.4 L127.2,97.4 L158.3,97.1 L164.8,88.3 L167.3,59.1 L154.2,43.7 L144.8,36.3 L125.3,30.0 L969.9,30.0 L969.9,365.5 L963.6,366.2 L911.5,356.5 L906.1,338.5 L900.0,335.9 L890.2,338.5 L877.4,345.6 L861.9,340.8 L849.1,329.5 L836.8,325.3 L828.4,311.4 L819.0,291.8 L812.1,294.2 L804.1,289.4 L799.3,295.1 L791.8,294.4 L794.4,300.8 L793.3,304.2 L802.4,327.9 L808.6,331.2 L810.8,336.4 L819.5,342.6 L820.2,348.6 L819.0,353.5 L827.8,370.9 L827.0,360.3 L830.4,352.6 L833.9,351.0 L837.7,355.6 L837.9,364.2 L835.2,372.8 L837.6,378.4 L839.8,377.7 L840.3,381.7 L850.3,379.4 L868.4,380.2 L898.3,346.9 L899.9,348.1 L897.1,356.9 L898.8,368.4 L904.5,378.5 L911.6,383.8 L928.4,388.4 L937.6,401.7 L942.1,403.5 L942.1,406.8 L935.4,419.6 L930.1,424.3 L925.3,434.4 L919.6,433.6 L916.9,437.1 L914.9,444.5 L916.5,454.4 L915.3,456.2 L909.4,456.1 L901.5,461.6 L900.2,468.7 L897.3,471.8 L889.4,471.7 L884.5,475.4 L884.5,481.3 L878.4,485.4 L871.4,484.0 L862.9,489.0 L847.8,493.7 L845.1,505.2 L832.4,511.4 L812.1,518.3 L800.7,528.6 L791.3,528.6 L783.9,534.7 L775.8,537.5 L762.0,539.1 L759.2,543.0 L755.8,544.0 L753.9,547.8 L747.6,547.4 L743.5,549.4 L734.7,548.7 L731.4,540.1 L731.8,532.1 L727.2,516.9 L723.6,510.9 L726.1,510.2 L724.8,503.5 L726.4,500.6 L724.2,488.0 L720.3,483.6 L719.3,477.7 L712.8,472.5 L706.0,460.2 L702.4,448.2 L693.6,438.1 L688.0,435.7 L679.6,421.7 L678.1,411.5 L678.6,402.8 L671.4,386.6 L665.4,380.9 L658.5,377.8 L654.4,369.4 L655.1,366.1 L651.5,358.5 L647.8,355.2 L642.9,344.3 L628.6,322.4 L622.3,322.5 L626.4,303.4 L626.0,301.3 L624.7,297.5 L626.0,301.3 L622.4,307.2 L616.3,325.9 L613.3,328.5 L603.3,317.2 L594.3,296.2 L593.0,297.5 L598.2,313.0 L615.6,350.6 L624.4,366.8 L635.8,383.1 L633.3,385.6 L633.7,395.2 L650.7,411.3 L654.8,425.7 L652.0,428.4 L653.9,443.5 L658.5,461.0 L670.3,470.0 L677.7,487.0 L681.2,500.5 L705.5,521.5 L723.4,543.3 L729.6,547.8 L732.6,552.3 L732.2,558.4 L725.0,561.9 L734.6,568.6 L737.1,574.7 L742.8,580.8 L749.1,580.9 L761.1,577.1 L774.9,575.4 L796.9,567.2 L808.2,566.4 L820.8,562.7 L826.8,557.7 L831.6,557.7 L830.8,577.9 L827.2,587.3 L30.0,587.3 L30.0,321.7 L34.0,321.2ZM812.1,144.8 L807.7,161.3 L803.0,164.7 L803.3,172.0 L807.4,182.8 L819.4,185.8 L828.2,193.2 L846.3,195.7 L866.1,191.8 L867.3,188.4 L865.0,178.0 L866.8,162.7 L856.9,157.7 L860.2,147.7 L851.7,146.8 L854.6,134.5 L866.5,138.1 L877.7,133.4 L868.4,124.6 L864.8,116.2 L854.6,119.9 L853.3,130.7 L848.6,117.6 L851.7,111.5 L849.3,106.4 L834.6,101.4 L828.8,88.2 L821.8,84.5 L821.4,79.7 L833.8,81.1 L834.3,70.4 L845.1,68.0 L856.1,70.2 L858.4,55.9 L856.2,46.8 L843.5,47.5 L832.7,44.0 L818.0,50.4 L806.1,53.5 L800.3,62.2 L788.0,64.6 L775.4,79.7 L786.9,93.7 L785.7,103.5 L806.2,128.5 L812.7,138.9 L818.6,139.6 L822.5,143.6 L812.1,144.8ZM357.0,176.2 L379.6,173.3 L375.0,184.8 L376.9,189.4 L374.2,196.9 L364.5,191.4 L340.3,182.3 L342.1,174.8 L357.0,176.2ZM293.1,134.1 L299.4,129.6 L307.0,140.0 L305.2,159.4 L299.5,158.5 L294.3,163.4 L289.5,159.5 L289.0,141.8 L286.1,133.4 L293.1,134.1ZM299.7,127.1 L293.9,124.1 L291.0,114.2 L293.5,108.8 L301.7,103.2 L303.9,115.8 L299.7,127.1ZM610.1,215.2 L621.6,210.8 L613.0,217.1 L614.4,221.0 L601.3,227.0 L595.1,225.0 L592.1,219.2 L599.1,218.5 L600.9,215.0 L610.1,215.2ZM509.4,218.0 L516.4,216.3 L514.8,220.6 L496.5,221.8 L496.6,219.4 L481.1,216.6 L483.5,210.3 L490.4,215.3 L509.7,215.5 L509.4,218.0Z";
-  var cp=el("path",{id:"coastP",d:COAST}); defs.appendChild(cp);
-  var rg=el("g",{id:"geoRivers"});
-  [[[31,30.4],[31,27],[32,24],[32.8,20],[33,16]],
-   [[38.3,37.1],[39.5,36],[41,35],[43,33.6],[45.5,31.5],[47.3,30.6]],
-   [[40,37.2],[42,36],[43.5,34.7],[44.6,33],[46,31.3],[47.3,30.6]]].forEach(function(pts){
+  defs.appendChild(el("path",{id:"eCoastP",d:COAST}));
+  var rg=el("g",{id:"eRivers"});
+  [[[31,30.4],[31,27],[32,24],[32.8,20],[33,16]]].forEach(function(pts){
     var d="M"+pts.map(function(p){return xp0(p[0]).toFixed(1)+","+yp0(p[1]).toFixed(1);}).join(" L");
     rg.appendChild(el("path",{d:d}));
   });
   defs.appendChild(rg);
-  P.JORN.forEach(function(j){
-    var mk=el("marker",{id:"arr-"+j.id,viewBox:"0 0 10 10",refX:"8",refY:"5",markerWidth:"5",markerHeight:"5",orient:"auto-start-reverse"});
-    mk.appendChild(el("path",{d:"M0,0 L10,5 L0,10 Z",fill:j.cor}));
-    defs.appendChild(mk);
-  });
-  mapG.appendChild(defs);
+  mapa.appendChild(defs);
 
-  function buildBase(V,withSeas){
-    V.svg.appendChild(el("rect",{x:0,y:0,width:V.W,height:V.H,fill:"url(#pWater)"}));
-    var grat=el("g");
-    for(var lo=-10;lo<=60;lo+=5) grat.appendChild(el("line",{class:"grat",x1:V.xp(lo),y1:0,x2:V.xp(lo),y2:V.H}));
-    for(var la=10;la<=48;la+=5) grat.appendChild(el("line",{class:"grat",x1:0,y1:V.yp(la),x2:V.W,y2:V.yp(la)}));
-    V.svg.appendChild(grat);
-    var geo=el("g",{transform:V.tf});
-    var coast=el("use",{href:"#coastP",class:"coast"});
-    coast.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","#coastP");
-    geo.appendChild(coast);
-    var riv=el("use",{href:"#geoRivers",class:"riveru"});
-    riv.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","#geoRivers");
-    geo.appendChild(riv);
-    V.svg.appendChild(geo);
-    if(withSeas){
-      function sea(lon,lat,txt){var t=el("text",{class:"sea",x:V.xp(lon),y:V.yp(lat),"text-anchor":"middle"});t.textContent=txt;V.svg.appendChild(t);}
-      sea(21,34.2,"M A R   M E D I T E R R Â N E O");
-      sea(50.5,28.6,"Golfo Pérsico");
-    }
-    V.rotas=el("g"); V.svg.appendChild(V.rotas);
-    V.nodes=el("g"); V.svg.appendChild(V.nodes);
-    V.halo=el("circle",{r:11,fill:"none",stroke:"#8a5f04","stroke-width":2.6,"pointer-events":"none"});
-    V.halo.style.display="none"; V.svg.appendChild(V.halo);
-  }
-  buildBase(VG,true); buildBase(VD,false);
+  mapa.appendChild(el("rect",{x:0,y:0,width:W,height:H,fill:"url(#eWater)"}));
+  var grat=el("g");
+  for(var lo=26;lo<=42;lo+=2) grat.appendChild(el("line",{class:"grat",x1:xp(lo),y1:0,x2:xp(lo),y2:H}));
+  for(var la=26;la<=34;la+=2) grat.appendChild(el("line",{class:"grat",x1:0,y1:yp(la),x2:W,y2:yp(la)}));
+  mapa.appendChild(grat);
+  var geo=el("g",{transform:"translate("+TX+","+TY+") scale("+S+")"});
+  var coast=el("use",{href:"#eCoastP",class:"coast"});
+  coast.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","#eCoastP");
+  geo.appendChild(coast);
+  var riv=el("use",{href:"#eRivers",class:"riveru"});
+  riv.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","#eRivers");
+  geo.appendChild(riv);
+  mapa.appendChild(geo);
 
-  /* Jordão + mar Salgado + Jaboque, só no detalhe */
+  /* Jordão · mar Salgado · rótulos */
   (function(){
-    var jr=[[35.62,33.2],[35.61,32.9],[35.56,32.5],[35.53,32.1],[35.5,31.85]];
-    var d="M"+jr.map(function(p){return VD.xp(p[0]).toFixed(1)+","+VD.yp(p[1]).toFixed(1);}).join(" L");
-    VD.svg.insertBefore(el("path",{d:d,fill:"none",stroke:"#44789a","stroke-width":1.6,opacity:.95}),VD.rotas);
-    var jb=[[36.15,32.23],[35.9,32.16],[35.62,32.2]];
-    var d2="M"+jb.map(function(p){return VD.xp(p[0]).toFixed(1)+","+VD.yp(p[1]).toFixed(1);}).join(" L");
-    VD.svg.insertBefore(el("path",{d:d2,fill:"none",stroke:"#44789a","stroke-width":1.2,opacity:.85}),VD.rotas);
-    var ms=el("ellipse",{cx:VD.xp(35.5),cy:VD.yp(31.5),rx:14,ry:36,fill:"#a6cde0",stroke:"#93a59a","stroke-width":.8});
-    VD.svg.insertBefore(ms,VD.rotas);
-    var t=el("text",{class:"sea",x:VD.xp(35.66),y:VD.yp(31.45)}); t.textContent="mar Salgado"; VD.svg.insertBefore(t,VD.rotas);
-    var t2=el("text",{class:"sea",x:VD.xp(35.75),y:VD.yp(32.28)}); t2.textContent="Jaboque"; VD.svg.insertBefore(t2,VD.rotas);
-    var t3=el("text",{class:"sea",x:VD.xp(35.36),y:VD.yp(32.62)}); t3.textContent="o Jordão"; VD.svg.insertBefore(t3,VD.rotas);
+    var jr=[[35.62,32.7],[35.56,32.4],[35.53,32.1],[35.5,31.9]];
+    mapa.appendChild(el("path",{d:"M"+jr.map(function(p){return xp(p[0]).toFixed(1)+","+yp(p[1]).toFixed(1);}).join(" L"),
+      fill:"none",stroke:"#44789a","stroke-width":1.5,opacity:.95}));
+    mapa.appendChild(el("ellipse",{cx:xp(35.5),cy:yp(31.45),rx:8,ry:24,fill:"#a6cde0",stroke:"#93a59a","stroke-width":.8}));
+    function sea(lon,lat,txt,rot){var t=el("text",{class:"sea",x:xp(lon),y:yp(lat),"text-anchor":"middle"});
+      if(rot)t.setAttribute("transform","rotate("+rot+" "+xp(lon)+" "+yp(lat)+")");t.textContent=txt;mapa.appendChild(t);}
+    sea(30.6,32.3,"M A R   M E D I T E R R Â N E O");
+    sea(33.05,28.6,"golfo de Suez",-55);
+    sea(34.85,28.55,"golfo de Ácaba",-62);
+    sea(35.85,31.42,"mar Salgado",-78);
   })();
 
-  /* região de Canaã no mapa geral */
-  var regiao=el("g",{class:"regiao"});
-  var rx0=VG.xp(34.2), ry0=VG.yp(32.75), rx1=VG.xp(36.0), ry1=VG.yp(30.9);
-  regiao.appendChild(el("rect",{x:rx0,y:ry0,width:rx1-rx0,height:ry1-ry0,rx:6}));
-  var rlbl=el("text",{x:rx0-4,y:ry1+14,"text-anchor":"start"}); rlbl.textContent="Canaã — detalhe abaixo"; regiao.appendChild(rlbl);
-  VG.svg.insertBefore(regiao,VG.rotas);
+  var rotasG=el("g"); mapa.appendChild(rotasG);
+  var nodesG=el("g"); mapa.appendChild(nodesG);
+  var halo=el("circle",{r:11,fill:"none",stroke:"#8a5f04","stroke-width":2.6,"pointer-events":"none"});
+  halo.style.display="none"; mapa.appendChild(halo);
 
-  /* estado */
-  var jId="abraao", cur=0;
-  function J(){return P.jornada(jId);}
+  /* marcadores — cor da perna da primeira etapa que usa o lugar */
+  var pernaDoLugar={};
+  E.ETAPAS.forEach(function(et){ if(!pernaDoLugar[et.lugar]) pernaDoLugar[et.lugar]=et.perna; });
+  var pts={};
+  E.LUG.forEach(function(l){
+    var p=E.perna(pernaDoLugar[l.id]||"saida");
+    var g=el("g",{class:"lpt"});
+    var hit=el("circle",{class:"hit",r:13,cx:xp(l.lon),cy:yp(l.lat),fill:"transparent","pointer-events":"all",
+                         tabindex:"0",role:"button","aria-label":l.nome+" — "+l.idl+". Ir à etapa correspondente."});
+    var vis=el("g",{transform:"translate("+xp(l.lon)+","+yp(l.lat)+")"});
+    var att=l.conf==="att";
+    var shp=el("circle",{class:"shape",r:5.5,fill:att?p.cor:"#ffffff",stroke:att?"#ffffff":p.cor,"stroke-width":att?1.4:2});
+    if(!att) shp.setAttribute("stroke-dasharray","3 2");
+    var tx=el("text",{class:"llbl",x:l.ldx!==undefined?l.ldx:9,y:l.ldy!==undefined?l.ldy:3.5});
+    tx.textContent=l.nome;
+    vis.appendChild(shp); vis.appendChild(tx);
+    g.appendChild(hit); g.appendChild(vis); nodesG.appendChild(g);
+    g.addEventListener("click",function(){gotoLugar(l.id);});
+    hit.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();e.stopPropagation();gotoLugar(l.id);}});
+    pts[l.id]={x:xp(l.lon),y:yp(l.lat)};
+  });
 
-  /* marcadores */
-  function buildMarkers(V,ids,detail){
-    V.nodes.textContent=""; V.pts={};
-    ids.forEach(function(id){
-      var l=P.lug(id);
-      var g=el("g",{class:"lpt"});
-      var hit=el("circle",{class:"hit",r:13,cx:V.xp(l.lon),cy:V.yp(l.lat),fill:"transparent","pointer-events":"all",
-                           tabindex:"0",role:"button","aria-label":l.nome+" — "+l.idl+". Ir à etapa correspondente."});
-      var vis=el("g",{transform:"translate("+V.xp(l.lon)+","+V.yp(l.lat)+")"});
-      var shp=el("circle",{class:"shape",r:5.5});
-      var tx=el("text",{class:"llbl",x:(detail&&l.ldx!==undefined)?l.ldx:9,y:(detail&&l.ldy!==undefined)?l.ldy:3.5});
-      tx.textContent=l.nome;
-      vis.appendChild(shp); vis.appendChild(tx);
-      g.appendChild(hit); g.appendChild(vis); V.nodes.appendChild(g);
-      g.addEventListener("click",function(){gotoLugar(id);});
-      hit.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();e.stopPropagation();gotoLugar(id);}});
-      V.pts[id]={g:g,shp:shp,x:V.xp(l.lon),y:V.yp(l.lat)};
-    });
-  }
-  buildMarkers(VG,GERAL,false);
-  buildMarkers(VD,CANAA,true);
-
-  function tintMarkers(){
-    var j=J(), used={};
-    j.etapas.forEach(function(e){used[e.lugar]=1;});
-    [VG,VD].forEach(function(V){
-      for(var id in V.pts){
-        var l=P.lug(id), o=V.pts[id], on=!!used[id];
-        o.g.style.display=on?"":"none";
-        o.g.querySelector(".hit").setAttribute("tabindex",on?"0":"-1");
-        var att=l.conf==="att";
-        o.shp.setAttribute("fill",att?j.cor:"#ffffff");
-        o.shp.setAttribute("stroke",att?"#ffffff":j.cor);
-        o.shp.setAttribute("stroke-width",att?1.4:2);
-        if(att) o.shp.removeAttribute("stroke-dasharray"); else o.shp.setAttribute("stroke-dasharray","3 2");
-      }
-    });
+  /* rota contínua — um segmento por etapa (i ≥ 1), colorido pela perna */
+  var segs=[];
+  for(var i=1;i<E.ETAPAS.length;i++){
+    var a=E.lug(E.ETAPAS[i-1].lugar), b=E.lug(E.ETAPAS[i].lugar);
+    if(a.id===b.id&&!(E.ETAPAS[i].via&&E.ETAPAS[i].via.length)){segs.push(null);continue;}
+    var ptsArr=[[a.lon,a.lat]].concat(E.ETAPAS[i].via||[]).concat([[b.lon,b.lat]]);
+    var d="M"+ptsArr.map(function(p){return xp(p[0]).toFixed(1)+","+yp(p[1]).toFixed(1);}).join(" L");
+    var path=el("path",{d:d,fill:"none",stroke:E.perna(E.ETAPAS[i].perna).cor,
+                        "stroke-linejoin":"round","stroke-linecap":"round"});
+    rotasG.appendChild(path); segs.push(path);
   }
 
-  /* rotas */
-  function segPath(V,et,prev){
-    var pts=[[P.lug(prev.lugar).lon,P.lug(prev.lugar).lat]]
-      .concat(et.via||[])
-      .concat([[P.lug(et.lugar).lon,P.lug(et.lugar).lat]]);
-    return "M"+pts.map(function(p){return V.xp(p[0]).toFixed(1)+","+V.yp(p[1]).toFixed(1);}).join(" L");
-  }
-  function buildRoutes(){
-    var j=J();
-    [VG,VD].forEach(function(V){
-      V.rotas.textContent=""; V.segs=[];
-      for(var i=1;i<j.etapas.length;i++){
-        var p=el("path",{d:segPath(V,j.etapas[i],j.etapas[i-1]),fill:"none",stroke:j.cor,
-                         "stroke-linejoin":"round","stroke-linecap":"round"});
-        V.rotas.appendChild(p); V.segs.push(p);
-      }
-    });
+  var cur=0;
+  function paintRota(){
+    for(var i=1;i<E.ETAPAS.length;i++){
+      var p=segs[i-1]; if(!p) continue;
+      var done=i<=cur, fut=!!E.ETAPAS[i].futura;
+      p.setAttribute("stroke-width",done?2.6:1.8);
+      p.setAttribute("opacity",done?0.95:0.35);
+      if(fut||!done) p.setAttribute("stroke-dasharray",fut?"3 5":"5 5");
+      else p.removeAttribute("stroke-dasharray");
+      if(done&&!fut) p.setAttribute("marker-end","url(#earr-"+E.ETAPAS[i].perna+")");
+      else p.removeAttribute("marker-end");
+    }
+    var o=pts[E.ETAPAS[cur].lugar];
+    halo.style.display=""; halo.setAttribute("cx",o.x); halo.setAttribute("cy",o.y);
+    halo.setAttribute("stroke",E.perna(E.ETAPAS[cur].perna).cor);
   }
 
-  function paintRoutes(){
-    var j=J();
-    [VG,VD].forEach(function(V){
-      V.segs.forEach(function(p,k){
-        var i=k+1, done=i<=cur, fut=!!j.etapas[i].futura;
-        p.setAttribute("stroke-width",done?2.6:1.8);
-        p.setAttribute("opacity",done?0.95:0.35);
-        if(fut||!done) p.setAttribute("stroke-dasharray",fut?"3 5":"5 5");
-        else p.removeAttribute("stroke-dasharray");
-        if(done&&!fut) p.setAttribute("marker-end","url(#arr-"+j.id+")");
-        else p.removeAttribute("marker-end");
-      });
-    });
-    /* halo na estação atual */
-    var lugar=J().etapas[cur].lugar;
-    [VG,VD].forEach(function(V){
-      var o=V.pts[lugar];
-      if(o){V.halo.style.display=""; V.halo.setAttribute("cx",o.x); V.halo.setAttribute("cy",o.y);}
-      else V.halo.style.display="none";
-    });
-    /* região de Canaã acesa quando a etapa atual está nela */
-    regiao.querySelector("rect").setAttribute("stroke-width",CANAA.indexOf(lugar)>=0?2.4:1.4);
-  }
-
-  /* espinha de etapas */
-  var spine=document.getElementById("spine");
-  function confChip(conf){return "<span class='confchip conf-"+conf+"'>"+P.CONF[conf].t+"</span>";}
-  function leituraHtml(ref){
-    if(!window.TEXTO) return "";
-    var p=window.TEXTO.passagem(ref);
-    if(!p) return "";
+  /* leitura integral */
+  function versosHtml(p){
     var h="";
     p.forEach(function(g){
       if(p.length>1) h+="<h4>"+g.nome+" "+g.cap+"</h4>";
       h+="<p>"+g.versos.map(function(x){return "<sup>"+x.v+"</sup>"+x.t;}).join(" ")+"</p>";
     });
-    h+="<div class='fonte'>"+window.TEXTO.META.nome+" ("+window.TEXTO.META.sigla+") · "+window.TEXTO.META.nota+" · "+window.TEXTO.META.licenca+"</div>";
+    return h;
+  }
+  function leituraHtml(ref){
+    var p=T.passagem(ref); if(!p) return "";
+    var h=versosHtml(p)+"<div class='fonte'>"+T.META.nome+" ("+T.META.sigla+") · "+T.META.nota+" · "+T.META.licenca+"</div>";
     return "<details class='leitura'><summary>Ler o texto completo · "+ref+"</summary><div class='versos'>"+h+"</div></details>";
   }
+
+  /* espinha — mostra a perna atual; navegação é global */
+  var spine=document.getElementById("spine");
+  var curPerna="saida";
+  function idxGlobais(pernaId){
+    var out=[]; E.ETAPAS.forEach(function(et,i){if(et.perna===pernaId)out.push(i);}); return out;
+  }
+  function confChip(conf){return "<span class='confchip conf-"+conf+"'>"+E.CONF[conf].t+"</span>";}
   function buildSpine(){
-    var j=J();
+    var p=E.perna(curPerna), gis=idxGlobais(curPerna);
     spine.textContent="";
-    document.getElementById("spinehead").textContent="A jornada de "+j.nome+" · "+j.etapas.length+" etapas";
-    j.etapas.forEach(function(et,i){
-      var l=P.lug(et.lugar);
+    document.getElementById("spinehead").textContent=p.nome+" · etapas "+(gis[0]+1)+"–"+(gis[gis.length-1]+1)+" de "+E.ETAPAS.length;
+    gis.forEach(function(gi){
+      var et=E.ETAPAS[gi], l=E.lug(et.lugar);
       var art=document.createElement("article");
-      art.className="peri"; art.dataset.i=i; art.dataset.on="0";
+      art.className="peri"; art.dataset.gi=gi; art.dataset.on="0";
       var head=document.createElement("button");
       head.className="phead"; head.setAttribute("aria-expanded","false");
-      head.innerHTML="<span class='pref'>Etapa "+(i+1)+" · "+et.ref+"</span>"+
-        "<span class='ptit'>"+et.titulo+(et.futura?" <span style='font-size:11px;color:var(--muted)'>· além de Gênesis</span>":"")+"</span>"+
+      head.innerHTML="<span class='pref'>Etapa "+(gi+1)+" · "+et.ref+"</span>"+
+        "<span class='ptit'>"+et.titulo+(et.futura?" <span style='font-size:11px;color:var(--muted)'>· além do Pentateuco</span>":"")+"</span>"+
         "<span class='plug'>em <b>"+l.nome+"</b> — "+l.idl+"</span>";
-      head.addEventListener("click",function(){selectEtapa(i,false);});
+      head.addEventListener("click",function(){selectEtapa(gi,false);});
       art.appendChild(head);
       var body=document.createElement("div");
       body.className="pbody"; body.hidden=true;
       var h="";
-      if(et.idade) h+="<span class='pidade'>"+et.idade+"</span>";
-      h+="<div class='ptexto'>"+et.txt+"</div>";
+      if(et.quando) h+="<span class='pidade'>"+et.quando+"</span>";
+      var dest=T.passagem(et.ref);
+      h+="<div class='ptexto'>"+(dest?versosHtml(dest):"—")+"</div>";
       if(et.nota) h+="<p class='pnota'>"+et.nota+"</p>";
       h+=leituraHtml(et.leitura||et.ref);
-      var a=P.af(l.af);
-      h+="<div class='ident'>"+confChip(l.conf)+"<b>"+P.FONTES[a.fonte].nome+"</b> — "+a.txt+"</div>";
+      var a=E.af(l.af);
+      h+="<div class='ident'>"+confChip(l.conf)+"<b>"+E.FONTES[a.fonte].nome+"</b> — "+a.txt+"</div>";
       body.innerHTML=h;
       var nav=document.createElement("div"); nav.className="pnav";
       var bPrev=document.createElement("button"); bPrev.type="button"; bPrev.className="chip"; bPrev.textContent="◂ etapa anterior";
       var bNext=document.createElement("button"); bNext.type="button"; bNext.className="chip"; bNext.textContent="próxima etapa ▸";
-      if(i===0) bPrev.disabled=true;
-      if(i===j.etapas.length-1) bNext.disabled=true;
-      bPrev.addEventListener("click",function(){if(i>0)selectEtapa(i-1,true);});
-      bNext.addEventListener("click",function(){if(i<j.etapas.length-1)selectEtapa(i+1,true);});
+      if(gi===0) bPrev.disabled=true;
+      if(gi===E.ETAPAS.length-1) bNext.disabled=true;
+      bPrev.addEventListener("click",function(){if(gi>0)selectEtapa(gi-1,true);});
+      bNext.addEventListener("click",function(){if(gi<E.ETAPAS.length-1)selectEtapa(gi+1,true);});
       nav.appendChild(bPrev); nav.appendChild(bNext);
       body.appendChild(nav);
       art.appendChild(body);
@@ -436,105 +375,122 @@
 
   var insEl=document.getElementById("insight");
   function setInsight(){
-    var j=J(), et=j.etapas[cur];
-    insEl.innerHTML="<b>Jornada de "+j.nome+"</b> — "+j.intro+
-      "<br>Etapa <b>"+(cur+1)+"/"+j.etapas.length+"</b> · "+et.titulo+" · "+et.ref+".";
+    var p=E.perna(curPerna), et=E.ETAPAS[cur];
+    insEl.innerHTML="<b>"+p.nome+"</b> — "+p.intro+
+      "<br>Etapa <b>"+(cur+1)+"/"+E.ETAPAS.length+"</b> · "+et.titulo+" · "+et.ref+".";
   }
 
-  function selectEtapa(i,scroll){
-    cur=i;
-    [].slice.call(spine.children).forEach(function(art,k){
-      var on=k===i;
+  var btns=[].slice.call(document.querySelectorAll(".seg button"));
+  var ORDER=["saida","sinai","terra"];
+  function setActive(id){btns.forEach(function(b){
+    var on=b.dataset.p===id;
+    b.setAttribute("aria-checked",on?"true":"false");
+    b.setAttribute("tabindex",on?"0":"-1");
+  });}
+
+  function selectEtapa(gi,scroll){
+    cur=gi;
+    var perna=E.ETAPAS[gi].perna;
+    if(perna!==curPerna){curPerna=perna; setActive(perna); buildSpine();}
+    [].slice.call(spine.children).forEach(function(art){
+      var on=+art.dataset.gi===gi;
       art.dataset.on=on?"1":"0";
       art.querySelector(".phead").setAttribute("aria-expanded",on?"true":"false");
       art.querySelector(".pbody").hidden=!on;
     });
     if(scroll){
-      var art=spine.children[i];
+      var art=spine.querySelector("[data-gi='"+gi+"']");
       if(art) art.scrollIntoView({behavior:reduce?"auto":"smooth",block:"nearest"});
     }
-    if(history.replaceState) history.replaceState(null,"","#"+jId+"-"+(i+1));
-    setInsight(); paintRoutes();
+    if(history.replaceState) history.replaceState(null,"","#e"+(gi+1));
+    setInsight(); paintRota();
   }
 
   function gotoLugar(id){
-    var j=J(), cands=[];
-    j.etapas.forEach(function(et,i){if(et.lugar===id)cands.push(i);});
+    var cands=[];
+    E.ETAPAS.forEach(function(et,i){if(et.lugar===id)cands.push(i);});
     if(!cands.length) return;
     var best=cands[0], bd=1e9;
-    cands.forEach(function(i){var d=Math.abs(i-cur)+(i>=cur?0:0.5); if(d<bd){bd=d;best=i;}});
+    cands.forEach(function(i){var d=Math.abs(i-cur); if(d<bd){bd=d;best=i;}});
     selectEtapa(best,true);
   }
 
-  /* seletor de jornada */
-  var btns=[].slice.call(document.querySelectorAll(".seg button"));
-  var ORDER=["abraao","jaco","jose"];
-  function setActive(id){btns.forEach(function(b){
-    var on=b.dataset.j===id;
-    b.setAttribute("aria-checked",on?"true":"false");
-    b.setAttribute("tabindex",on?"0":"-1");
-  });}
-  function setJornada(id,keepEtapa){
-    jId=id; setActive(id);
-    buildSpine(); buildRoutes(); tintMarkers();
-    selectEtapa(keepEtapa||0,false);
-  }
   btns.forEach(function(b){
-    b.addEventListener("click",function(){if(b.dataset.j!==jId)setJornada(b.dataset.j);});
+    b.addEventListener("click",function(){
+      if(b.dataset.p===curPerna) return;
+      selectEtapa(idxGlobais(b.dataset.p)[0],false);
+    });
     b.addEventListener("keydown",function(e){
       var d=0;
       if(e.key==="ArrowRight"||e.key==="ArrowDown")d=1;
       else if(e.key==="ArrowLeft"||e.key==="ArrowUp")d=-1;
       else if(e.key==="Home")d="H"; else if(e.key==="End")d="E"; else return;
       e.preventDefault();
-      var i=ORDER.indexOf(jId), n=d==="H"?0:d==="E"?ORDER.length-1:(i+d+ORDER.length)%ORDER.length;
-      setJornada(ORDER[n]); btns[n].focus();
+      var i=ORDER.indexOf(curPerna), n=d==="H"?0:d==="E"?ORDER.length-1:(i+d+ORDER.length)%ORDER.length;
+      selectEtapa(idxGlobais(ORDER[n])[0],false); btns[n].focus();
     });
   });
 
-  /* cronologia patriarcal */
+  /* cronologia — eixo quebrado nos ~38 anos */
   (function(){
-    var svg=document.getElementById("chrono"), C=P.CRONO;
-    var X0=110, X1=970, Y0=52, RH=40, BH=12;
-    function x(am){return X0+(am-C.min)/(C.max-C.min)*(X1-X0);}
-    var cores={0:"#e9c46a",1:"#c97a35",2:"#7d8ef2",3:"#2ea87d"};
-    var axY=Y0+C.vidas.length*RH+4;
-    C.vidas.forEach(function(v,i){
-      var y=Y0+i*RH;
-      var t=el("text",{class:"vlbl",x:X0-10,y:y+4,"text-anchor":"end"}); t.textContent=v.nome; svg.appendChild(t);
-      svg.appendChild(el("rect",{x:x(v.n),y:y-BH/2,width:x(v.m)-x(v.n),height:BH,rx:4,fill:cores[i],opacity:.9}));
-      var t2=el("text",{class:"evlbl",x:x(v.m)+6,y:y+3}); t2.textContent="AM "+v.n+"–"+v.m; svg.appendChild(t2);
-    });
-    C.eventos.forEach(function(ev,k){
-      var y=Y0+ev.linha*RH, up=k%2===0;
-      var ex=x(ev.am), ly=up?y-16:y+18;
-      svg.appendChild(el("line",{class:"evln",x1:ex,y1:y+(up?-8:8),x2:ex,y2:ly+(up?3:-8)}));
-      svg.appendChild(el("rect",{class:"ev",x:ex-3.5,y:y-3.5,width:7,height:7,transform:"rotate(45 "+ex+" "+y+")"}));
-      var t=el("text",{class:"evlbl",x:ex,y:ly+(up?0:2),"text-anchor":"middle"}); t.textContent=ev.t; svg.appendChild(t);
-    });
-    var ax=el("g",{class:"axis"});
-    ax.appendChild(el("line",{x1:X0,y1:axY,x2:X1,y2:axY}));
-    for(var a=C.min;a<=C.max;a+=50){
-      ax.appendChild(el("line",{x1:x(a),y1:axY,x2:x(a),y2:axY+5}));
-      if(a%100===0){var t=el("text",{x:x(a),y:axY+18,"text-anchor":"middle"}); t.textContent=a.toLocaleString("pt-BR"); ax.appendChild(t);}
+    var svg=document.getElementById("chrono"), C=E.CRONO;
+    var X0=60, X1=960, Y=92;
+    var larguras=[0.42,0.12,0.46], acum=[0,0.42,0.54];
+    function x(t){
+      for(var i=0;i<C.zonas.length;i++){
+        var z=C.zonas[i];
+        if(t<=z.b||i===C.zonas.length-1){
+          var f=Math.max(0,Math.min(1,(t-z.a)/(z.b-z.a)));
+          return X0+(acum[i]+f*larguras[i])*(X1-X0);
+        }
+      }
+      return X1;
     }
-    var t2=el("text",{class:"evlbl",x:X1,y:axY+34,"text-anchor":"end"}); t2.textContent="Anno Mundi (TM) →"; ax.appendChild(t2);
+    /* banda comprimida */
+    var z2=C.zonas[1];
+    svg.appendChild(el("rect",{class:"banda",x:x(z2.a),y:34,width:x(z2.b)-x(z2.a),height:96}));
+    var ql=el("text",{class:"qlbl",x:(x(z2.a)+x(z2.b))/2,y:28,"text-anchor":"middle"}); ql.textContent=z2.rotulo; svg.appendChild(ql);
+    /* eixo */
+    var ax=el("g",{class:"axis"});
+    ax.appendChild(el("line",{x1:X0,y1:Y+38,x2:X1,y2:Y+38}));
+    [0,1,2,39,40,41].forEach(function(a){
+      ax.appendChild(el("line",{x1:x(a),y1:Y+38,x2:x(a),y2:Y+43}));
+      var t=el("text",{x:x(a),y:Y+56,"text-anchor":"middle"}); t.textContent="ano "+a; ax.appendChild(t);
+    });
+    /* marcas de quebra */
+    [x(z2.a)+ (x(z2.b)-x(z2.a))/2-6, x(z2.a)+(x(z2.b)-x(z2.a))/2+6].forEach(function(qx){
+      ax.appendChild(el("line",{class:"quebra",x1:qx-4,y1:Y+32,x2:qx+4,y2:Y+44}));
+    });
     svg.appendChild(ax);
-    var a=P.af(C.af);
+    /* linha da jornada */
+    svg.appendChild(el("line",{x1:x(0.04),y1:Y,x2:x(40.03),y2:Y,stroke:"#66798e","stroke-width":2}));
+    C.eventos.forEach(function(ev,k){
+      var ex=x(ev.t), up=k%2===0, ly=up?Y-26:Y+26;
+      svg.appendChild(el("line",{class:"evln",x1:ex,y1:Y+(up?-7:7),x2:ex,y2:ly+(up?4:-9)}));
+      svg.appendChild(el("rect",{class:"ev",x:ex-3.5,y:Y-3.5,width:7,height:7,transform:"rotate(45 "+ex+" "+Y+")"}));
+      var t=el("text",{class:"evlbl",x:ex,y:ly+(up?0:2),"text-anchor":"middle"}); t.textContent=ev.txt; svg.appendChild(t);
+    });
+    var a=E.af(C.af);
     document.getElementById("chrononote").innerHTML=
-      "<span class='confchip conf-der'>derivado</span><b>"+P.FONTES[a.fonte].nome+"</b> — "+a.txt;
+      "<span class='confchip conf-der'>derivado</span><b>"+E.FONTES[a.fonte].nome+"</b> — "+a.txt;
   })();
 
-  /* init + deep link (#jornada-N) */
-  var m=location.hash.replace("#","").match(/^(abraao|jaco|jose)(?:-(\d+))?$/);
-  if(m){ setJornada(m[1], m[2]?Math.min(P.jornada(m[1]).etapas.length-1,Math.max(0,parseInt(m[2],10)-1)):0); }
-  else setJornada("abraao");
+  /* notas de rota (honestidade primeiro) */
+  (function(){
+    var r=E.af("a-rota"), d=E.af("a-data");
+    document.getElementById("rotanote").innerHTML=
+      "<span class='confchip conf-deb'>debatido</span>"+r.txt+" "+d.txt;
+  })();
+
+  /* init + deep link (#eN) */
+  buildSpine();
+  var m=location.hash.match(/^#e(\d+)$/);
+  selectEtapa(m?Math.min(E.ETAPAS.length-1,Math.max(0,parseInt(m[1],10)-1)):0,false);
   window.addEventListener("hashchange",function(){
-    var m2=location.hash.replace("#","").match(/^(abraao|jaco|jose)(?:-(\d+))?$/);
+    var m2=location.hash.match(/^#e(\d+)$/);
     if(!m2) return;
-    var idx=m2[2]?Math.min(P.jornada(m2[1]).etapas.length-1,Math.max(0,parseInt(m2[2],10)-1)):0;
-    if(m2[1]!==jId) setJornada(m2[1],idx);
-    else if(idx!==cur) selectEtapa(idx,true);
+    var gi=Math.min(E.ETAPAS.length-1,Math.max(0,parseInt(m2[1],10)-1));
+    if(gi!==cur) selectEtapa(gi,true);
   });
 })();
 </script>

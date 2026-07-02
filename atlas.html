@@ -17,7 +17,8 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <script src="dados.js"></script>
-<script src="dados-texto.js"></script>
+<script src="texto/core.js"></script>
+<script src="texto/genesis.js"></script>
 <style>
   /* ═══ DESIGN TOKENS · Atlas Bíblico Interativo · v1 · WCAG 2.1 AA ═══ */
   :root{
@@ -305,10 +306,9 @@
     if(!window.TEXTO) return "";
     var p=window.TEXTO.passagem(ref);
     if(!p) return "";
-    var livro=ref.charAt(0)==="J"&&ref.charAt(1)==="s"?"Josué":"Gênesis";
     var h="";
     p.forEach(function(g){
-      if(p.length>1) h+="<h4>"+livro+" "+g.cap+"</h4>";
+      if(p.length>1) h+="<h4>"+g.nome+" "+g.cap+"</h4>";
       h+="<p>"+g.versos.map(function(x){return "<sup>"+x.v+"</sup>"+x.t;}).join(" ")+"</p>";
     });
     h+="<div class='fonte'>"+window.TEXTO.META.nome+" ("+window.TEXTO.META.sigla+") · "+window.TEXTO.META.nota+" · "+window.TEXTO.META.licenca+"</div>";
