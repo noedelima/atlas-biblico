@@ -62,7 +62,7 @@ O site é **HTML + JS puro, sem build e sem dependências em runtime** — abra 
 - ✅ **A biblioteca** — o leitor completo, livro a livro, com carga sob demanda
 - ✅ **PWA** — manifest + service worker: o atlas instala e funciona offline (o que você visita fica disponível sem rede)
 - ✅ **Gazetteer (1ª rodada)** — os sítios do mundo greco-romano (módulos 9–10) agora citam o **[Pleiades](https://pleiades.stoa.org/)**, com IDs verificados contra a API; duas coordenadas foram corrigidas no processo (Listra, Corinto)
-- ✅ **Deuterocanônicos** — os sete livros do cânon católico entram na biblioteca (trad. Figueiredo, domínio público), com fonte declarada por livro; as adições gregas de Ester/Daniel ficam de fora por ora
+- ✅ **Deuterocanônicos** — os sete livros do cânon católico entram na biblioteca (trad. Figueiredo, domínio público), com fonte declarada por livro — **e as adições gregas de Ester (10–16) e de Daniel (3 completo, Susana, Bel e o dragão)**, como entradas próprias com a numeração tradicional; os Macabeus ancoram o "silêncio" no panorama (Modin, 167 a.C.)
 - **Adiante** — overlay da Bíblia de Jerusalém (privado, por direito autoral — o corpus aceita traduções paralelas via `TEXTO.registrar`) · refinamento contínuo das identificações do AT (Pleiades cobre pouco o Bronze/Ferro; OpenBible/STEPBible são o caminho)
 
 ## Fontes e licenças de conteúdo
@@ -70,7 +70,7 @@ O site é **HTML + JS puro, sem build e sem dependências em runtime** — abra 
 | Fonte | Uso | Licença |
 |---|---|---|
 | [Bíblia Livre](https://sites.google.com/site/biblialivre/) (BLIVRE) | **texto integral** — os 66 livros do cânon comum, via eBible/getBible | CC-BY 3.0 BR |
-| Bíblia trad. Pe. A. P. de Figueiredo (Vulgata, 1778–90; ed. 1950) | **texto integral dos deuterocanônicos** (Tb, Jt, 1–2Mc, Sb, Eclo, Br) — digitalização OCR do exemplar do Internet Archive, revisada verso a verso | Domínio público |
+| Bíblia trad. Pe. A. P. de Figueiredo (Vulgata, 1778–90; ed. 1950) | **texto integral dos deuterocanônicos** (Tb, Jt, 1–2Mc, Sb, Eclo, Br) **e das adições gregas de Ester e Daniel** — digitalização OCR do exemplar do Internet Archive, revisada verso a verso | Domínio público |
 | Bíblia Almeida (edição em domínio público) | trechos em destaque nas perícopes e cards | Domínio público |
 | [Natural Earth](https://www.naturalearthdata.com/) | geometria de costas/rios do basemap | Domínio público |
 | Identificações dos povos e lugares | tradicionais/debatidas, sinalizadas por confiança | — |

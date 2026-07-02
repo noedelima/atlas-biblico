@@ -377,13 +377,20 @@ function check(name, ok, extra) {
         caps: window.BIBLIOTECA.reduce((s, l) => s + l.c, 0),
         versos: window.BIBLIOTECA.reduce((s, l) => s + l.v, 0)
       }));
-      check("73 livros no manifesto (com os deuterocanônicos)", manifesto.livros === 73, manifesto.livros);
-      check("1.326 capítulos", manifesto.caps === 1326, manifesto.caps);
-      check("35.476 versículos — a Bíblia inteira", manifesto.versos === 35476, manifesto.versos);
+      check("75 entradas no manifesto (73 livros + 2 adições)", manifesto.livros === 75, manifesto.livros);
+      check("1.336 capítulos", manifesto.caps === 1336, manifesto.caps);
+      check("35.794 versículos — a Bíblia inteira", manifesto.versos === 35794, manifesto.versos);
       const estante = await page.$$eval("#shelf .bk", (b) => b.length);
-      check("estante com 73 livros clicáveis", estante === 73, estante);
-      const dc = await page.evaluate(() => window.BIBLIOTECA.filter((l) => l.d).map((l) => l.s).join(","));
+      check("estante com 75 entradas clicáveis", estante === 75, estante);
+      const dc = await page.evaluate(() => window.BIBLIOTECA.filter((l) => l.d && !l.ad).map((l) => l.s).join(","));
       check("7 deuterocanônicos marcados", dc === "Tb,Jt,1Mc,2Mc,Sb,Eclo,Br", dc);
+      const ad = await page.evaluate(() => window.BIBLIOTECA.filter((l) => l.ad).map((l) => l.s + ":" + (l.ks || []).join("·")).join(" "));
+      check("adições gregas com capítulos próprios", ad === "EtG:10·11·12·13·14·15·16 DnG:3·13·14", ad);
+      // Susana (Dn 13) via chave de capítulo não sequencial
+      await page.evaluate(() => { location.hash = "#DnG.13"; });
+      await page.waitForTimeout(700);
+      const susana = await page.evaluate(() => document.getElementById("rtexto").textContent);
+      check("DnG 13 (Susana) carrega pela chave", susana.includes("Susana"), susana.slice(0, 60));
       // deep link deuterocanônico → carga sob demanda (Figueiredo)
       await page.evaluate(() => { location.hash = "#Sb.3"; });
       await page.waitForTimeout(700);
