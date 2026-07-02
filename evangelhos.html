@@ -3,28 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Atlas Bíblico Interativo — F7: Exílio e retorno. Daniel e Ezequiel na Babilônia, o edito de Ciro, o segundo Templo, Ester em Susã, os muros de Neemias — e Malaquias, o fecho do Antigo Testamento.">
-<title>Exílio e retorno — Dn · Ed · Ne · Et · Ml · F7</title>
+<meta name="description" content="Atlas Bíblico Interativo — F8: os Evangelhos. De Belém à ascensão na geografia da Galileia e da Judeia, com o esquema de Jerusalém da Paixão, texto integral dos quatro evangelhos e a cronologia a.C./d.C. com os cruxes declarados.">
+<title>Os Evangelhos — o Verbo se fez carne · F8</title>
 <link rel="icon" href="assets/icone.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/icon-180.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Atlas Bíblico Interativo">
 <meta property="og:locale" content="pt_BR">
-<meta property="og:title" content="Exílio e retorno (F7) — o fecho do Antigo Testamento">
-<meta property="og:description" content="De Jerusalém à Babilônia e de volta: Daniel, Ezequiel, o edito de Ciro, Ester, Neemias — e Malaquias, esperando o sol da justiça.">
-<meta property="og:url" content="https://noedelima.github.io/atlas-biblico/exilio.html">
+<meta property="og:title" content="Os Evangelhos (F8) — o Verbo se fez carne">
+<meta property="og:description" content="De Belém à ascensão: a Galileia, a semana da Paixão em Jerusalém e o túmulo vazio — com os quatro evangelhos integrais.">
+<meta property="og:url" content="https://noedelima.github.io/atlas-biblico/evangelhos.html">
 <meta property="og:image" content="https://noedelima.github.io/atlas-biblico/assets/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<script src="dados-exilio.js"></script>
+<script src="dados-evangelhos.js"></script>
 <script src="texto/core.js"></script>
-<script src="texto/daniel.js"></script>
-<script src="texto/ezequiel.js"></script>
-<script src="texto/esdras.js"></script>
-<script src="texto/neemias.js"></script>
-<script src="texto/ester.js"></script>
-<script src="texto/malaquias.js"></script>
+<script src="texto/mateus.js"></script>
+<script src="texto/marcos.js"></script>
+<script src="texto/lucas.js"></script>
+<script src="texto/joao.js"></script>
 <style>
   /* ═══ DESIGN TOKENS · Atlas Bíblico Interativo · v1 · WCAG 2.1 AA ═══ */
   :root{
@@ -126,6 +124,12 @@
   .hit:focus-visible{outline:2px solid var(--halo); stroke:var(--halo); stroke-width:2.5}
   text{font-family:var(--sans)}
 
+  .cid .muralha{fill:#1a2432; stroke:var(--line-strong); stroke-width:1.6}
+  .cid .templo{fill:#22304a; stroke:#3a4c66; stroke-width:1.2}
+  .cid .cedron{fill:#12202e}
+  .cid .monte{fill:#1c2836; stroke:#2e3c4e; stroke-width:1}
+  .cid .rlbl{fill:var(--muted); font-size:11px; font-style:italic; font-family:var(--serif); letter-spacing:.08em}
+  .cid .ilbl{font-size:10.5px; fill:#cfe0ef; paint-order:stroke; stroke:#0e1218; stroke-width:3px; stroke-linejoin:round; pointer-events:none}
   .anc .axis text{fill:var(--muted); font-size:10.5px}
   .anc .axis line{stroke:var(--line-strong)}
   .anc .ev{stroke:#0e1218; stroke-width:.6}
@@ -144,17 +148,17 @@
 <body>
 <div class="wrap">
   <header>
-    <nav class="crumbs" aria-label="Navegação"><a href="./">← Atlas Bíblico Interativo</a> · <a href="reis.html">o reino dividido</a></nav>
-    <div class="kicker">Atlas Bíblico Interativo · F7 · Exílio e retorno · AA</div>
-    <h1>Exílio e retorno — e o fecho do Antigo Testamento</h1>
-    <p class="sub">Três movimentos: <b>na Babilônia</b> (Daniel, a fornalha, Ezequiel junto ao Quebar, a escrita na parede), <b>o retorno</b> (o edito de Ciro, o altar entre as ruínas, o segundo Templo) e <b>os muros e a espera</b> (Ester em Susã, Neemias, a Lei lida na praça — e Malaquias, o último verso do AT). O mapa se estende de Jerusalém à Pérsia; as âncoras seguem firmes.</p>
+    <nav class="crumbs" aria-label="Navegação"><a href="./">← Atlas Bíblico Interativo</a> · <a href="exilio.html">exílio e retorno</a> · <a href="panorama.html">panorama do AT</a></nav>
+    <div class="kicker">Atlas Bíblico Interativo · F8 · Os Evangelhos · AA</div>
+    <h1>Os Evangelhos — “e a Palavra se fez carne”</h1>
+    <p class="sub">Depois de ~400 anos de silêncio, o atlas atravessa a fronteira: três movimentos — <b>o Verbo se fez carne</b> (de Belém a Caná), <b>Galileia</b> (Cafarnaum, o lago, a confissão, a glória no monte) e <b>a Paixão e a glória</b> (a semana em Jerusalém, com o esquema da cidade). Os quatro evangelhos integrais; a cronologia cruza o a.C./d.C. com os cruxes declarados.</p>
   </header>
 
   <div class="controls">
     <div class="seg" role="radiogroup" aria-label="Movimento">
-      <button data-p="babilonia" role="radio" aria-checked="true"  tabindex="0"><span class="dot" style="background:#e9c46a" aria-hidden="true"></span>Na Babilônia</button>
-      <button data-p="retorno"   role="radio" aria-checked="false" tabindex="-1"><span class="dot" style="background:#7d8ef2" aria-hidden="true"></span>O retorno</button>
-      <button data-p="muros"     role="radio" aria-checked="false" tabindex="-1"><span class="dot" style="background:#2ea87d" aria-hidden="true"></span>Os muros e a espera</button>
+      <button data-p="encarnacao" role="radio" aria-checked="true"  tabindex="0"><span class="dot" style="background:#e9c46a" aria-hidden="true"></span>O Verbo se fez carne</button>
+      <button data-p="galileia"   role="radio" aria-checked="false" tabindex="-1"><span class="dot" style="background:#7d8ef2" aria-hidden="true"></span>Galileia</button>
+      <button data-p="paixao"     role="radio" aria-checked="false" tabindex="-1"><span class="dot" style="background:#2ea87d" aria-hidden="true"></span>A Paixão e a glória</button>
     </div>
     <div class="insight" id="insight" aria-live="polite"></div>
   </div>
@@ -167,16 +171,23 @@
 
     <section aria-label="Mapa e âncoras">
       <div class="mapcard">
-        <div class="maphead">De Jerusalém à Pérsia — Dn · Ed · Ne · Et</div>
+        <div class="maphead">Galileia e Judeia — Mt · Mc · Lc · Jo</div>
         <div class="scroll">
-          <svg id="mapa" class="map" viewBox="0 0 1000 480" role="group" aria-label="Mapa do Crescente Fértil, de Jerusalém à Babilônia e a Susã, com as rotas do exílio e do retorno."></svg>
+          <svg id="mapa" class="map" viewBox="0 0 1000 560" role="group" aria-label="Mapa da Galileia e da Judeia com os lugares dos evangelhos, de Belém a Cesareia de Filipe. Cada lugar é um botão que leva à etapa correspondente."></svg>
         </div>
-        <p class="viewnote"><b>● cheio</b> = identificação atestada · <b>○ tracejado</b> = provável · cor = movimento · trecho pontilhado = etapa futura (a espera).</p>
+        <p class="viewnote"><b>● cheio</b> = identificação atestada · <b>○ tracejado</b> = provável/debatida · cor = movimento · seta pontilhada = a fuga ao Egito.</p>
+      </div>
+      <div class="mapcard cid">
+        <div class="maphead">Jerusalém da Paixão · esquema</div>
+        <div class="scroll">
+          <svg id="cidade" class="map" viewBox="0 0 1000 300" role="group" aria-label="Esquema da Jerusalém da Paixão, sem escala: a cidade e o Templo, o vale do Cédron, Getsêmani, o monte das Oliveiras, Betânia, e o Gólgota com o túmulo fora da muralha. Cada ponto leva à etapa correspondente."></svg>
+        </div>
+        <p class="viewnote" id="cidnote"></p>
       </div>
       <div class="mapcard anc">
-        <div class="maphead">As âncoras do período · a.C.</div>
+        <div class="maphead">A fronteira do calendário · a.C. ⇄ d.C.</div>
         <div class="scroll">
-          <svg id="ancoras" class="map" viewBox="0 0 1000 175" role="img" aria-label="Linha do tempo em anos antes de Cristo: as levas de 605 e 597, a queda de Jerusalém em 586, a queda da Babilônia em 539, o edito de Ciro em 538, o segundo Templo em 515, os muros de Neemias em 445 e Malaquias por volta de 430."></svg>
+          <svg id="ancoras" class="map" viewBox="0 0 1000 175" role="img" aria-label="Linha do tempo cruzando a fronteira dos calendários: nascimento antes de 4 antes de Cristo, morte de Herodes, ano quinze de Tibério em 28, e a crucificação em 30 ou 33 — as duas datas em debate."></svg>
         </div>
         <p class="viewnote" id="ancnote"></p>
       </div>
@@ -184,22 +195,22 @@
   </div>
 
   <footer>
-    <b>Proveniência:</b> texto integral <b>Bíblia Livre</b> (BLIVRE, CC-BY 3.0 BR) · crônicas babilônicas, cilindro de Ciro e arquivos de Murashu citados por afirmação · os “70 anos” com as duas contagens declaradas · basemap <b>Natural Earth</b> (domínio público).
-    <br><b>Veio de:</b> <a href="reis.html" style="color:var(--gold1)">Salomão e o reino dividido</a> — a mesa posta na Babilônia. <b>Continue a leitura:</b> <a href="evangelhos.html" style="color:var(--gold1)">os Evangelhos (F8) →</a> · <a href="panorama.html" style="color:var(--gold1)">panorama do AT</a>
+    <b>Proveniência:</b> texto integral <b>Bíblia Livre</b> (BLIVRE, CC-BY 3.0 BR) · identificações com confiança por sítio — os debates declarados (Caná, Betsaida, Tabor × Hermom, Gólgota × Gordon, Emaús, o censo de Lc 2:2) · cronologia com Lc 3:1 como âncora e a crucificação 30 × 33 em aberto · basemap <b>Natural Earth</b> (domínio público).
+    <br><b>Veio de:</b> <a href="exilio.html" style="color:var(--gold1)">Exílio e retorno</a> — Malaquias esperava; João Batista aponta. <b>Roadmap:</b> F9 Atos e as viagens de Paulo — o mapa vira o Mediterrâneo.
   </footer>
 </div>
 
 <script>
 (function(){
   "use strict";
-  var X=window.EXILIO, T=window.TEXTO;
+  var X=window.EVANGELHOS, T=window.TEXTO;
   var NS="http://www.w3.org/2000/svg";
   function el(t,a){var e=document.createElementNS(NS,t);if(a)for(var k in a)e.setAttribute(k,a[k]);return e;}
   var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* projeção-base e vista larga (Jerusalém → Pérsia) */
   function xp0(lon){return 30+(lon+12)*12.702;} function yp0(lat){return 30+(48-lat)*14.667;}
-  var W=1000, H=480, S=2.15, CLON=40.6, CLAT=32.8;
+  var W=1000, H=560, S=11, CLON=35.45, CLAT=32.35;
   var TX=W/2-S*xp0(CLON), TY=H/2-S*yp0(CLAT);
   function xp(lon){return TX+S*xp0(lon);} function yp(lat){return TY+S*yp0(lat);}
 
@@ -211,7 +222,7 @@
   gl.appendChild(el("stop",{offset:"0","stop-color":"#dde6c6"})); gl.appendChild(el("stop",{offset:"1","stop-color":"#e9dcba"}));
   defs.appendChild(gw); defs.appendChild(gl);
   X.PERNAS.forEach(function(p){
-    var mk=el("marker",{id:"xarr-"+p.id,viewBox:"0 0 10 10",refX:"8",refY:"5",markerWidth:"5",markerHeight:"5",orient:"auto-start-reverse"});
+    var mk=el("marker",{id:"evarr-"+p.id,viewBox:"0 0 10 10",refX:"8",refY:"5",markerWidth:"5",markerHeight:"5",orient:"auto-start-reverse"});
     mk.appendChild(el("path",{d:"M0,0 L10,5 L0,10 Z",fill:p.cor}));
     defs.appendChild(mk);
   });
@@ -229,37 +240,46 @@
 
   mapa.appendChild(el("rect",{x:0,y:0,width:W,height:H,fill:"url(#xWater)"}));
   var grat=el("g");
-  for(var lo=25;lo<=55;lo+=5) grat.appendChild(el("line",{class:"grat",x1:xp(lo),y1:0,x2:xp(lo),y2:H}));
-  for(var la=25;la<=40;la+=5) grat.appendChild(el("line",{class:"grat",x1:0,y1:yp(la),x2:W,y2:yp(la)}));
+  for(var lo=33;lo<=39;lo+=1) grat.appendChild(el("line",{class:"grat",x1:xp(lo),y1:0,x2:xp(lo),y2:H}));
+  for(var la=30;la<=34;la+=1) grat.appendChild(el("line",{class:"grat",x1:0,y1:yp(la),x2:W,y2:yp(la)}));
   mapa.appendChild(grat);
   var geo=el("g",{transform:"translate("+TX+","+TY+") scale("+S+")"});
   var coast=el("use",{href:"#xCoastP",class:"coast"});
   coast.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","#xCoastP");
   geo.appendChild(coast);
-  var riv=el("use",{href:"#xRivers",class:"riveru"});
-  riv.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","#xRivers");
-  geo.appendChild(riv);
   mapa.appendChild(geo);
   (function(){
+    mapa.appendChild(el("ellipse",{cx:xp(35.58),cy:yp(32.83),rx:14,ry:22,fill:"#a6cde0",stroke:"#93a59a","stroke-width":.8}));
+    var jr=[[35.61,33.25],[35.6,33.0],[35.58,32.83],[35.55,32.5],[35.53,32.2],[35.5,31.95]];
+    mapa.appendChild(el("path",{d:"M"+jr.map(function(p){return xp(p[0]).toFixed(1)+","+yp(p[1]).toFixed(1);}).join(" L"),
+      fill:"none",stroke:"#44789a","stroke-width":1.6,opacity:.95}));
+    mapa.appendChild(el("ellipse",{cx:xp(35.5),cy:yp(31.45),rx:16,ry:52,fill:"#a6cde0",stroke:"#93a59a","stroke-width":.8}));
     function sea(lon,lat,txt,rot){var t=el("text",{class:"sea",x:xp(lon),y:yp(lat),"text-anchor":"middle"});
       if(rot)t.setAttribute("transform","rotate("+rot+" "+xp(lon)+" "+yp(lat)+")");t.textContent=txt;mapa.appendChild(t);}
-    sea(28.5,33.6,"M A R   M E D I T E R R Â N E O");
-    sea(50.6,28.8,"golfo Pérsico",-38);
-    sea(43.6,34.6,"Eufrates",-32);
+    sea(34.1,32.4,"M A R   G R A N D E",-90);
+    sea(35.85,31.35,"mar Salgado",-80);
+    sea(35.95,32.83,"Genesaré");
   })();
+  /* a fuga ao Egito: seta pontilhada para o sudoeste */
+  var egito=el("g");
+  var egd="M"+xp(35.20)+","+yp(31.70)+" L"+xp(34.7)+","+yp(31.35)+" L"+xp(34.0)+","+yp(31.0)+" L"+xp(33.3)+","+yp(30.7);
+  egito.appendChild(el("path",{d:egd,fill:"none",stroke:"#8a5f04","stroke-width":2,"stroke-dasharray":"3 6","stroke-linecap":"round"}));
+  var egl=el("text",{class:"sea",x:xp(33.9),y:yp(30.85)}); egl.textContent="→ Egito (Os 11:1)"; egito.appendChild(egl);
+  egito.setAttribute("opacity",".35"); mapa.appendChild(egito);
 
   var rotasG=el("g"); mapa.appendChild(rotasG);
   var nodesG=el("g"); mapa.appendChild(nodesG);
   var halo=el("circle",{r:11,fill:"none",stroke:"#8a5f04","stroke-width":2.6,"pointer-events":"none"});
   halo.style.display="none"; mapa.appendChild(halo);
 
-  var cur=0, curPerna="babilonia";
+  var cur=0, curPerna="encarnacao";
   function idxGlobais(pernaId){
     var out=[]; X.ETAPAS.forEach(function(et,i){if(et.perna===pernaId)out.push(i);}); return out;
   }
 
   var pts={};
   X.LUG.forEach(function(l){
+    if(l.inset&&l.id!=="jerusalem"&&l.id!=="betania"&&l.id!=="oliveiras"){pts[l.id]={soInset:true};return;}
     var g=el("g",{class:"lpt"});
     var hit=el("circle",{class:"hit",r:13,cx:xp(l.lon),cy:yp(l.lat),fill:"transparent","pointer-events":"all",
                          tabindex:"0",role:"button","aria-label":l.nome+" — "+l.idl+". Ir à etapa correspondente."});
@@ -280,6 +300,7 @@
     var cor=X.perna(curPerna).cor;
     X.LUG.forEach(function(l){
       var o=pts[l.id], on=!!usados[l.id];
+      if(o.soInset) return;
       o.g.style.display=on?"":"none";
       o.hit.setAttribute("tabindex",on?"0":"-1");
       var att=l.conf==="att";
@@ -295,7 +316,7 @@
     var gis=idxGlobais(curPerna), cor=X.perna(curPerna).cor;
     for(var k=1;k<gis.length;k++){
       var a=X.lug(X.ETAPAS[gis[k-1]].lugar), b=X.lug(X.ETAPAS[gis[k]].lugar), et=X.ETAPAS[gis[k]];
-      if(a.id===b.id&&!(et.via&&et.via.length)){segs.push(null);continue;}
+      if((a.id===b.id&&!(et.via&&et.via.length))||(a.inset&&b.inset)){segs.push(null);continue;}
       var arr=[[a.lon,a.lat]].concat(et.via||[]).concat([[b.lon,b.lat]]);
       var d="M"+arr.map(function(p){return xp(p[0]).toFixed(1)+","+yp(p[1]).toFixed(1);}).join(" L");
       var path=el("path",{d:d,fill:"none",stroke:cor,"stroke-linejoin":"round","stroke-linecap":"round"});
@@ -311,12 +332,15 @@
       p.setAttribute("opacity",done?0.95:0.3);
       if(fut||!done) p.setAttribute("stroke-dasharray",fut?"3 5":"5 5");
       else p.removeAttribute("stroke-dasharray");
-      if(done&&!fut) p.setAttribute("marker-end","url(#xarr-"+curPerna+")");
+      if(done&&!fut) p.setAttribute("marker-end","url(#evarr-"+curPerna+")");
       else p.removeAttribute("marker-end");
     });
-    var o=pts[X.ETAPAS[cur].lugar];
+    var lug=X.lug(X.ETAPAS[cur].lugar);
+    var o=pts[lug.id].soInset?pts.jerusalem:pts[lug.id];
     halo.style.display=""; halo.setAttribute("cx",o.x); halo.setAttribute("cy",o.y);
     halo.setAttribute("stroke",X.perna(curPerna).cor);
+    egito.setAttribute("opacity",X.ETAPAS[cur].egito?"1":".35");
+    paintCidade();
   }
 
   function versosHtml(p){
@@ -346,7 +370,7 @@
       var head=document.createElement("button");
       head.className="phead"; head.setAttribute("aria-expanded","false");
       head.innerHTML="<span class='pref'>Etapa "+(gi+1)+" · "+et.ref+"</span>"+
-        "<span class='ptit'>"+et.titulo+(et.futura?" <span style='font-size:11px;color:var(--muted)'>· o fecho do AT</span>":"")+"</span>"+
+        "<span class='ptit'>"+et.titulo+(et.futura?" <span style='font-size:11px;color:var(--muted)'>· a ponte para Atos</span>":"")+"</span>"+
         "<span class='plug'>em <b>"+l.nome+"</b> — "+l.idl+"</span>";
       head.addEventListener("click",function(){selectEtapa(gi,false);});
       art.appendChild(head);
@@ -382,7 +406,7 @@
   }
 
   var btns=[].slice.call(document.querySelectorAll(".seg button"));
-  var ORDER=["babilonia","retorno","muros"];
+  var ORDER=["encarnacao","galileia","paixao"];
   function setActive(id){btns.forEach(function(b){
     var on=b.dataset.p===id;
     b.setAttribute("aria-checked",on?"true":"false");
@@ -433,20 +457,23 @@
     });
   });
 
-  /* as âncoras do período (a.C.) */
+  /* a fronteira do calendário (a.C. ⇄ d.C.) */
   (function(){
     var svg=document.getElementById("ancoras"), A=X.ANCORAS;
     var X0=70, X1=950, Y=88;
-    function x(t){return X0+(A.min-t)/(A.min-A.max)*(X1-X0);}
+    function x(t){return X0+(t-A.min)/(A.max-A.min)*(X1-X0);}
     var ax=el("g",{class:"axis"});
     ax.appendChild(el("line",{x1:X0,y1:Y+40,x2:X1,y2:Y+40}));
-    for(var a=A.min;a>=A.max;a-=20){
-      ax.appendChild(el("line",{x1:x(a),y1:Y+40,x2:x(a),y2:Y+45}));
-      if(a%40===0){var t=el("text",{x:x(a),y:Y+58,"text-anchor":"middle"}); t.textContent=a; ax.appendChild(t);}
-    }
-    var t2=el("text",{class:"evlbl",x:X1,y:Y+72,"text-anchor":"end"}); t2.textContent="anos a.C. →"; ax.appendChild(t2);
+    [-5,0,10,20,30].forEach(function(t){
+      ax.appendChild(el("line",{x1:x(t),y1:Y+40,x2:x(t),y2:Y+45}));
+      var tx=el("text",{x:x(t),y:Y+58,"text-anchor":"middle"});
+      tx.textContent=t<0?(-t)+" a.C.":(t===0?"0*":t+" d.C."); ax.appendChild(tx);
+    });
+    var nz=el("text",{class:"evlbl",x:X1,y:Y+72,"text-anchor":"end"}); nz.textContent="* não há ano zero"; ax.appendChild(nz);
     svg.appendChild(ax);
-    svg.appendChild(el("line",{x1:x(605),y1:Y,x2:x(430),y2:Y,stroke:"#66798e","stroke-width":2}));
+    svg.appendChild(el("line",{x1:x(0),y1:34,x2:x(0),y2:Y+40,stroke:"#5d7183","stroke-width":1.4,"stroke-dasharray":"6 5"}));
+    var sl=el("text",{class:"evlbl",x:x(0),y:26,"text-anchor":"middle",fill:"#e9c46a"}); sl.textContent="a.C. ⇄ d.C."; svg.appendChild(sl);
+    svg.appendChild(el("line",{x1:x(-5),y1:Y,x2:x(33),y2:Y,stroke:"#66798e","stroke-width":2}));
     A.eventos.forEach(function(ev,k){
       var ex=x(ev.t), up=k%2===0, ly=up?Y-26:Y+22;
       svg.appendChild(el("line",{class:"evln",x1:ex,y1:Y+(up?-7:7),x2:ex,y2:ly+(up?4:-9)}));
@@ -454,13 +481,77 @@
       var d=el("rect",{class:"ev",x:ex-4,y:Y-4,width:8,height:8,transform:"rotate(45 "+ex+" "+Y+")",
                        fill:att?"#f4e2b0":"#0e1218",stroke:att?"#0e1218":"#e9c46a","stroke-width":att?.6:1.6});
       svg.appendChild(d);
-      var t=el("text",{class:"evlbl",x:ex,y:ly+(up?0:6),"text-anchor":"middle"}); t.textContent=ev.t+" · "+ev.txt; svg.appendChild(t);
+      var t=el("text",{class:"evlbl",x:ex,y:ly+(up?0:6),"text-anchor":"middle"}); t.textContent=ev.txt; svg.appendChild(t);
     });
-    var a=X.af(A.af), b=X.af("a-70anos");
+    var a=X.af(A.af), b=X.af("a-censo");
     document.getElementById("ancnote").innerHTML=
       "<span class='confchip conf-att'>atestado</span><b>"+X.FONTES[a.fonte].nome+"</b> — "+a.txt+
       "<br><span class='confchip conf-deb'>debatido</span><b>"+X.FONTES[b.fonte].nome+"</b> — "+b.txt;
   })();
+
+  /* o esquema de Jerusalém da Paixão */
+  var cidHalo, cidPts={}, cidSegs=[];
+  (function(){
+    var svg=document.getElementById("cidade");
+    /* Cédron e Oliveiras */
+    svg.appendChild(el("path",{class:"cedron",d:"M614,10 C630,80 626,180 616,290 L662,290 C650,180 654,80 646,10 Z"}));
+    var cl=el("text",{class:"rlbl",x:636,y:150,"text-anchor":"middle",transform:"rotate(-90 636 150)"}); cl.textContent="vale do Cédron"; svg.appendChild(cl);
+    svg.appendChild(el("ellipse",{class:"monte",cx:790,cy:150,rx:120,ry:95}));
+    var ml=el("text",{class:"rlbl",x:790,y:96,"text-anchor":"middle"}); ml.textContent="monte das Oliveiras"; svg.appendChild(ml);
+    /* a cidade e o Templo */
+    svg.appendChild(el("path",{class:"muralha",d:"M180,84 L470,70 L590,88 L600,200 L520,272 L300,282 L170,240 Z"}));
+    var jl=el("text",{class:"rlbl",x:300,y:190,"text-anchor":"middle"}); jl.textContent="J E R U S A L É M"; svg.appendChild(jl);
+    svg.appendChild(el("rect",{class:"templo",x:455,y:100,width:125,height:98,rx:6}));
+    var tl=el("text",{class:"rlbl",x:517,y:230,"text-anchor":"middle"}); tl.textContent="o Templo"; svg.appendChild(tl);
+    svg.appendChild(el("rect",{x:262,y:242,width:12,height:12,fill:"#3a4c66"}));
+    var cnl=el("text",{class:"rlbl",x:284,y:252}); cnl.textContent="cenáculo (tradição)"; svg.appendChild(cnl);
+    var em=el("text",{class:"rlbl",x:30,y:262}); em.textContent="← para Emaús (déb.)"; svg.appendChild(em);
+    /* o caminho da semana (segmentos progressivos) */
+    var ordem=["betania","oliveiras","jerusalem","getsemani","golgota","tumulo","oliveiras"];
+    var segG=el("g"); svg.appendChild(segG);
+    for(var k=1;k<ordem.length;k++){
+      var a=X.lug(ordem[k-1]).inset, b=X.lug(ordem[k]).inset;
+      var p=el("path",{d:"M"+a.x+","+a.y+" L"+b.x+","+b.y,fill:"none",stroke:"#147a56","stroke-linejoin":"round","stroke-linecap":"round"});
+      segG.appendChild(p); cidSegs.push(p);
+    }
+    /* pontos */
+    X.LUG.forEach(function(l){
+      if(!l.inset) return;
+      var g=el("g",{class:"lpt"});
+      var hit=el("circle",{class:"hit",r:14,cx:l.inset.x,cy:l.inset.y,fill:"transparent","pointer-events":"all",
+                           tabindex:"0",role:"button","aria-label":l.nome+" — "+l.idl+". Ir à etapa correspondente."});
+      var vis=el("g",{transform:"translate("+l.inset.x+","+l.inset.y+")"});
+      var att=l.conf==="att";
+      var shp=el("circle",{class:"shape",r:6,fill:att?"#2ea87d":"#0e1218",stroke:att?"#0e1218":"#2ea87d","stroke-width":att?1.4:2});
+      if(!att) shp.setAttribute("stroke-dasharray","3 2");
+      var tx=el("text",{class:"ilbl",x:l.id==="betania"?-58:10,y:l.id==="tumulo"?-8:(l.id==="golgota"?-8:4)});
+      tx.textContent=l.nome; vis.appendChild(shp); vis.appendChild(tx);
+      g.appendChild(hit); g.appendChild(vis); svg.appendChild(g);
+      g.addEventListener("click",function(){gotoLugar(l.id);});
+      hit.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();e.stopPropagation();gotoLugar(l.id);}});
+      cidPts[l.id]=l.inset;
+    });
+    cidHalo=el("circle",{r:12,fill:"none",stroke:"#2ea87d","stroke-width":2.6,"pointer-events":"none"});
+    cidHalo.style.display="none"; svg.appendChild(cidHalo);
+    var a2=X.af("a-golgota"), b2=X.af("a-emaus");
+    document.getElementById("cidnote").innerHTML=
+      "<span class='confchip conf-der'>derivado</span><b>Esquema</b> — posições relativas, sem escala; a muralha é a da época (a linha exata é discutida). "+
+      "<span class='confchip conf-prob'>provável</span>"+a2.txt+
+      "<br><span class='confchip conf-deb'>debatido</span><b>"+X.FONTES[b2.fonte].nome+"</b> — "+b2.txt;
+  })();
+  var ORDEM_CID=["betania","oliveiras","jerusalem","getsemani","golgota","tumulo","oliveiras"];
+  var GI_CID=[13,14,15,16,17,18,19];
+  function paintCidade(){
+    cidSegs.forEach(function(p,k){
+      var done=GI_CID[k+1]<=cur;
+      p.setAttribute("stroke-width",done?2.6:1.6);
+      p.setAttribute("opacity",done?0.95:0.3);
+      if(!done) p.setAttribute("stroke-dasharray","4 5"); else p.removeAttribute("stroke-dasharray");
+    });
+    var lug=X.lug(X.ETAPAS[cur].lugar);
+    if(lug.inset){cidHalo.style.display=""; cidHalo.setAttribute("cx",lug.inset.x); cidHalo.setAttribute("cy",lug.inset.y);}
+    else cidHalo.style.display="none";
+  }
 
   /* init + deep link (#eN) */
   buildSpine(); buildRota(); tintMarkers();

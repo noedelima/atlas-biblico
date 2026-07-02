@@ -8,7 +8,7 @@ const { chromium } = require("playwright");
 
 const ROOT = path.resolve(__dirname, "..");
 const url = (f) => "file://" + path.join(ROOT, f);
-const PAGES = ["index.html", "atlas.html", "patriarcas.html", "exodo.html", "conquista.html", "monarquia.html", "reis.html", "exilio.html", "panorama.html", "genesis5.html", "tabua-nacoes.html"];
+const PAGES = ["index.html", "atlas.html", "patriarcas.html", "exodo.html", "conquista.html", "monarquia.html", "reis.html", "exilio.html", "panorama.html", "evangelhos.html", "genesis5.html", "tabua-nacoes.html"];
 
 let failures = 0;
 function check(name, ok, extra) {
@@ -33,7 +33,7 @@ function check(name, ok, extra) {
 
     if (f === "index.html") {
       const links = await page.$$eval(".mods a.mod", (as) => as.map((a) => a.getAttribute("href")));
-      check("10 módulos na landing", links.length === 10, links.join(","));
+      check("11 módulos na landing", links.length === 11, links.join(","));
       const logo = await page.$$eval('img[src="assets/logo.svg"]', (m) => m.length);
       check("logo na landing", logo === 1);
     }
@@ -239,6 +239,33 @@ function check(name, ok, extra) {
       check("10 marcos proféticos posicionados", profs === 10, profs);
       const caps = await page.$$eval(".caps a", (as) => as.length);
       check("navegação em capítulos (9 links)", caps === 9, caps);
+    }
+
+    if (f === "evangelhos.html") {
+      const dados = await page.evaluate(() => ({
+        etapas: window.EVANGELHOS.ETAPAS.length,
+        porPerna: window.EVANGELHOS.PERNAS.map((p) => window.EVANGELHOS.ETAPAS.filter((e) => e.perna === p.id).length),
+        livros: window.TEXTO.livros().join(","),
+        natal: (window.TEXTO.passagem("Lc 2:1-20") || []).reduce((s, g) => s + g.versos.length, 0),
+        paixao: (window.TEXTO.passagem("Jo 19:16-30") || []).reduce((s, g) => s + g.versos.length, 0),
+        verbo: (window.TEXTO.passagem("Jo 1:14") || [])[0]?.versos[0]?.t.includes("se fez carne")
+      }));
+      check("20 etapas em 3 movimentos (6·7·7)", dados.etapas === 20 && dados.porPerna.join(",") === "6,7,7",
+        JSON.stringify(dados.porPerna));
+      check("livros Mt·Mc·Lc·Jo carregados", dados.livros === "Mt,Mc,Lc,Jo", dados.livros);
+      check("texto: Lc 2:1-20 = 20 versos", dados.natal === 20, dados.natal);
+      check("texto: Jo 19:16-30 = 15 versos", dados.paixao === 15, dados.paixao);
+      check("texto: Jo 1:14 — 'se fez carne'", dados.verbo === true);
+      const insetPts = await page.$$eval("#cidade .lpt", (g) => g.length);
+      check("esquema da Paixão com 6 pontos", insetPts === 6, insetPts);
+      await page.evaluate(() => { location.hash = "#e18"; });
+      await page.waitForTimeout(300);
+      const fim = await page.evaluate(() => ({
+        on: document.querySelector('[data-gi="17"]')?.dataset.on,
+        perna: document.querySelector('.seg button[aria-checked="true"]')?.dataset.p
+      }));
+      check("deep link #e18 → Gólgota (Paixão)", fim.on === "1" && fim.perna === "paixao", JSON.stringify(fim));
+      check("console limpo após interações", errors.length === 0, errors.join(" | "));
     }
 
     const og = await page.$$eval('meta[property="og:title"]', (m) => m.length);
