@@ -8,7 +8,7 @@ const { chromium } = require("playwright");
 
 const ROOT = path.resolve(__dirname, "..");
 const url = (f) => "file://" + path.join(ROOT, f);
-const PAGES = ["index.html", "atlas.html", "patriarcas.html", "exodo.html", "conquista.html", "monarquia.html", "reis.html", "exilio.html", "panorama.html", "evangelhos.html", "atos.html", "genesis5.html", "tabua-nacoes.html"];
+const PAGES = ["index.html", "atlas.html", "patriarcas.html", "exodo.html", "conquista.html", "monarquia.html", "reis.html", "exilio.html", "panorama.html", "evangelhos.html", "atos.html", "cartas.html", "genesis5.html", "tabua-nacoes.html"];
 
 let failures = 0;
 function check(name, ok, extra) {
@@ -33,7 +33,7 @@ function check(name, ok, extra) {
 
     if (f === "index.html") {
       const links = await page.$$eval(".mods a.mod", (as) => as.map((a) => a.getAttribute("href")));
-      check("12 módulos na landing", links.length === 12, links.join(","));
+      check("13 módulos na landing", links.length === 13, links.join(","));
       const logo = await page.$$eval('img[src="assets/logo.svg"]', (m) => m.length);
       check("logo na landing", logo === 1);
     }
@@ -231,14 +231,16 @@ function check(name, ok, extra) {
 
     if (f === "panorama.html") {
       const eras = await page.$$eval("#pan a.era", (as) => as.map((a) => a.getAttribute("href")));
-      check("9 eras clicáveis (com o NT)", eras.length === 9, eras.join(","));
-      check("eras apontam para os 9 módulos",
-        ["atlas.html","patriarcas.html","exodo.html","conquista.html","monarquia.html","reis.html","exilio.html","evangelhos.html","atos.html"]
+      check("10 eras clicáveis (com o NT e as cartas)", eras.length === 10, eras.join(","));
+      check("eras apontam para os 10 módulos",
+        ["atlas.html","patriarcas.html","exodo.html","conquista.html","monarquia.html","reis.html","exilio.html","evangelhos.html","atos.html","cartas.html"]
           .every((h) => eras.includes(h)), eras.join(","));
       const profs = await page.$$eval("#pan rect.prof", (r) => r.length);
       check("10 marcos proféticos posicionados", profs === 10, profs);
+      const cartasBand = await page.$$eval('#pan a.era[href="cartas.html"]', (as) => as.length);
+      check("faixa das cartas no panorama", cartasBand === 1, cartasBand);
       const caps = await page.$$eval(".caps a", (as) => as.length);
-      check("navegação em capítulos (11 links)", caps === 11, caps);
+      check("navegação em capítulos (12 links)", caps === 12, caps);
     }
 
     if (f === "evangelhos.html") {
@@ -296,6 +298,43 @@ function check(name, ok, extra) {
         perna: document.querySelector('.seg button[aria-checked="true"]')?.dataset.p
       }));
       check("deep link #e19 → a nova Jerusalém", fim2.on === "1" && fim2.perna === "roma", JSON.stringify(fim2));
+      check("console limpo após interações", errors.length === 0, errors.join(" | "));
+    }
+
+    if (f === "cartas.html") {
+      const dados = await page.evaluate(() => ({
+        etapas: window.CARTAS.ETAPAS.length,
+        porPerna: window.CARTAS.PERNAS.map((p) => window.CARTAS.ETAPAS.filter((e) => e.perna === p.id).length),
+        nLivros: window.TEXTO.livros().length,
+        dispersao: window.CARTAS.DISPERSAO.length,
+        setas: window.CARTAS.ETAPAS.filter((e) => e.de).length,
+        fm: (window.TEXTO.passagem("Fm 1:1-25") || []).reduce((s, g) => s + g.versos.length, 0),
+        jo3: (window.TEXTO.passagem("3Jo 1") || []).reduce((s, g) => s + g.versos.length, 0),
+        amor: (window.TEXTO.passagem("Rm 8:38-39") || [])[0]?.versos[1]?.t.includes("amor de Deus"),
+        fe: (window.TEXTO.passagem("Hb 11:1") || [])[0]?.versos[0]?.t.includes("certeza")
+      }));
+      check("21 etapas em 3 grupos (6·7·8)", dados.etapas === 21 && dados.porPerna.join(",") === "6,7,8",
+        JSON.stringify(dados.porPerna));
+      check("21 livros carregados (todas as cartas)", dados.nLivros === 21, dados.nLivros);
+      check("5 províncias na camada da Dispersão", dados.dispersao === 5, dados.dispersao);
+      check("11 setas origem→destino (Gl, Tt e as gerais, sem remetente fixo)", dados.setas === 11, dados.setas);
+      check("texto: Fm inteira = 25 versos", dados.fm === 25, dados.fm);
+      check("texto: 3Jo 1 = 14 versos (o livro mais curto)", dados.jo3 === 14, dados.jo3);
+      check("texto: Rm 8:39 — 'amor de Deus'", dados.amor === true);
+      check("texto: Hb 11:1 — 'a certeza'", dados.fe === true);
+      // e16 (1 Pedro) acende a camada da Dispersão
+      await page.evaluate(() => { location.hash = "#e16"; });
+      await page.waitForTimeout(300);
+      const dispOn = await page.evaluate(() =>
+        document.getElementById("btnigrejas").getAttribute("aria-pressed") === "true");
+      check("camada da Dispersão acende em 1 Pedro (e16)", dispOn);
+      await page.evaluate(() => { location.hash = "#e21"; });
+      await page.waitForTimeout(300);
+      const fim = await page.evaluate(() => ({
+        on: document.querySelector('[data-gi="20"]')?.dataset.on,
+        perna: document.querySelector('.seg button[aria-checked="true"]')?.dataset.p
+      }));
+      check("deep link #e21 → 3 João (as gerais)", fim.on === "1" && fim.perna === "gerais", JSON.stringify(fim));
       check("console limpo após interações", errors.length === 0, errors.join(" | "));
     }
 

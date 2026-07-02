@@ -3,24 +3,43 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Atlas Bíblico Interativo — F9: Atos, as viagens de Paulo e o Apocalipse. De Pentecostes a Roma pelo Mediterrâneo, e de Patmos às sete igrejas e à nova Jerusalém — o fecho do cânon, com texto integral.">
-<title>Atos · as viagens · o Apocalipse — F9</title>
+<meta name="description" content="Atlas Bíblico Interativo — F10: as 21 cartas do Novo Testamento, de Romanos a Judas, como setas no Mediterrâneo — de onde partiram, para quem foram, quando — com texto integral.">
+<title>As cartas · Romanos a Judas — F10</title>
 <link rel="icon" href="assets/icone.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/icon-180.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Atlas Bíblico Interativo">
 <meta property="og:locale" content="pt_BR">
-<meta property="og:title" content="Atos e o Apocalipse (F9) — até os confins da terra">
-<meta property="og:description" content="De Pentecostes a Roma, e de Patmos à nova Jerusalém: o Mediterrâneo de Paulo, as sete igrejas — e o cânon fechando o círculo do Éden.">
-<meta property="og:url" content="https://noedelima.github.io/atlas-biblico/atos.html">
+<meta property="og:title" content="As cartas (F10) — o correio do evangelho">
+<meta property="og:description" content="As 21 cartas do NT como setas no Mediterrâneo: de onde partiram, para quem foram — com texto integral e as datas na âncora de Gálio.">
+<meta property="og:url" content="https://noedelima.github.io/atlas-biblico/cartas.html">
 <meta property="og:image" content="https://noedelima.github.io/atlas-biblico/assets/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<script src="dados-atos.js"></script>
+<script src="dados-cartas.js"></script>
 <script src="texto/core.js"></script>
-<script src="texto/atos.js"></script>
-<script src="texto/apocalipse.js"></script>
+<script src="texto/romanos.js"></script>
+<script src="texto/1corintios.js"></script>
+<script src="texto/2corintios.js"></script>
+<script src="texto/galatas.js"></script>
+<script src="texto/efesios.js"></script>
+<script src="texto/filipenses.js"></script>
+<script src="texto/colossenses.js"></script>
+<script src="texto/1tessalonicenses.js"></script>
+<script src="texto/2tessalonicenses.js"></script>
+<script src="texto/1timoteo.js"></script>
+<script src="texto/2timoteo.js"></script>
+<script src="texto/tito.js"></script>
+<script src="texto/filemom.js"></script>
+<script src="texto/hebreus.js"></script>
+<script src="texto/tiago.js"></script>
+<script src="texto/1pedro.js"></script>
+<script src="texto/2pedro.js"></script>
+<script src="texto/1joao.js"></script>
+<script src="texto/2joao.js"></script>
+<script src="texto/3joao.js"></script>
+<script src="texto/judas.js"></script>
 <style>
   /* ═══ DESIGN TOKENS · Atlas Bíblico Interativo · v1 · WCAG 2.1 AA ═══ */
   :root{
@@ -126,8 +145,8 @@
   .maphead2 button{appearance:none; margin-left:auto; font:inherit; font-size:11px; letter-spacing:.05em; color:var(--muted); background:var(--field); border:1px solid var(--line-strong); border-radius:8px; padding:5px 11px; cursor:pointer; min-height:30px; text-transform:none}
   .maphead2 button:hover{color:var(--ink)}
   .maphead2 button[aria-pressed="true"]{color:var(--gold1); border-color:var(--gold2)}
-  .igreja circle{fill:#8a5f04; stroke:#fff; stroke-width:1.2}
-  .igreja text{font-size:9.5px; fill:#26331b; paint-order:stroke; stroke:#f3f5ec; stroke-width:2.6px; pointer-events:none}
+  .igreja text{font-size:11px; font-style:italic; letter-spacing:.18em; fill:#7a5a10; opacity:.9;
+    paint-order:stroke; stroke:#f3f5ec; stroke-width:2.6px; pointer-events:none}
   .anc .axis text{fill:var(--muted); font-size:10.5px}
   .anc .axis line{stroke:var(--line-strong)}
   .anc .ev{stroke:#0e1218; stroke-width:.6}
@@ -146,17 +165,17 @@
 <body>
 <div class="wrap">
   <header>
-    <nav class="crumbs" aria-label="Navegação"><a href="./">← Atlas Bíblico Interativo</a> · <a href="evangelhos.html">os Evangelhos</a></nav>
-    <div class="kicker">Atlas Bíblico Interativo · F9 · Atos · Apocalipse · AA</div>
-    <h1>Atos e o Apocalipse — até os confins da terra</h1>
-    <p class="sub">O fecho do cânon em três movimentos: <b>Jerusalém e Judeia</b> (Pentecostes revertendo Babel, Estêvão, Damasco, Cornélio), <b>as viagens</b> (de Antioquia a Éfeso — com a âncora de Gálio em Corinto) e <b>a Roma — e a Patmos</b> (o naufrágio, 'sem impedimento algum', as sete cartas e a nova Jerusalém, onde o rio do Éden volta a correr). O mapa é o Mediterrâneo inteiro.</p>
+    <nav class="crumbs" aria-label="Navegação"><a href="./">← Atlas Bíblico Interativo</a> · <a href="atos.html">Atos e o Apocalipse</a></nav>
+    <div class="kicker">Atlas Bíblico Interativo · F10 · As cartas · Rm–Jd · AA</div>
+    <h1>As cartas — o correio do evangelho</h1>
+    <p class="sub">As 21 cartas do Novo Testamento sobre o mapa que Paulo andou, em três grupos: <b>no caminho</b> (1–2 Tessalonicenses, Gálatas, 1–2 Coríntios — e Romanos, mandada na frente), <b>da prisão — e as pastorais</b> (Efésios, Filipenses, Colossenses, Filemom; 1–2 Timóteo, Tito) e <b>as gerais — e as de João</b> (Hebreus, Tiago, 1–2 Pedro, Judas, 1–3 João). Cada seta é uma carta: de onde foi escrita, para quem — e as datas penduradas na âncora de Gálio (51/52 d.C.).</p>
   </header>
 
   <div class="controls">
-    <div class="seg" role="radiogroup" aria-label="Movimento">
-      <button data-p="jerusalem" role="radio" aria-checked="true"  tabindex="0"><span class="dot" style="background:#e9c46a" aria-hidden="true"></span>Jerusalém e Judeia</button>
-      <button data-p="viagens"   role="radio" aria-checked="false" tabindex="-1"><span class="dot" style="background:#7d8ef2" aria-hidden="true"></span>As viagens</button>
-      <button data-p="roma"      role="radio" aria-checked="false" tabindex="-1"><span class="dot" style="background:#2ea87d" aria-hidden="true"></span>A Roma — e a Patmos</button>
+    <div class="seg" role="radiogroup" aria-label="Grupo de cartas">
+      <button data-p="caminho" role="radio" aria-checked="true"  tabindex="0"><span class="dot" style="background:#e9c46a" aria-hidden="true"></span>No caminho</button>
+      <button data-p="prisao"  role="radio" aria-checked="false" tabindex="-1"><span class="dot" style="background:#7d8ef2" aria-hidden="true"></span>Da prisão — e as pastorais</button>
+      <button data-p="gerais"  role="radio" aria-checked="false" tabindex="-1"><span class="dot" style="background:#2ea87d" aria-hidden="true"></span>As gerais — e as de João</button>
     </div>
     <div class="insight" id="insight" aria-live="polite"></div>
   </div>
@@ -169,19 +188,19 @@
 
     <section aria-label="Mapa e âncoras">
       <div class="mapcard">
-        <div class="maphead maphead2">O Mediterrâneo — At · Ap
-          <button id="btnigrejas" type="button" aria-pressed="false">◈ as sete igrejas (Ap 2–3)</button>
+        <div class="maphead maphead2">As cartas sobre o Mediterrâneo — Rm–Jd
+          <button id="btnigrejas" type="button" aria-pressed="false">◈ a Dispersão (1Pe 1:1)</button>
         </div>
         <div class="scroll">
-          <svg id="mapa" class="map" viewBox="0 0 1000 520" role="group" aria-label="Mapa do Mediterrâneo oriental com as rotas de Atos, de Jerusalém a Roma, e Patmos. Uma camada opcional mostra as sete igrejas do Apocalipse."></svg>
+          <svg id="mapa" class="map" viewBox="0 0 1000 520" role="group" aria-label="Mapa do Mediterrâneo com as cartas do Novo Testamento desenhadas como setas, da cidade onde foram escritas para os destinatários. Uma camada opcional mostra as cinco províncias da Dispersão de 1 Pedro."></svg>
         </div>
-        <p class="viewnote"><b>● cheio</b> = identificação atestada · <b>○ tracejado</b> = provável · cor = movimento · trecho pontilhado = a nova Jerusalém (que desce do céu — o ponto é simbólico).</p>
+        <p class="viewnote"><b>seta</b> = o caminho da carta (de onde foi escrita → para quem; a selecionada fica cheia, as demais pontilhadas) · <b>● cheio</b> = sítio atestado · <b>○ tracejado</b> = provável/região · cor = grupo.</p>
         <p class="viewnote" id="igrejasnote" hidden></p>
       </div>
       <div class="mapcard anc">
         <div class="maphead">As âncoras do período · d.C.</div>
         <div class="scroll">
-          <svg id="ancoras" class="map" viewBox="0 0 1000 175" role="img" aria-label="Linha do tempo em anos depois de Cristo: Pentecostes em 30 ou 33, o edito de Cláudio em 49, Gálio em Corinto em 51 — a âncora de Atos —, Roma por volta de 60, o incêndio de 64 e Patmos por volta de 95."></svg>
+          <svg id="ancoras" class="map" viewBox="0 0 1000 175" role="img" aria-label="Linha do tempo em anos depois de Cristo: Gálatas talvez em 48, 1 e 2 Tessalonicenses em 50 e 51 pela âncora de Gálio, 1 Coríntios por volta de 55, Romanos por volta de 57, as cartas da prisão por volta de 60 a 62, 2 Timóteo por volta de 66 e as de João por volta de 85 a 95."></svg>
         </div>
         <p class="viewnote" id="ancnote"></p>
       </div>
@@ -189,15 +208,15 @@
   </div>
 
   <footer>
-    <b>Proveniência:</b> texto integral <b>Bíblia Livre</b> (BLIVRE, CC-BY 3.0 BR) · a inscrição de Gálio como âncora absoluta · sete igrejas todas escavadas · a nova Jerusalém declarada como simbólica (desce do céu) · basemap <b>Natural Earth</b> (domínio público).
-    <br><b>Veio de:</b> <a href="evangelhos.html" style="color:var(--gold1)">os Evangelhos</a> — “sereis minhas testemunhas”. <b>As cartas destas cidades:</b> <a href="cartas.html" style="color:var(--gold1)">o correio do evangelho (F10) →</a> <b>O círculo se fecha:</b> <a href="atlas.html" style="color:var(--gold1)">o rio do Éden (Gn 2) →</a> · <a href="panorama.html" style="color:var(--gold1)">o panorama</a>
+    <b>Proveniência:</b> texto integral <b>Bíblia Livre</b> (BLIVRE, CC-BY 3.0 BR) · datas penduradas na inscrição de Gálio (51/52 d.C.) · autorias, origens e destinos debatidos marcados como tais · basemap <b>Natural Earth</b> (domínio público).
+    <br><b>Veio de:</b> <a href="atos.html" style="color:var(--gold1)">Atos e o Apocalipse</a> — as cidades destas cartas. <b>Adiante:</b> <a href="panorama.html" style="color:var(--gold1)">o panorama — a Bíblia, costurada</a>
   </footer>
 </div>
 
 <script>
 (function(){
   "use strict";
-  var X=window.ATOS, T=window.TEXTO;
+  var X=window.CARTAS, T=window.TEXTO;
   var NS="http://www.w3.org/2000/svg";
   function el(t,a){var e=document.createElementNS(NS,t);if(a)for(var k in a)e.setAttribute(k,a[k]);return e;}
   var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -253,12 +272,11 @@
     sea(19.2,42.5,"Adriático",-48);
   })();
 
-  /* camada das sete igrejas (Ap 2–3) */
+  /* camada da Dispersão (1Pe 1:1) — as cinco províncias */
   var igrejasG=el("g"); igrejasG.style.display="none"; mapa.appendChild(igrejasG);
-  X.IGREJAS.forEach(function(c){
+  X.DISPERSAO.forEach(function(c){
     var g=el("g",{class:"igreja"});
-    g.appendChild(el("circle",{cx:xp(c.lon),cy:yp(c.lat),r:4}));
-    var t=el("text",{x:xp(c.lon)+(c.ldx||8),y:yp(c.lat)+(c.ldy||3)}); t.textContent=c.n;
+    var t=el("text",{x:xp(c.lon),y:yp(c.lat),"text-anchor":"middle"}); t.textContent=c.n;
     g.appendChild(t); igrejasG.appendChild(g);
   });
   var igrejasOn=false;
@@ -269,7 +287,7 @@
     b.setAttribute("aria-pressed",on?"true":"false");
     var note=document.getElementById("igrejasnote");
     note.hidden=!on;
-    if(on){var a=X.af("a-igrejas");
+    if(on){var a=X.af("a-dispersao");
       note.innerHTML="<span class='confchip conf-att'>atestado</span><b>"+X.FONTES[a.fonte].nome+"</b> — "+a.txt;}
   }
   document.getElementById("btnigrejas").addEventListener("click",function(){setIgrejas(!igrejasOn);});
@@ -279,7 +297,7 @@
   var halo=el("circle",{r:11,fill:"none",stroke:"#8a5f04","stroke-width":2.6,"pointer-events":"none"});
   halo.style.display="none"; mapa.appendChild(halo);
 
-  var cur=0, curPerna="jerusalem";
+  var cur=0, curPerna="caminho";
   function idxGlobais(pernaId){
     var out=[]; X.ETAPAS.forEach(function(et,i){if(et.perna===pernaId)out.push(i);}); return out;
   }
@@ -302,7 +320,7 @@
 
   function tintMarkers(){
     var usados={};
-    X.ETAPAS.forEach(function(et){ if(et.perna===curPerna) usados[et.lugar]=1; });
+    X.ETAPAS.forEach(function(et){ if(et.perna===curPerna){usados[et.lugar]=1; if(et.de)usados[et.de]=1;} });
     var cor=X.perna(curPerna).cor;
     X.LUG.forEach(function(l){
       var o=pts[l.id], on=!!usados[l.id];
@@ -319,26 +337,29 @@
   function buildRota(){
     rotasG.textContent=""; segs=[];
     var gis=idxGlobais(curPerna), cor=X.perna(curPerna).cor;
-    for(var k=1;k<gis.length;k++){
-      var a=X.lug(X.ETAPAS[gis[k-1]].lugar), b=X.lug(X.ETAPAS[gis[k]].lugar), et=X.ETAPAS[gis[k]];
-      if(a.id===b.id&&!(et.via&&et.via.length)){segs.push(null);continue;}
-      var arr=[[a.lon,a.lat]].concat(et.via||[]).concat([[b.lon,b.lat]]);
-      var d="M"+arr.map(function(p){return xp(p[0]).toFixed(1)+","+yp(p[1]).toFixed(1);}).join(" L");
-      var path=el("path",{d:d,fill:"none",stroke:cor,"stroke-linejoin":"round","stroke-linecap":"round"});
+    gis.forEach(function(gi){
+      var et=X.ETAPAS[gi];
+      if(!et.de||et.de===et.lugar){segs.push(null);return;}
+      var a=pts[et.de], b=pts[et.lugar];
+      var mx=(a.x+b.x)/2, my=(a.y+b.y)/2;
+      var dx=b.x-a.x, dy=b.y-a.y, L=Math.sqrt(dx*dx+dy*dy)||1;
+      var k=Math.min(46,L*0.26)*(et.curva||1);
+      var d="M"+a.x.toFixed(1)+","+a.y.toFixed(1)+
+            " Q"+(mx+dy/L*k).toFixed(1)+","+(my-dx/L*k).toFixed(1)+
+            " "+b.x.toFixed(1)+","+b.y.toFixed(1);
+      var path=el("path",{d:d,fill:"none",stroke:cor,"stroke-linejoin":"round","stroke-linecap":"round","marker-end":"url(#atarr-"+curPerna+")"});
       rotasG.appendChild(path); segs.push(path);
-    }
+    });
   }
   function paintMapa(){
     var gis=idxGlobais(curPerna);
     segs.forEach(function(p,k){
       if(!p) return;
-      var gi=gis[k+1], done=gi<=cur, fut=!!X.ETAPAS[gi].futura;
-      p.setAttribute("stroke-width",done?2.4:1.6);
-      p.setAttribute("opacity",done?0.95:0.3);
-      if(fut||!done) p.setAttribute("stroke-dasharray",fut?"3 5":"5 5");
-      else p.removeAttribute("stroke-dasharray");
-      if(done&&!fut) p.setAttribute("marker-end","url(#atarr-"+curPerna+")");
-      else p.removeAttribute("marker-end");
+      var on=gis[k]===cur;
+      p.setAttribute("stroke-width",on?2.6:1.2);
+      p.setAttribute("opacity",on?0.95:0.35);
+      if(on) p.removeAttribute("stroke-dasharray");
+      else p.setAttribute("stroke-dasharray","4 4");
     });
     var o=pts[X.ETAPAS[cur].lugar];
     halo.style.display=""; halo.setAttribute("cx",o.x); halo.setAttribute("cy",o.y);
@@ -372,8 +393,8 @@
       var head=document.createElement("button");
       head.className="phead"; head.setAttribute("aria-expanded","false");
       head.innerHTML="<span class='pref'>Etapa "+(gi+1)+" · "+et.ref+"</span>"+
-        "<span class='ptit'>"+et.titulo+(et.futura?" <span style='font-size:11px;color:var(--muted)'>· o fecho do cânon</span>":"")+"</span>"+
-        "<span class='plug'>em <b>"+(et.lnome||l.nome)+"</b> — "+(et.idl||l.idl)+"</span>";
+        "<span class='ptit'>"+et.titulo+(et.futura?" <span style='font-size:11px;color:var(--muted)'>· —</span>":"")+"</span>"+
+        "<span class='plug'>"+(et.pre||"para")+" <b>"+(et.lnome||l.nome)+"</b> — "+(et.idl||l.idl)+"</span>";
       head.addEventListener("click",function(){selectEtapa(gi,false);});
       art.appendChild(head);
       var body=document.createElement("div");
@@ -408,7 +429,7 @@
   }
 
   var btns=[].slice.call(document.querySelectorAll(".seg button"));
-  var ORDER=["jerusalem","viagens","roma"];
+  var ORDER=["caminho","prisao","gerais"];
   function setActive(id){btns.forEach(function(b){
     var on=b.dataset.p===id;
     b.setAttribute("aria-checked",on?"true":"false");
@@ -429,7 +450,7 @@
       var art=spine.querySelector("[data-gi='"+gi+"']");
       if(art) art.scrollIntoView({behavior:reduce?"auto":"smooth",block:"nearest"});
     }
-    if(X.ETAPAS[gi].ref==="Ap 2:4-5,7"&&!igrejasOn) setIgrejas(true);
+    if(X.ETAPAS[gi].ref==="1Pe 2:9-10"&&!igrejasOn) setIgrejas(true);
     if(history.replaceState) history.replaceState(null,"","#e"+(gi+1));
     setInsight(); paintMapa();
   }
@@ -467,13 +488,13 @@
     function x(t){return X0+(t-A.min)/(A.max-A.min)*(X1-X0);}
     var ax=el("g",{class:"axis"});
     ax.appendChild(el("line",{x1:X0,y1:Y+40,x2:X1,y2:Y+40}));
-    for(var a=30;a<=100;a+=10){
+    for(var a=50;a<=100;a+=10){
       ax.appendChild(el("line",{x1:x(a),y1:Y+40,x2:x(a),y2:Y+45}));
       if(a%20===10||a%20===0){var t=el("text",{x:x(a),y:Y+58,"text-anchor":"middle"}); t.textContent=a; ax.appendChild(t);}
     }
     var t2=el("text",{class:"evlbl",x:X1,y:Y+72,"text-anchor":"end"}); t2.textContent="anos d.C. →"; ax.appendChild(t2);
     svg.appendChild(ax);
-    svg.appendChild(el("line",{x1:x(30),y1:Y,x2:x(95),y2:Y,stroke:"#66798e","stroke-width":2}));
+    svg.appendChild(el("line",{x1:x(48),y1:Y,x2:x(90),y2:Y,stroke:"#66798e","stroke-width":2}));
     A.eventos.forEach(function(ev,k){
       var ex=x(ev.t), up=k%2===0, ly=up?(ev.far?Y-46:Y-26):(ev.far?Y+40:Y+22);
       svg.appendChild(el("line",{class:"evln",x1:ex,y1:Y+(up?-7:7),x2:ex,y2:ly+(up?4:-9)}));
@@ -483,10 +504,10 @@
       svg.appendChild(d);
       var t=el("text",{class:"evlbl",x:ex,y:ly+(up?0:6),"text-anchor":"middle"}); t.textContent=ev.txt; svg.appendChild(t);
     });
-    var a=X.af(A.af), b=X.af("a-nova-jerusalem");
+    var a=X.af(A.af), b=X.af("a-pastorais");
     document.getElementById("ancnote").innerHTML=
       "<span class='confchip conf-att'>atestado</span><b>"+X.FONTES[a.fonte].nome+"</b> — "+a.txt+
-      "<br><span class='confchip conf-der'>derivado</span><b>"+X.FONTES[b.fonte].nome+"</b> — "+b.txt;
+      "<br><span class='confchip conf-deb'>debatido</span><b>"+X.FONTES[b.fonte].nome+"</b> — "+b.txt;
   })();
 
   /* init + deep link (#eN) */
