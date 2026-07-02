@@ -8,7 +8,7 @@ const { chromium } = require("playwright");
 
 const ROOT = path.resolve(__dirname, "..");
 const url = (f) => "file://" + path.join(ROOT, f);
-const PAGES = ["index.html", "atlas.html", "patriarcas.html", "exodo.html", "conquista.html", "monarquia.html", "reis.html", "exilio.html", "panorama.html", "evangelhos.html", "genesis5.html", "tabua-nacoes.html"];
+const PAGES = ["index.html", "atlas.html", "patriarcas.html", "exodo.html", "conquista.html", "monarquia.html", "reis.html", "exilio.html", "panorama.html", "evangelhos.html", "atos.html", "genesis5.html", "tabua-nacoes.html"];
 
 let failures = 0;
 function check(name, ok, extra) {
@@ -33,7 +33,7 @@ function check(name, ok, extra) {
 
     if (f === "index.html") {
       const links = await page.$$eval(".mods a.mod", (as) => as.map((a) => a.getAttribute("href")));
-      check("11 módulos na landing", links.length === 11, links.join(","));
+      check("12 módulos na landing", links.length === 12, links.join(","));
       const logo = await page.$$eval('img[src="assets/logo.svg"]', (m) => m.length);
       check("logo na landing", logo === 1);
     }
@@ -231,14 +231,14 @@ function check(name, ok, extra) {
 
     if (f === "panorama.html") {
       const eras = await page.$$eval("#pan a.era", (as) => as.map((a) => a.getAttribute("href")));
-      check("7 eras clicáveis", eras.length === 7, eras.join(","));
-      check("eras apontam para os 7 módulos",
-        ["atlas.html","patriarcas.html","exodo.html","conquista.html","monarquia.html","reis.html","exilio.html"]
+      check("9 eras clicáveis (com o NT)", eras.length === 9, eras.join(","));
+      check("eras apontam para os 9 módulos",
+        ["atlas.html","patriarcas.html","exodo.html","conquista.html","monarquia.html","reis.html","exilio.html","evangelhos.html","atos.html"]
           .every((h) => eras.includes(h)), eras.join(","));
       const profs = await page.$$eval("#pan rect.prof", (r) => r.length);
       check("10 marcos proféticos posicionados", profs === 10, profs);
       const caps = await page.$$eval(".caps a", (as) => as.length);
-      check("navegação em capítulos (9 links)", caps === 9, caps);
+      check("navegação em capítulos (11 links)", caps === 11, caps);
     }
 
     if (f === "evangelhos.html") {
@@ -265,6 +265,37 @@ function check(name, ok, extra) {
         perna: document.querySelector('.seg button[aria-checked="true"]')?.dataset.p
       }));
       check("deep link #e18 → Gólgota (Paixão)", fim.on === "1" && fim.perna === "paixao", JSON.stringify(fim));
+      check("console limpo após interações", errors.length === 0, errors.join(" | "));
+    }
+
+    if (f === "atos.html") {
+      const dados = await page.evaluate(() => ({
+        etapas: window.ATOS.ETAPAS.length,
+        porPerna: window.ATOS.PERNAS.map((p) => window.ATOS.ETAPAS.filter((e) => e.perna === p.id).length),
+        livros: window.TEXTO.livros().join(","),
+        igrejas: window.ATOS.IGREJAS.length,
+        pentecostes: (window.TEXTO.passagem("At 2:1-13,36-41") || []).reduce((s, g) => s + g.versos.length, 0),
+        fim: (window.TEXTO.passagem("Ap 22:21") || [])[0]?.versos[0]?.t.includes("graça")
+      }));
+      check("19 etapas em 3 movimentos (5·7·7)", dados.etapas === 19 && dados.porPerna.join(",") === "5,7,7",
+        JSON.stringify(dados.porPerna));
+      check("livros At·Ap carregados", dados.livros === "At,Ap", dados.livros);
+      check("7 igrejas na camada", dados.igrejas === 7, dados.igrejas);
+      check("texto: At 2 (Pentecostes) = 19 versos", dados.pentecostes === 19, dados.pentecostes);
+      check("texto: Ap 22:21 — o último verso", dados.fim === true);
+      // e18 (as sete cartas) acende a camada
+      await page.evaluate(() => { location.hash = "#e18"; });
+      await page.waitForTimeout(300);
+      const igrejasOn = await page.evaluate(() =>
+        document.getElementById("btnigrejas").getAttribute("aria-pressed") === "true");
+      check("camada das sete igrejas acende (e18)", igrejasOn);
+      await page.evaluate(() => { location.hash = "#e19"; });
+      await page.waitForTimeout(300);
+      const fim2 = await page.evaluate(() => ({
+        on: document.querySelector('[data-gi="18"]')?.dataset.on,
+        perna: document.querySelector('.seg button[aria-checked="true"]')?.dataset.p
+      }));
+      check("deep link #e19 → a nova Jerusalém", fim2.on === "1" && fim2.perna === "roma", JSON.stringify(fim2));
       check("console limpo após interações", errors.length === 0, errors.join(" | "));
     }
 

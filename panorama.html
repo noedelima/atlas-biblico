@@ -91,14 +91,14 @@
   <header>
     <nav class="crumbs" aria-label="Navegação"><a href="./">← Atlas Bíblico Interativo</a></nav>
     <div class="kicker">Atlas Bíblico Interativo · Panorama · Antigo Testamento</div>
-    <h1>O Antigo Testamento, costurado — da Criação à espera</h1>
+    <h1>A Bíblia, costurada — da Criação à nova Jerusalém</h1>
     <p class="sub">Todo o arco narrativo do atlas numa linha só: à esquerda, o tempo <b>relativo</b> (<i>Anno Mundi</i> — plural nos módulos: TM · LXX · PS); à direita, as <b>âncoras absolutas</b> (a.C.) dos sincronismos assírios, babilônicos e persas. No meio, a <b>costura</b> — onde a cronologia é honestamente aberta. Clique numa era para abrir o módulo; os losangos azuis posicionam os profetas.</p>
   </header>
 
   <div class="mapcard">
     <div class="maphead">Da Criação a Malaquias · nove eras clicáveis</div>
     <div class="scroll">
-      <svg id="pan" class="pan" viewBox="0 0 1000 400" role="group" aria-label="Linha do tempo do Antigo Testamento com nove eras clicáveis, da Criação ao pós-exílio, e os profetas posicionados nos séculos oitavo ao quinto antes de Cristo."></svg>
+      <svg id="pan" class="pan" viewBox="0 0 1000 470" role="group" aria-label="Linha do tempo da Bíblia inteira com as eras clicáveis, da Criação ao pós-exílio, os profetas posicionados, e o Novo Testamento — Evangelhos e Atos ao Apocalipse."></svg>
     </div>
     <p class="viewnote" id="nota1"></p>
     <p class="viewnote" id="nota2"></p>
@@ -112,13 +112,15 @@
     <a href="monarquia.html"><b>5</b> Rute · Samuel · a monarquia</a>
     <a href="reis.html"><b>6</b> Salomão · o reino dividido</a>
     <a href="exilio.html"><b>7</b> Exílio e retorno</a>
+    <a href="evangelhos.html"><b>8</b> Os Evangelhos</a>
+    <a href="atos.html"><b>9</b> Atos · Apocalipse</a>
     <a href="genesis5.html"><b>+</b> Gn 5 (protótipo)</a>
     <a href="tabua-nacoes.html"><b>+</b> Tábua das Nações (protótipo)</a>
   </nav>
 
   <footer>
     <b>O que este panorama afirma — e o que não afirma:</b> as eras são portas de navegação, não uma cronologia fechada; o <i>Anno Mundi</i> é sempre plural (TM · LXX · PS), o período dos juízes fica declaradamente em aberto, e as datas absolutas só começam nos sincronismos da monarquia. Os <b>Escritos</b> (Jó · Salmos · Provérbios · Eclesiastes · Cantares · Lamentações · Joel…) não têm ancoragem narrativa única — entram como camadas temáticas no roadmap.
-    <br><b>Adiante:</b> ~400 anos entre Malaquias e Mateus — e o Novo Testamento já começou: <a href="evangelhos.html" style="color:var(--gold1)">os Evangelhos (F8) →</a>
+    <br><b>O círculo:</b> o rio e a árvore do primeiro mapa (Gn 2) voltam no último (Ap 22) — Gênesis → Apocalipse, completo.
   </footer>
 </div>
 
@@ -221,6 +223,20 @@
   var sil=el("text",{class:"tick",x:B1,y:YP+2,"text-anchor":"start"}); sil.textContent="→"; svg.appendChild(sil);
   var sil2=el("text",{class:"proflbl",x:B1-2,y:YP+64,"text-anchor":"end","font-style":"italic"});
   sil2.textContent="…e ~400 anos de silêncio, até o Jordão (Mt 3)"; svg.appendChild(sil2);
+
+  /* …e o Novo Testamento */
+  var YN=418;
+  var ntl=el("text",{class:"seglbl",x:B0,y:YN-26}); ntl.textContent="…e o Novo Testamento · d.C."; svg.appendChild(ntl);
+  var gap=el("text",{class:"tick",x:B0-8,y:YN+4,"text-anchor":"end","font-style":"italic"}); gap.textContent="← Malaquias · ~400 anos de silêncio ·"; svg.appendChild(gap);
+  [{nome:"Os Evangelhos",sub:"Mt–Jo",href:"evangelhos.html",cor:"#e9c46a",x:B0,w:190},
+   {nome:"Atos → Apocalipse",sub:"At · Ap",href:"atos.html",cor:"#2ea87d",x:B0+196,w:210}].forEach(function(e){
+    var a=el("a",{href:e.href,class:"era",role:"link","aria-label":"Era "+e.nome+" ("+e.sub+") — abrir o módulo"});
+    a.appendChild(el("rect",{x:e.x,y:YN-16,width:e.w,height:38,rx:9,fill:e.cor,stroke:"#0e1218"}));
+    var t1=el("text",{class:"eranome",x:e.x+e.w/2,y:YN,"text-anchor":"middle"}); t1.textContent=e.nome; a.appendChild(t1);
+    var t2=el("text",{class:"eranome",x:e.x+e.w/2,y:YN+14,"text-anchor":"middle","font-weight":"400"}); t2.textContent=e.sub; a.appendChild(t2);
+    svg.appendChild(a);
+  });
+  var fim=el("text",{class:"tick",x:B0+406,y:YN+38,"text-anchor":"end","font-style":"italic"}); fim.textContent="→ a nova Jerusalém (Ap 21–22) — o rio do Éden outra vez"; svg.appendChild(fim);
 
   document.getElementById("nota1").innerHTML=
     "<span class='confchip conf-deb'>debatido</span><b>A costura</b> — a passagem do tempo relativo às datas absolutas depende de duas pontes declaradas: a cronologia dos juízes (somas maiores que o intervalo — sobreposições prováveis) e o ano 480 de 1Rs 6:1 (leitura direta × leitura simbólica). O atlas mostra as duas pontas sem forçar a solda.";
