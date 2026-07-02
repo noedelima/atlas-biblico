@@ -8,7 +8,7 @@ const { chromium } = require("playwright");
 
 const ROOT = path.resolve(__dirname, "..");
 const url = (f) => "file://" + path.join(ROOT, f);
-const PAGES = ["index.html", "atlas.html", "patriarcas.html", "exodo.html", "conquista.html", "monarquia.html", "reis.html", "exilio.html", "panorama.html", "evangelhos.html", "atos.html", "cartas.html", "genesis5.html", "tabua-nacoes.html"];
+const PAGES = ["index.html", "atlas.html", "patriarcas.html", "exodo.html", "conquista.html", "monarquia.html", "reis.html", "exilio.html", "panorama.html", "evangelhos.html", "atos.html", "cartas.html", "escritos.html", "genesis5.html", "tabua-nacoes.html"];
 
 let failures = 0;
 function check(name, ok, extra) {
@@ -33,7 +33,7 @@ function check(name, ok, extra) {
 
     if (f === "index.html") {
       const links = await page.$$eval(".mods a.mod", (as) => as.map((a) => a.getAttribute("href")));
-      check("13 módulos na landing", links.length === 13, links.join(","));
+      check("14 módulos na landing", links.length === 14, links.join(","));
       const logo = await page.$$eval('img[src="assets/logo.svg"]', (m) => m.length);
       check("logo na landing", logo === 1);
     }
@@ -240,7 +240,7 @@ function check(name, ok, extra) {
       const cartasBand = await page.$$eval('#pan a.era[href="cartas.html"]', (as) => as.length);
       check("faixa das cartas no panorama", cartasBand === 1, cartasBand);
       const caps = await page.$$eval(".caps a", (as) => as.length);
-      check("navegação em capítulos (12 links)", caps === 12, caps);
+      check("navegação em capítulos (13 links)", caps === 13, caps);
     }
 
     if (f === "evangelhos.html") {
@@ -335,6 +335,40 @@ function check(name, ok, extra) {
         perna: document.querySelector('.seg button[aria-checked="true"]')?.dataset.p
       }));
       check("deep link #e21 → 3 João (as gerais)", fim.on === "1" && fim.perna === "gerais", JSON.stringify(fim));
+      check("console limpo após interações", errors.length === 0, errors.join(" | "));
+    }
+
+    if (f === "escritos.html") {
+      const dados = await page.evaluate(() => ({
+        etapas: window.ESCRITOS.ETAPAS.length,
+        porPerna: window.ESCRITOS.PERNAS.map((p) => window.ESCRITOS.ETAPAS.filter((e) => e.perna === p.id).length),
+        livros: window.ESCRITOS.LIVROS.length,
+        slCaps: Object.keys(window.TEXTO.livro("Sl").caps).length,
+        pastor: (window.TEXTO.passagem("Sl 23") || []).reduce((s, g) => s + g.versos.length, 0),
+        olhos: (window.TEXTO.passagem("Jó 42:5") || [])[0]?.versos[0]?.t.includes("meus olhos te veem"),
+        tempos: (window.TEXTO.passagem("Ec 3:1-8") || []).reduce((s, g) => s + g.versos.length, 0),
+        lm5: (window.TEXTO.passagem("Lm 5") || []).reduce((s, g) => s + g.versos.length, 0),
+        babilonia: (window.TEXTO.passagem("Sl 137:1") || [])[0]?.versos[0]?.t.includes("rios da Babilônia")
+      }));
+      check("20 etapas em 3 grupos (6·9·5)", dados.etapas === 20 && dados.porPerna.join(",") === "6,9,5",
+        JSON.stringify(dados.porPerna));
+      check("6 livros na estante", dados.livros === 6, dados.livros);
+      check("Salmos completo (150 capítulos)", dados.slCaps === 150, dados.slCaps);
+      check("texto: Sl 23 = 6 versos", dados.pastor === 6, dados.pastor);
+      check("texto: Jó 42:5 — 'meus olhos te veem'", dados.olhos === true);
+      check("texto: Ec 3:1-8 = 8 versos (os tempos)", dados.tempos === 8, dados.tempos);
+      check("texto: Lm 5 = 22 versos", dados.lm5 === 22, dados.lm5);
+      check("texto: Sl 137 — 'rios da Babilônia'", dados.babilonia === true);
+      const estante = await page.$$eval("#estante .book", (b) => b.length);
+      check("estante com 6 livros clicáveis", estante === 6, estante);
+      // clicar em Lamentações leva a uma etapa do livro
+      await page.evaluate(() => { location.hash = "#e20"; });
+      await page.waitForTimeout(300);
+      const fim = await page.evaluate(() => ({
+        on: document.querySelector('[data-gi="19"]')?.dataset.on,
+        perna: document.querySelector('.seg button[aria-checked="true"]')?.dataset.p
+      }));
+      check("deep link #e20 → Lamentações 5 (o cântico)", fim.on === "1" && fim.perna === "cantico", JSON.stringify(fim));
       check("console limpo após interações", errors.length === 0, errors.join(" | "));
     }
 
