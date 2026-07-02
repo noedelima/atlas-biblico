@@ -3,24 +3,28 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Atlas Bíblico Interativo — F6: Salomão e o Templo, o reino dividido. Do ano 480 à queda de Jerusalém: 1–2 Reis com texto integral, o mapa dos dois reinos e as âncoras absolutas (a.C.) dos sincronismos assírios.">
-<title>Salomão e o Templo · o reino dividido — F6</title>
+<meta name="description" content="Atlas Bíblico Interativo — F7: Exílio e retorno. Daniel e Ezequiel na Babilônia, o edito de Ciro, o segundo Templo, Ester em Susã, os muros de Neemias — e Malaquias, o fecho do Antigo Testamento.">
+<title>Exílio e retorno — Dn · Ed · Ne · Et · Ml · F7</title>
 <link rel="icon" href="assets/icone.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/icon-180.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Atlas Bíblico Interativo">
 <meta property="og:locale" content="pt_BR">
-<meta property="og:title" content="Salomão e o Templo · o reino dividido (F6)">
-<meta property="og:description" content="Do ano 480 à queda de Jerusalém: o Templo, os dois reinos, Elias e Eliseu — e as âncoras absolutas da cronologia (a.C.).">
-<meta property="og:url" content="https://noedelima.github.io/atlas-biblico/reis.html">
+<meta property="og:title" content="Exílio e retorno (F7) — o fecho do Antigo Testamento">
+<meta property="og:description" content="De Jerusalém à Babilônia e de volta: Daniel, Ezequiel, o edito de Ciro, Ester, Neemias — e Malaquias, esperando o sol da justiça.">
+<meta property="og:url" content="https://noedelima.github.io/atlas-biblico/exilio.html">
 <meta property="og:image" content="https://noedelima.github.io/atlas-biblico/assets/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<script src="dados-reis.js"></script>
+<script src="dados-exilio.js"></script>
 <script src="texto/core.js"></script>
-<script src="texto/1reis.js"></script>
-<script src="texto/2reis.js"></script>
+<script src="texto/daniel.js"></script>
+<script src="texto/ezequiel.js"></script>
+<script src="texto/esdras.js"></script>
+<script src="texto/neemias.js"></script>
+<script src="texto/ester.js"></script>
+<script src="texto/malaquias.js"></script>
 <style>
   /* ═══ DESIGN TOKENS · Atlas Bíblico Interativo · v1 · WCAG 2.1 AA ═══ */
   :root{
@@ -108,7 +112,8 @@
   svg.map{display:block; width:100%; min-width:680px; height:auto}
   .viewnote{color:var(--muted); font-size:11.5px; margin:8px 8px 6px}
   .viewnote b{color:var(--gold1)}
-  .coast{fill:url(#mLand2); stroke:#93a59a; stroke-width:1; vector-effect:non-scaling-stroke}
+  .coast{fill:url(#xLand); stroke:#93a59a; stroke-width:1; vector-effect:non-scaling-stroke}
+  .riveru{stroke:var(--river); stroke-width:1.5; fill:none; opacity:.95; vector-effect:non-scaling-stroke; stroke-linecap:round}
   .grat{stroke:#9fb4c2;stroke-width:.5;opacity:.45}
   .sea{fill:var(--sea-label);font-style:italic;font-size:11px;font-family:var(--serif);letter-spacing:.04em}
   .llbl{font-size:10.5px;fill:#26331b;paint-order:stroke;stroke:#f3f5ec;stroke-width:3px;stroke-linejoin:round;pointer-events:none}
@@ -121,22 +126,11 @@
   .hit:focus-visible{outline:2px solid var(--halo); stroke:var(--halo); stroke-width:2.5}
   text{font-family:var(--sans)}
 
-  .reino{font-size:15px;font-style:italic;font-family:var(--serif);fill:#6b4f2a;paint-order:stroke;stroke:#f3f5ec;stroke-width:2.5px;pointer-events:none;letter-spacing:.22em}
-  .front{fill:none;stroke:#8a5f04;stroke-width:1.6;stroke-dasharray:7 5}
-  .maphead2{display:flex; align-items:center; gap:12px}
-  .maphead2 button{appearance:none; margin-left:auto; font:inherit; font-size:11px; letter-spacing:.05em; color:var(--muted); background:var(--field); border:1px solid var(--line-strong); border-radius:8px; padding:5px 11px; cursor:pointer; min-height:30px; text-transform:none}
-  .maphead2 button:hover{color:var(--ink)}
-  .maphead2 button[aria-pressed="true"]{color:var(--gold1); border-color:var(--gold2)}
   .anc .axis text{fill:var(--muted); font-size:10.5px}
   .anc .axis line{stroke:var(--line-strong)}
   .anc .ev{stroke:#0e1218; stroke-width:.6}
   .anc .evlbl{fill:var(--muted); font-size:9.5px}
   .anc .evln{stroke:#66798e; stroke-width:.8; stroke-dasharray:2 2}
-  .linh .lnode rect{fill:#1a2230; stroke:var(--line-strong); stroke-width:1.2}
-  .linh .ln{fill:var(--ink); font-family:var(--serif); font-size:15px}
-  .linh .ls{fill:var(--muted); font-size:10px}
-  .linh .larr{fill:none; stroke:var(--gold2); stroke-width:2; marker-end:url(#larrow)}
-  .linh .lt{fill:var(--gold1); font-size:12px; letter-spacing:.08em; text-transform:uppercase; font-weight:600}
 
   footer{margin-top:26px; color:var(--muted); font-size:12px; border-top:1px solid var(--line); padding-top:14px; line-height:1.7}
   footer b{color:var(--ink)}
@@ -150,17 +144,17 @@
 <body>
 <div class="wrap">
   <header>
-    <nav class="crumbs" aria-label="Navegação"><a href="./">← Atlas Bíblico Interativo</a> · <a href="monarquia.html">a monarquia</a></nav>
-    <div class="kicker">Atlas Bíblico Interativo · F6 · Salomão · o reino dividido · AA</div>
-    <h1>Salomão e o Templo — e o reino que se partiu</h1>
-    <p class="sub">Três atos de 1–2 Reis: <b>Salomão</b> (do coração que ouve à glória enchendo a casa — e à queda), <b>o reino dividido</b> (Israel e Judá, Elias e Eliseu, a queda de Samaria) e <b>Judá até o exílio</b> (o cerco de 701, o livro achado, Megido, 586). É aqui que a cronologia do atlas <b>ancora em datas absolutas</b>, pelos sincronismos assírios e babilônicos.</p>
+    <nav class="crumbs" aria-label="Navegação"><a href="./">← Atlas Bíblico Interativo</a> · <a href="reis.html">o reino dividido</a></nav>
+    <div class="kicker">Atlas Bíblico Interativo · F7 · Exílio e retorno · AA</div>
+    <h1>Exílio e retorno — e o fecho do Antigo Testamento</h1>
+    <p class="sub">Três movimentos: <b>na Babilônia</b> (Daniel, a fornalha, Ezequiel junto ao Quebar, a escrita na parede), <b>o retorno</b> (o edito de Ciro, o altar entre as ruínas, o segundo Templo) e <b>os muros e a espera</b> (Ester em Susã, Neemias, a Lei lida na praça — e Malaquias, o último verso do AT). O mapa se estende de Jerusalém à Pérsia; as âncoras seguem firmes.</p>
   </header>
 
   <div class="controls">
-    <div class="seg" role="radiogroup" aria-label="Fio narrativo">
-      <button data-p="salomao"  role="radio" aria-checked="true"  tabindex="0"><span class="dot" style="background:#e9c46a" aria-hidden="true"></span>Salomão</button>
-      <button data-p="dividido" role="radio" aria-checked="false" tabindex="-1"><span class="dot" style="background:#7d8ef2" aria-hidden="true"></span>O reino dividido</button>
-      <button data-p="juda"     role="radio" aria-checked="false" tabindex="-1"><span class="dot" style="background:#2ea87d" aria-hidden="true"></span>Judá até o exílio</button>
+    <div class="seg" role="radiogroup" aria-label="Movimento">
+      <button data-p="babilonia" role="radio" aria-checked="true"  tabindex="0"><span class="dot" style="background:#e9c46a" aria-hidden="true"></span>Na Babilônia</button>
+      <button data-p="retorno"   role="radio" aria-checked="false" tabindex="-1"><span class="dot" style="background:#7d8ef2" aria-hidden="true"></span>O retorno</button>
+      <button data-p="muros"     role="radio" aria-checked="false" tabindex="-1"><span class="dot" style="background:#2ea87d" aria-hidden="true"></span>Os muros e a espera</button>
     </div>
     <div class="insight" id="insight" aria-live="polite"></div>
   </div>
@@ -171,21 +165,18 @@
       <div id="spine"></div>
     </section>
 
-    <section aria-label="Mapa e a linhagem">
+    <section aria-label="Mapa e âncoras">
       <div class="mapcard">
-        <div class="maphead maphead2">Os dois reinos — 1–2Rs
-          <button id="btnreinos" type="button" aria-pressed="false">◈ mostrar Israel e Judá</button>
-        </div>
+        <div class="maphead">De Jerusalém à Pérsia — Dn · Ed · Ne · Et</div>
         <div class="scroll">
-          <svg id="mapa" class="map" viewBox="0 0 1000 560" role="group" aria-label="Mapa de Canaã com os lugares de Primeiro e Segundo Reis. Uma camada opcional mostra os dois reinos, Israel e Judá; uma seta pontilhada aponta o exílio para a Babilônia."></svg>
+          <svg id="mapa" class="map" viewBox="0 0 1000 480" role="group" aria-label="Mapa do Crescente Fértil, de Jerusalém à Babilônia e a Susã, com as rotas do exílio e do retorno."></svg>
         </div>
-        <p class="viewnote"><b>● cheio</b> = identificação atestada · <b>○ tracejado</b> = provável/debatida · cor = ato · seta pontilhada = o exílio (→ Babilônia).</p>
-        <p class="viewnote" id="reinosnote" hidden></p>
+        <p class="viewnote"><b>● cheio</b> = identificação atestada · <b>○ tracejado</b> = provável · cor = movimento · trecho pontilhado = etapa futura (a espera).</p>
       </div>
       <div class="mapcard anc">
-        <div class="maphead">As âncoras absolutas · a.C.</div>
+        <div class="maphead">As âncoras do período · a.C.</div>
         <div class="scroll">
-          <svg id="ancoras" class="map" viewBox="0 0 1000 175" role="img" aria-label="Linha do tempo em anos antes de Cristo: a divisão do reino por volta de 931, Qarqar em 853, Jeú no obelisco negro em 841, a queda de Samaria em 722, o cerco de Senaqueribe em 701, o livro achado em 622 e a queda de Jerusalém em 586."></svg>
+          <svg id="ancoras" class="map" viewBox="0 0 1000 175" role="img" aria-label="Linha do tempo em anos antes de Cristo: as levas de 605 e 597, a queda de Jerusalém em 586, a queda da Babilônia em 539, o edito de Ciro em 538, o segundo Templo em 515, os muros de Neemias em 445 e Malaquias por volta de 430."></svg>
         </div>
         <p class="viewnote" id="ancnote"></p>
       </div>
@@ -193,109 +184,82 @@
   </div>
 
   <footer>
-    <b>Proveniência:</b> texto integral <b>Bíblia Livre</b> (BLIVRE, CC-BY 3.0 BR) · identificações com confiança por sítio · âncoras absolutas pelos sincronismos assírios/babilônicos · a âncora interna de 1Rs 6:1 (ano 480) declarada como debatida · basemap <b>Natural Earth</b> (domínio público).
-    <br><b>Veio de:</b> <a href="monarquia.html" style="color:var(--gold1)">Rute · Samuel · a monarquia</a> — a promessa de 2Sm 7 vira pedra e cedro. <b>Continue a leitura:</b> <a href="exilio.html" style="color:var(--gold1)">Exílio e retorno (F7) →</a>
+    <b>Proveniência:</b> texto integral <b>Bíblia Livre</b> (BLIVRE, CC-BY 3.0 BR) · crônicas babilônicas, cilindro de Ciro e arquivos de Murashu citados por afirmação · os “70 anos” com as duas contagens declaradas · basemap <b>Natural Earth</b> (domínio público).
+    <br><b>Veio de:</b> <a href="reis.html" style="color:var(--gold1)">Salomão e o reino dividido</a> — a mesa posta na Babilônia. <b>Adiante:</b> ~400 anos de silêncio, e o Novo Testamento. <a href="panorama.html" style="color:var(--gold1)">Ver o panorama do AT →</a>
   </footer>
 </div>
 
 <script>
 (function(){
   "use strict";
-  var M=window.REIS, T=window.TEXTO;
+  var X=window.EXILIO, T=window.TEXTO;
   var NS="http://www.w3.org/2000/svg";
   function el(t,a){var e=document.createElementNS(NS,t);if(a)for(var k in a)e.setAttribute(k,a[k]);return e;}
   var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* projeção-base e vista de Canaã */
+  /* projeção-base e vista larga (Jerusalém → Pérsia) */
   function xp0(lon){return 30+(lon+12)*12.702;} function yp0(lat){return 30+(48-lat)*14.667;}
-  var W=1000, H=560, S=11, CLON=35.6, CLAT=32.0;
+  var W=1000, H=480, S=2.15, CLON=40.6, CLAT=32.8;
   var TX=W/2-S*xp0(CLON), TY=H/2-S*yp0(CLAT);
   function xp(lon){return TX+S*xp0(lon);} function yp(lat){return TY+S*yp0(lat);}
 
   var mapa=document.getElementById("mapa");
   var defs=el("defs");
-  var gw=el("linearGradient",{id:"mWater2",x1:"0",y1:"0",x2:"0",y2:"1"});
+  var gw=el("linearGradient",{id:"xWater",x1:"0",y1:"0",x2:"0",y2:"1"});
   gw.appendChild(el("stop",{offset:"0","stop-color":"#c8e2ef"})); gw.appendChild(el("stop",{offset:"1","stop-color":"#a6cde0"}));
-  var gl=el("linearGradient",{id:"mLand2",x1:"0",y1:"0",x2:"0",y2:"1"});
+  var gl=el("linearGradient",{id:"xLand",x1:"0",y1:"0",x2:"0",y2:"1"});
   gl.appendChild(el("stop",{offset:"0","stop-color":"#dde6c6"})); gl.appendChild(el("stop",{offset:"1","stop-color":"#e9dcba"}));
   defs.appendChild(gw); defs.appendChild(gl);
-  M.PERNAS.forEach(function(p){
-    var mk=el("marker",{id:"marr-"+p.id,viewBox:"0 0 10 10",refX:"8",refY:"5",markerWidth:"5",markerHeight:"5",orient:"auto-start-reverse"});
+  X.PERNAS.forEach(function(p){
+    var mk=el("marker",{id:"xarr-"+p.id,viewBox:"0 0 10 10",refX:"8",refY:"5",markerWidth:"5",markerHeight:"5",orient:"auto-start-reverse"});
     mk.appendChild(el("path",{d:"M0,0 L10,5 L0,10 Z",fill:p.cor}));
     defs.appendChild(mk);
   });
-  var mk2=el("marker",{id:"larrow",viewBox:"0 0 10 10",refX:"8",refY:"5",markerWidth:"6",markerHeight:"6",orient:"auto"});
-  mk2.appendChild(el("path",{d:"M0,0 L10,5 L0,10 Z",fill:"#d4933c"}));
-  defs.appendChild(mk2);
   var COAST="M34.0,321.2 L44.0,311.1 L50.3,307.2 L60.9,295.0 L57.8,276.7 L64.3,256.4 L72.5,246.5 L94.6,233.7 L107.1,209.5 L116.5,209.6 L124.1,215.8 L136.2,214.8 L154.9,218.2 L167.1,210.2 L180.8,207.6 L188.8,201.6 L201.1,197.1 L243.6,193.3 L250.0,195.5 L262.0,189.7 L275.5,189.6 L280.7,193.0 L289.4,192.1 L303.2,186.2 L312.1,188.0 L311.7,195.4 L322.5,190.0 L323.4,192.8 L317.1,200.0 L317.0,206.8 L321.4,210.4 L319.7,223.1 L311.3,230.5 L313.8,238.5 L320.3,238.7 L323.5,245.7 L328.4,248.0 L343.3,253.0 L348.6,251.8 L359.2,254.2 L376.1,260.8 L382.0,273.8 L411.3,282.8 L424.9,290.1 L431.1,286.3 L437.1,279.5 L434.2,268.3 L438.2,261.2 L447.3,254.3 L456.1,252.3 L473.2,255.3 L477.6,261.9 L499.0,266.1 L502.1,271.0 L519.0,270.7 L549.7,281.2 L564.7,272.4 L575.9,271.2 L584.9,273.0 L588.4,280.3 L591.3,275.5 L601.5,279.0 L611.4,279.8 L617.7,276.1 L621.4,271.3 L620.5,270.5 L623.9,263.6 L626.4,252.5 L633.1,236.7 L639.7,225.9 L638.5,214.7 L641.6,208.6 L636.9,202.0 L641.7,196.5 L634.0,197.7 L623.4,194.3 L614.6,202.8 L595.4,204.4 L585.1,196.6 L571.4,196.1 L568.5,202.1 L559.7,203.9 L547.4,196.1 L533.5,196.3 L526.0,181.8 L516.7,173.6 L522.9,162.2 L514.8,155.2 L528.9,141.2 L548.5,140.6 L553.8,129.4 L578.0,131.4 L593.3,121.9 L608.1,117.7 L629.1,117.4 L651.3,127.8 L669.5,133.4 L684.3,131.2 L695.2,132.5 L710.2,124.8 L712.1,118.5 L709.0,108.5 L701.6,103.1 L694.6,101.4 L673.7,84.6 L659.2,79.0 L648.3,70.4 L657.5,68.1 L668.1,55.8 L661.0,50.0 L679.7,44.0 L679.3,40.8 L657.8,44.3 L649.3,49.1 L637.5,49.9 L626.5,55.3 L627.3,64.4 L633.5,68.0 L646.4,67.1 L643.9,72.3 L630.0,74.9 L612.8,83.4 L605.7,80.4 L608.5,73.5 L594.7,69.2 L596.9,66.4 L609.1,61.5 L605.4,58.2 L585.6,54.4 L584.8,49.0 L573.0,50.8 L568.3,58.9 L558.4,69.7 L558.7,73.5 L552.6,76.6 L548.7,75.3 L545.2,93.0 L538.6,99.0 L533.9,109.5 L539.5,123.5 L550.6,128.3 L548.3,131.9 L533.2,132.7 L517.2,145.1 L513.2,138.3 L513.4,135.2 L499.0,133.4 L483.6,137.3 L492.5,145.5 L486.0,147.9 L478.9,147.9 L472.2,140.4 L469.8,143.6 L472.7,152.3 L479.0,159.2 L474.2,162.4 L487.6,173.4 L487.8,181.7 L476.0,177.8 L479.8,185.3 L471.7,186.9 L476.5,199.8 L468.1,200.0 L457.7,193.6 L450.7,172.1 L439.2,157.0 L438.4,152.8 L436.2,151.8 L436.0,148.6 L428.9,143.7 L427.8,136.7 L430.6,122.1 L422.3,113.9 L404.8,105.5 L397.5,100.3 L385.9,95.9 L375.2,85.1 L377.7,84.0 L371.9,77.8 L371.7,72.9 L363.5,70.6 L359.6,76.9 L355.9,72.0 L356.2,66.9 L359.5,65.3 L349.3,63.2 L339.0,68.4 L339.7,75.7 L338.2,79.9 L342.3,87.3 L354.2,94.7 L360.6,106.8 L374.8,118.7 L384.7,118.6 L387.8,121.8 L384.3,124.7 L405.0,134.5 L415.8,142.1 L417.2,144.9 L414.8,150.1 L407.7,143.3 L396.7,140.8 L391.4,150.3 L400.5,155.8 L399.0,163.4 L393.7,164.3 L386.9,176.9 L381.6,178.0 L384.3,165.7 L387.0,162.5 L378.2,146.6 L372.9,144.8 L369.2,138.5 L361.0,135.8 L355.5,129.9 L346.1,129.0 L336.2,122.3 L315.9,104.3 L312.0,89.8 L295.3,83.3 L289.5,85.3 L282.1,92.1 L276.9,93.2 L265.4,101.4 L240.3,97.5 L221.8,102.2 L220.4,111.1 L221.0,119.6 L209.0,129.4 L192.7,132.5 L191.6,137.4 L183.8,145.5 L178.9,157.5 L183.8,165.8 L176.5,172.4 L173.7,181.9 L164.2,184.8 L155.2,196.1 L126.9,196.1 L119.0,201.2 L114.1,206.8 L107.9,205.6 L103.2,200.6 L99.6,192.2 L87.7,189.9 L82.6,193.7 L75.9,191.6 L69.4,193.3 L71.3,181.8 L70.1,172.8 L64.5,171.4 L61.4,165.9 L62.4,156.3 L67.5,150.9 L71.0,136.2 L70.8,130.0 L67.7,119.8 L68.3,109.3 L63.1,102.9 L81.1,92.4 L127.2,97.4 L158.3,97.1 L164.8,88.3 L167.3,59.1 L154.2,43.7 L144.8,36.3 L125.3,30.0 L969.9,30.0 L969.9,365.5 L963.6,366.2 L911.5,356.5 L906.1,338.5 L900.0,335.9 L890.2,338.5 L877.4,345.6 L861.9,340.8 L849.1,329.5 L836.8,325.3 L828.4,311.4 L819.0,291.8 L812.1,294.2 L804.1,289.4 L799.3,295.1 L791.8,294.4 L794.4,300.8 L793.3,304.2 L802.4,327.9 L808.6,331.2 L810.8,336.4 L819.5,342.6 L820.2,348.6 L819.0,353.5 L827.8,370.9 L827.0,360.3 L830.4,352.6 L833.9,351.0 L837.7,355.6 L837.9,364.2 L835.2,372.8 L837.6,378.4 L839.8,377.7 L840.3,381.7 L850.3,379.4 L868.4,380.2 L898.3,346.9 L899.9,348.1 L897.1,356.9 L898.8,368.4 L904.5,378.5 L911.6,383.8 L928.4,388.4 L937.6,401.7 L942.1,403.5 L942.1,406.8 L935.4,419.6 L930.1,424.3 L925.3,434.4 L919.6,433.6 L916.9,437.1 L914.9,444.5 L916.5,454.4 L915.3,456.2 L909.4,456.1 L901.5,461.6 L900.2,468.7 L897.3,471.8 L889.4,471.7 L884.5,475.4 L884.5,481.3 L878.4,485.4 L871.4,484.0 L862.9,489.0 L847.8,493.7 L845.1,505.2 L832.4,511.4 L812.1,518.3 L800.7,528.6 L791.3,528.6 L783.9,534.7 L775.8,537.5 L762.0,539.1 L759.2,543.0 L755.8,544.0 L753.9,547.8 L747.6,547.4 L743.5,549.4 L734.7,548.7 L731.4,540.1 L731.8,532.1 L727.2,516.9 L723.6,510.9 L726.1,510.2 L724.8,503.5 L726.4,500.6 L724.2,488.0 L720.3,483.6 L719.3,477.7 L712.8,472.5 L706.0,460.2 L702.4,448.2 L693.6,438.1 L688.0,435.7 L679.6,421.7 L678.1,411.5 L678.6,402.8 L671.4,386.6 L665.4,380.9 L658.5,377.8 L654.4,369.4 L655.1,366.1 L651.5,358.5 L647.8,355.2 L642.9,344.3 L628.6,322.4 L622.3,322.5 L626.4,303.4 L626.0,301.3 L624.7,297.5 L626.0,301.3 L622.4,307.2 L616.3,325.9 L613.3,328.5 L603.3,317.2 L594.3,296.2 L593.0,297.5 L598.2,313.0 L615.6,350.6 L624.4,366.8 L635.8,383.1 L633.3,385.6 L633.7,395.2 L650.7,411.3 L654.8,425.7 L652.0,428.4 L653.9,443.5 L658.5,461.0 L670.3,470.0 L677.7,487.0 L681.2,500.5 L705.5,521.5 L723.4,543.3 L729.6,547.8 L732.6,552.3 L732.2,558.4 L725.0,561.9 L734.6,568.6 L737.1,574.7 L742.8,580.8 L749.1,580.9 L761.1,577.1 L774.9,575.4 L796.9,567.2 L808.2,566.4 L820.8,562.7 L826.8,557.7 L831.6,557.7 L830.8,577.9 L827.2,587.3 L30.0,587.3 L30.0,321.7 L34.0,321.2ZM812.1,144.8 L807.7,161.3 L803.0,164.7 L803.3,172.0 L807.4,182.8 L819.4,185.8 L828.2,193.2 L846.3,195.7 L866.1,191.8 L867.3,188.4 L865.0,178.0 L866.8,162.7 L856.9,157.7 L860.2,147.7 L851.7,146.8 L854.6,134.5 L866.5,138.1 L877.7,133.4 L868.4,124.6 L864.8,116.2 L854.6,119.9 L853.3,130.7 L848.6,117.6 L851.7,111.5 L849.3,106.4 L834.6,101.4 L828.8,88.2 L821.8,84.5 L821.4,79.7 L833.8,81.1 L834.3,70.4 L845.1,68.0 L856.1,70.2 L858.4,55.9 L856.2,46.8 L843.5,47.5 L832.7,44.0 L818.0,50.4 L806.1,53.5 L800.3,62.2 L788.0,64.6 L775.4,79.7 L786.9,93.7 L785.7,103.5 L806.2,128.5 L812.7,138.9 L818.6,139.6 L822.5,143.6 L812.1,144.8ZM357.0,176.2 L379.6,173.3 L375.0,184.8 L376.9,189.4 L374.2,196.9 L364.5,191.4 L340.3,182.3 L342.1,174.8 L357.0,176.2ZM293.1,134.1 L299.4,129.6 L307.0,140.0 L305.2,159.4 L299.5,158.5 L294.3,163.4 L289.5,159.5 L289.0,141.8 L286.1,133.4 L293.1,134.1ZM299.7,127.1 L293.9,124.1 L291.0,114.2 L293.5,108.8 L301.7,103.2 L303.9,115.8 L299.7,127.1ZM610.1,215.2 L621.6,210.8 L613.0,217.1 L614.4,221.0 L601.3,227.0 L595.1,225.0 L592.1,219.2 L599.1,218.5 L600.9,215.0 L610.1,215.2ZM509.4,218.0 L516.4,216.3 L514.8,220.6 L496.5,221.8 L496.6,219.4 L481.1,216.6 L483.5,210.3 L490.4,215.3 L509.7,215.5 L509.4,218.0Z";
-  defs.appendChild(el("path",{id:"mCoastP2",d:COAST}));
+  defs.appendChild(el("path",{id:"xCoastP",d:COAST}));
+  var rg=el("g",{id:"xRivers"});
+  [[[38.3,37.1],[39.5,36],[41,35],[43,33.6],[45.5,31.5],[47.3,30.6]],
+   [[40,37.2],[42,36],[43.5,34.7],[44.6,33],[46,31.3],[47.3,30.6]],
+   [[31,30.4],[31,27],[32,24],[32.8,20],[33,16]]].forEach(function(pts){
+    var d="M"+pts.map(function(p){return xp0(p[0]).toFixed(1)+","+yp0(p[1]).toFixed(1);}).join(" L");
+    rg.appendChild(el("path",{d:d}));
+  });
+  defs.appendChild(rg);
   mapa.appendChild(defs);
 
-  mapa.appendChild(el("rect",{x:0,y:0,width:W,height:H,fill:"url(#mWater2)"}));
+  mapa.appendChild(el("rect",{x:0,y:0,width:W,height:H,fill:"url(#xWater)"}));
   var grat=el("g");
-  for(var lo=33;lo<=39;lo+=1) grat.appendChild(el("line",{class:"grat",x1:xp(lo),y1:0,x2:xp(lo),y2:H}));
-  for(var la=30;la<=34;la+=1) grat.appendChild(el("line",{class:"grat",x1:0,y1:yp(la),x2:W,y2:yp(la)}));
+  for(var lo=25;lo<=55;lo+=5) grat.appendChild(el("line",{class:"grat",x1:xp(lo),y1:0,x2:xp(lo),y2:H}));
+  for(var la=25;la<=40;la+=5) grat.appendChild(el("line",{class:"grat",x1:0,y1:yp(la),x2:W,y2:yp(la)}));
   mapa.appendChild(grat);
   var geo=el("g",{transform:"translate("+TX+","+TY+") scale("+S+")"});
-  var coast=el("use",{href:"#mCoastP2",class:"coast"});
-  coast.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","#mCoastP2");
+  var coast=el("use",{href:"#xCoastP",class:"coast"});
+  coast.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","#xCoastP");
   geo.appendChild(coast);
+  var riv=el("use",{href:"#xRivers",class:"riveru"});
+  riv.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","#xRivers");
+  geo.appendChild(riv);
   mapa.appendChild(geo);
-
-  /* Jordão · Genesaré · mar Salgado */
   (function(){
-    mapa.appendChild(el("ellipse",{cx:xp(35.58),cy:yp(32.83),rx:14,ry:22,fill:"#a6cde0",stroke:"#93a59a","stroke-width":.8}));
-    var jr=[[35.61,33.25],[35.6,33.0],[35.58,32.83],[35.55,32.5],[35.53,32.2],[35.5,31.95]];
-    mapa.appendChild(el("path",{d:"M"+jr.map(function(p){return xp(p[0]).toFixed(1)+","+yp(p[1]).toFixed(1);}).join(" L"),
-      fill:"none",stroke:"#44789a","stroke-width":1.6,opacity:.95}));
-    mapa.appendChild(el("ellipse",{cx:xp(35.5),cy:yp(31.45),rx:16,ry:52,fill:"#a6cde0",stroke:"#93a59a","stroke-width":.8}));
     function sea(lon,lat,txt,rot){var t=el("text",{class:"sea",x:xp(lon),y:yp(lat),"text-anchor":"middle"});
       if(rot)t.setAttribute("transform","rotate("+rot+" "+xp(lon)+" "+yp(lat)+")");t.textContent=txt;mapa.appendChild(t);}
-    sea(34.1,32.4,"M A R   G R A N D E",-90);
-    sea(35.85,31.35,"mar Salgado",-80);
-    sea(35.95,32.85,"Genesaré");
+    sea(28.5,33.6,"M A R   M E D I T E R R Â N E O");
+    sea(50.6,28.8,"golfo Pérsico",-38);
+    sea(43.6,34.6,"Eufrates",-32);
   })();
-
-  /* camada dos dois reinos (opcional) */
-  var reinosG=el("g"); reinosG.style.display="none"; mapa.appendChild(reinosG);
-  (function(){
-    var d="M"+M.REINOS.fronteira.map(function(p){return xp(p[0]).toFixed(1)+","+yp(p[1]).toFixed(1);}).join(" L");
-    reinosG.appendChild(el("path",{class:"front",d:d}));
-    M.REINOS.rotulos.forEach(function(r){
-      var t=el("text",{class:"reino",x:xp(r.lon),y:yp(r.lat),"text-anchor":"middle"});
-      t.textContent=r.n; reinosG.appendChild(t);
-    });
-  })();
-  var reinosOn=false;
-  function setReinos(on){
-    reinosOn=on;
-    reinosG.style.display=on?"":"none";
-    var b=document.getElementById("btnreinos");
-    b.setAttribute("aria-pressed",on?"true":"false");
-    var note=document.getElementById("reinosnote");
-    note.hidden=!on;
-    if(on){var a=M.af(M.REINOS.af);
-      note.innerHTML="<span class='confchip conf-der'>derivado</span><b>"+M.FONTES[a.fonte].nome+"</b> — "+a.txt;}
-  }
-  document.getElementById("btnreinos").addEventListener("click",function(){setReinos(!reinosOn);});
-
-  /* a seta do exílio: de Jerusalém para além da borda (→ Babilônia) */
-  var exilio=el("g");
-  var exd="M"+xp(35.23)+","+yp(31.77)+" L"+xp(35.9)+","+yp(32.1)+" L"+xp(37.2)+","+yp(32.6)+" L"+xp(38.6)+","+yp(33.0);
-  var exPath=el("path",{d:exd,fill:"none",stroke:"#8a5f04","stroke-width":2,"stroke-dasharray":"3 6","stroke-linecap":"round"});
-  exilio.appendChild(exPath);
-  var exLbl=el("text",{class:"sea",x:xp(37.0),y:yp(32.75)}); exLbl.textContent="→ Babilônia"; exilio.appendChild(exLbl);
-  exilio.setAttribute("opacity",".35"); mapa.appendChild(exilio);
 
   var rotasG=el("g"); mapa.appendChild(rotasG);
   var nodesG=el("g"); mapa.appendChild(nodesG);
   var halo=el("circle",{r:11,fill:"none",stroke:"#8a5f04","stroke-width":2.6,"pointer-events":"none"});
   halo.style.display="none"; mapa.appendChild(halo);
 
-  var pernaDoLugar={};
-  M.ETAPAS.forEach(function(et){ if(!pernaDoLugar[et.lugar]) pernaDoLugar[et.lugar]=et.perna; });
+  var cur=0, curPerna="babilonia";
+  function idxGlobais(pernaId){
+    var out=[]; X.ETAPAS.forEach(function(et,i){if(et.perna===pernaId)out.push(i);}); return out;
+  }
+
   var pts={};
-  M.LUG.forEach(function(l){
+  X.LUG.forEach(function(l){
     var g=el("g",{class:"lpt"});
     var hit=el("circle",{class:"hit",r:13,cx:xp(l.lon),cy:yp(l.lat),fill:"transparent","pointer-events":"all",
                          tabindex:"0",role:"button","aria-label":l.nome+" — "+l.idl+". Ir à etapa correspondente."});
@@ -310,18 +274,11 @@
     pts[l.id]={g:g,shp:shp,hit:hit,x:xp(l.lon),y:yp(l.lat)};
   });
 
-  var cur=0, curPerna="salomao";
-
-  function idxGlobais(pernaId){
-    var out=[]; M.ETAPAS.forEach(function(et,i){if(et.perna===pernaId)out.push(i);}); return out;
-  }
-
-  /* marcadores e rota do fio atual */
   function tintMarkers(){
     var usados={};
-    M.ETAPAS.forEach(function(et){ if(et.perna===curPerna) usados[et.lugar]=1; });
-    var cor=M.perna(curPerna).cor;
-    M.LUG.forEach(function(l){
+    X.ETAPAS.forEach(function(et){ if(et.perna===curPerna) usados[et.lugar]=1; });
+    var cor=X.perna(curPerna).cor;
+    X.LUG.forEach(function(l){
       var o=pts[l.id], on=!!usados[l.id];
       o.g.style.display=on?"":"none";
       o.hit.setAttribute("tabindex",on?"0":"-1");
@@ -335,9 +292,9 @@
   var segs=[];
   function buildRota(){
     rotasG.textContent=""; segs=[];
-    var gis=idxGlobais(curPerna), cor=M.perna(curPerna).cor;
+    var gis=idxGlobais(curPerna), cor=X.perna(curPerna).cor;
     for(var k=1;k<gis.length;k++){
-      var a=M.lug(M.ETAPAS[gis[k-1]].lugar), b=M.lug(M.ETAPAS[gis[k]].lugar), et=M.ETAPAS[gis[k]];
+      var a=X.lug(X.ETAPAS[gis[k-1]].lugar), b=X.lug(X.ETAPAS[gis[k]].lugar), et=X.ETAPAS[gis[k]];
       if(a.id===b.id&&!(et.via&&et.via.length)){segs.push(null);continue;}
       var arr=[[a.lon,a.lat]].concat(et.via||[]).concat([[b.lon,b.lat]]);
       var d="M"+arr.map(function(p){return xp(p[0]).toFixed(1)+","+yp(p[1]).toFixed(1);}).join(" L");
@@ -349,21 +306,19 @@
     var gis=idxGlobais(curPerna);
     segs.forEach(function(p,k){
       if(!p) return;
-      var gi=gis[k+1], done=gi<=cur, fut=!!M.ETAPAS[gi].futura;
+      var gi=gis[k+1], done=gi<=cur, fut=!!X.ETAPAS[gi].futura;
       p.setAttribute("stroke-width",done?2.4:1.6);
       p.setAttribute("opacity",done?0.95:0.3);
       if(fut||!done) p.setAttribute("stroke-dasharray",fut?"3 5":"5 5");
       else p.removeAttribute("stroke-dasharray");
-      if(done&&!fut) p.setAttribute("marker-end","url(#marr-"+curPerna+")");
+      if(done&&!fut) p.setAttribute("marker-end","url(#xarr-"+curPerna+")");
       else p.removeAttribute("marker-end");
     });
-    var o=pts[M.ETAPAS[cur].lugar];
+    var o=pts[X.ETAPAS[cur].lugar];
     halo.style.display=""; halo.setAttribute("cx",o.x); halo.setAttribute("cy",o.y);
-    halo.setAttribute("stroke",M.perna(curPerna).cor);
-    exilio.setAttribute("opacity",M.ETAPAS[cur].exilio?"1":".35");
+    halo.setAttribute("stroke",X.perna(curPerna).cor);
   }
 
-  /* leitura integral */
   function versosHtml(p){
     var h="";
     p.forEach(function(g){
@@ -379,19 +334,19 @@
   }
 
   var spine=document.getElementById("spine");
-  function confChip(conf){return "<span class='confchip conf-"+conf+"'>"+M.CONF[conf].t+"</span>";}
+  function confChip(conf){return "<span class='confchip conf-"+conf+"'>"+X.CONF[conf].t+"</span>";}
   function buildSpine(){
-    var p=M.perna(curPerna), gis=idxGlobais(curPerna);
+    var p=X.perna(curPerna), gis=idxGlobais(curPerna);
     spine.textContent="";
-    document.getElementById("spinehead").textContent=p.nome+" · etapas "+(gis[0]+1)+"–"+(gis[gis.length-1]+1)+" de "+M.ETAPAS.length;
+    document.getElementById("spinehead").textContent=p.nome+" · etapas "+(gis[0]+1)+"–"+(gis[gis.length-1]+1)+" de "+X.ETAPAS.length;
     gis.forEach(function(gi){
-      var et=M.ETAPAS[gi], l=M.lug(et.lugar);
+      var et=X.ETAPAS[gi], l=X.lug(et.lugar);
       var art=document.createElement("article");
       art.className="peri"; art.dataset.gi=gi; art.dataset.on="0";
       var head=document.createElement("button");
       head.className="phead"; head.setAttribute("aria-expanded","false");
       head.innerHTML="<span class='pref'>Etapa "+(gi+1)+" · "+et.ref+"</span>"+
-        "<span class='ptit'>"+et.titulo+(et.futura?" <span style='font-size:11px;color:var(--muted)'>· rumo ao exílio</span>":"")+"</span>"+
+        "<span class='ptit'>"+et.titulo+(et.futura?" <span style='font-size:11px;color:var(--muted)'>· o fecho do AT</span>":"")+"</span>"+
         "<span class='plug'>em <b>"+l.nome+"</b> — "+l.idl+"</span>";
       head.addEventListener("click",function(){selectEtapa(gi,false);});
       art.appendChild(head);
@@ -402,16 +357,16 @@
       h+="<div class='ptexto'>"+(dest?versosHtml(dest):"—")+"</div>";
       if(et.nota) h+="<p class='pnota'>"+et.nota+"</p>";
       h+=leituraHtml(et.leitura||et.ref);
-      var a=M.af(l.af);
-      h+="<div class='ident'>"+confChip(l.conf)+"<b>"+M.FONTES[a.fonte].nome+"</b> — "+a.txt+"</div>";
+      var a=X.af(l.af);
+      h+="<div class='ident'>"+confChip(l.conf)+"<b>"+X.FONTES[a.fonte].nome+"</b> — "+a.txt+"</div>";
       body.innerHTML=h;
       var nav=document.createElement("div"); nav.className="pnav";
       var bPrev=document.createElement("button"); bPrev.type="button"; bPrev.className="chip"; bPrev.textContent="◂ etapa anterior";
       var bNext=document.createElement("button"); bNext.type="button"; bNext.className="chip"; bNext.textContent="próxima etapa ▸";
       if(gi===0) bPrev.disabled=true;
-      if(gi===M.ETAPAS.length-1) bNext.disabled=true;
+      if(gi===X.ETAPAS.length-1) bNext.disabled=true;
       bPrev.addEventListener("click",function(){if(gi>0)selectEtapa(gi-1,true);});
-      bNext.addEventListener("click",function(){if(gi<M.ETAPAS.length-1)selectEtapa(gi+1,true);});
+      bNext.addEventListener("click",function(){if(gi<X.ETAPAS.length-1)selectEtapa(gi+1,true);});
       nav.appendChild(bPrev); nav.appendChild(bNext);
       body.appendChild(nav);
       art.appendChild(body);
@@ -421,13 +376,13 @@
 
   var insEl=document.getElementById("insight");
   function setInsight(){
-    var p=M.perna(curPerna), et=M.ETAPAS[cur];
+    var p=X.perna(curPerna), et=X.ETAPAS[cur];
     insEl.innerHTML="<b>"+p.nome+"</b> — "+p.intro+
-      "<br>Etapa <b>"+(cur+1)+"/"+M.ETAPAS.length+"</b> · "+et.titulo+" · "+et.ref+".";
+      "<br>Etapa <b>"+(cur+1)+"/"+X.ETAPAS.length+"</b> · "+et.titulo+" · "+et.ref+".";
   }
 
   var btns=[].slice.call(document.querySelectorAll(".seg button"));
-  var ORDER=["salomao","dividido","juda"];
+  var ORDER=["babilonia","retorno","muros"];
   function setActive(id){btns.forEach(function(b){
     var on=b.dataset.p===id;
     b.setAttribute("aria-checked",on?"true":"false");
@@ -436,7 +391,7 @@
 
   function selectEtapa(gi,scroll){
     cur=gi;
-    var perna=M.ETAPAS[gi].perna;
+    var perna=X.ETAPAS[gi].perna;
     if(perna!==curPerna){curPerna=perna; setActive(perna); buildSpine(); buildRota(); tintMarkers();}
     [].slice.call(spine.children).forEach(function(art){
       var on=+art.dataset.gi===gi;
@@ -448,15 +403,14 @@
       var art=spine.querySelector("[data-gi='"+gi+"']");
       if(art) art.scrollIntoView({behavior:reduce?"auto":"smooth",block:"nearest"});
     }
-    if(M.ETAPAS[gi].ref==="1Rs 12:16"&&!reinosOn) setReinos(true);
     if(history.replaceState) history.replaceState(null,"","#e"+(gi+1));
     setInsight(); paintMapa();
   }
 
   function gotoLugar(id){
     var cands=[];
-    M.ETAPAS.forEach(function(et,i){if(et.lugar===id&&et.perna===curPerna)cands.push(i);});
-    if(!cands.length) M.ETAPAS.forEach(function(et,i){if(et.lugar===id)cands.push(i);});
+    X.ETAPAS.forEach(function(et,i){if(et.lugar===id&&et.perna===curPerna)cands.push(i);});
+    if(!cands.length) X.ETAPAS.forEach(function(et,i){if(et.lugar===id)cands.push(i);});
     if(!cands.length) return;
     var best=cands[0], bd=1e9;
     cands.forEach(function(i){var d=Math.abs(i-cur); if(d<bd){bd=d;best=i;}});
@@ -479,20 +433,20 @@
     });
   });
 
-  /* as âncoras absolutas (a.C.) */
+  /* as âncoras do período (a.C.) */
   (function(){
-    var svg=document.getElementById("ancoras"), A=M.ANCORAS;
+    var svg=document.getElementById("ancoras"), A=X.ANCORAS;
     var X0=70, X1=950, Y=88;
     function x(t){return X0+(A.min-t)/(A.min-A.max)*(X1-X0);}
     var ax=el("g",{class:"axis"});
     ax.appendChild(el("line",{x1:X0,y1:Y+40,x2:X1,y2:Y+40}));
-    for(var a=A.min;a>=A.max;a-=50){
+    for(var a=A.min;a>=A.max;a-=20){
       ax.appendChild(el("line",{x1:x(a),y1:Y+40,x2:x(a),y2:Y+45}));
-      if(a%100===0){var t=el("text",{x:x(a),y:Y+58,"text-anchor":"middle"}); t.textContent=a; ax.appendChild(t);}
+      if(a%40===0){var t=el("text",{x:x(a),y:Y+58,"text-anchor":"middle"}); t.textContent=a; ax.appendChild(t);}
     }
     var t2=el("text",{class:"evlbl",x:X1,y:Y+72,"text-anchor":"end"}); t2.textContent="anos a.C. →"; ax.appendChild(t2);
     svg.appendChild(ax);
-    svg.appendChild(el("line",{x1:x(931),y1:Y,x2:x(586),y2:Y,stroke:"#66798e","stroke-width":2}));
+    svg.appendChild(el("line",{x1:x(605),y1:Y,x2:x(430),y2:Y,stroke:"#66798e","stroke-width":2}));
     A.eventos.forEach(function(ev,k){
       var ex=x(ev.t), up=k%2===0, ly=up?Y-26:Y+22;
       svg.appendChild(el("line",{class:"evln",x1:ex,y1:Y+(up?-7:7),x2:ex,y2:ly+(up?4:-9)}));
@@ -502,20 +456,20 @@
       svg.appendChild(d);
       var t=el("text",{class:"evlbl",x:ex,y:ly+(up?0:6),"text-anchor":"middle"}); t.textContent=ev.t+" · "+ev.txt; svg.appendChild(t);
     });
-    var a=M.af(A.af), b=M.af("a-1rs61");
+    var a=X.af(A.af), b=X.af("a-70anos");
     document.getElementById("ancnote").innerHTML=
-      "<span class='confchip conf-att'>atestado</span><b>"+M.FONTES[a.fonte].nome+"</b> — "+a.txt+
-      "<br><span class='confchip conf-deb'>debatido</span><b>"+M.FONTES[b.fonte].nome+"</b> — "+b.txt;
+      "<span class='confchip conf-att'>atestado</span><b>"+X.FONTES[a.fonte].nome+"</b> — "+a.txt+
+      "<br><span class='confchip conf-deb'>debatido</span><b>"+X.FONTES[b.fonte].nome+"</b> — "+b.txt;
   })();
 
   /* init + deep link (#eN) */
   buildSpine(); buildRota(); tintMarkers();
   var m=location.hash.match(/^#e(\d+)$/);
-  selectEtapa(m?Math.min(M.ETAPAS.length-1,Math.max(0,parseInt(m[1],10)-1)):0,false);
+  selectEtapa(m?Math.min(X.ETAPAS.length-1,Math.max(0,parseInt(m[1],10)-1)):0,false);
   window.addEventListener("hashchange",function(){
     var m2=location.hash.match(/^#e(\d+)$/);
     if(!m2) return;
-    var gi=Math.min(M.ETAPAS.length-1,Math.max(0,parseInt(m2[1],10)-1));
+    var gi=Math.min(X.ETAPAS.length-1,Math.max(0,parseInt(m2[1],10)-1));
     if(gi!==cur) selectEtapa(gi,true);
   });
 })();

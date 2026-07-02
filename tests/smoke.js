@@ -8,7 +8,7 @@ const { chromium } = require("playwright");
 
 const ROOT = path.resolve(__dirname, "..");
 const url = (f) => "file://" + path.join(ROOT, f);
-const PAGES = ["index.html", "atlas.html", "patriarcas.html", "exodo.html", "conquista.html", "monarquia.html", "reis.html", "genesis5.html", "tabua-nacoes.html"];
+const PAGES = ["index.html", "atlas.html", "patriarcas.html", "exodo.html", "conquista.html", "monarquia.html", "reis.html", "exilio.html", "panorama.html", "genesis5.html", "tabua-nacoes.html"];
 
 let failures = 0;
 function check(name, ok, extra) {
@@ -33,7 +33,7 @@ function check(name, ok, extra) {
 
     if (f === "index.html") {
       const links = await page.$$eval(".mods a.mod", (as) => as.map((a) => a.getAttribute("href")));
-      check("8 módulos na landing", links.length === 8, links.join(","));
+      check("10 módulos na landing", links.length === 10, links.join(","));
       const logo = await page.$$eval('img[src="assets/logo.svg"]', (m) => m.length);
       check("logo na landing", logo === 1);
     }
@@ -202,6 +202,43 @@ function check(name, ok, extra) {
       }));
       check("deep link #e16 → o exílio (ato 3)", fim2.on === "1" && fim2.perna === "juda", JSON.stringify(fim2));
       check("console limpo após interações", errors.length === 0, errors.join(" | "));
+    }
+
+    if (f === "exilio.html") {
+      const dados = await page.evaluate(() => ({
+        etapas: window.EXILIO.ETAPAS.length,
+        porPerna: window.EXILIO.PERNAS.map((p) => window.EXILIO.ETAPAS.filter((e) => e.perna === p.id).length),
+        livros: window.TEXTO.livros().join(","),
+        ossos: (window.TEXTO.passagem("Ez 37:1-14") || []).reduce((s, g) => s + g.versos.length, 0),
+        fim: (window.TEXTO.passagem("Ml 4:5-6") || []).reduce((s, g) => s + g.versos.length, 0),
+        ancoras: window.EXILIO.ANCORAS.eventos.length
+      }));
+      check("14 etapas em 3 movimentos (5·4·5)", dados.etapas === 14 && dados.porPerna.join(",") === "5,4,5",
+        JSON.stringify(dados.porPerna));
+      check("livros Dn·Ez·Ed·Ne·Et·Ml carregados", dados.livros === "Dn,Ez,Ed,Ne,Et,Ml", dados.livros);
+      check("texto: Ez 37:1-14 = 14 versos", dados.ossos === 14, dados.ossos);
+      check("texto: Ml 4:5-6 (o fecho do AT) = 2 versos", dados.fim === 2, dados.fim);
+      check("8 âncoras do período", dados.ancoras === 8, dados.ancoras);
+      await page.evaluate(() => { location.hash = "#e14"; });
+      await page.waitForTimeout(300);
+      const fim2 = await page.evaluate(() => ({
+        on: document.querySelector('[data-gi="13"]')?.dataset.on,
+        perna: document.querySelector('.seg button[aria-checked="true"]')?.dataset.p
+      }));
+      check("deep link #e14 → Malaquias (movimento 3)", fim2.on === "1" && fim2.perna === "muros", JSON.stringify(fim2));
+      check("console limpo após interações", errors.length === 0, errors.join(" | "));
+    }
+
+    if (f === "panorama.html") {
+      const eras = await page.$$eval("#pan a.era", (as) => as.map((a) => a.getAttribute("href")));
+      check("7 eras clicáveis", eras.length === 7, eras.join(","));
+      check("eras apontam para os 7 módulos",
+        ["atlas.html","patriarcas.html","exodo.html","conquista.html","monarquia.html","reis.html","exilio.html"]
+          .every((h) => eras.includes(h)), eras.join(","));
+      const profs = await page.$$eval("#pan rect.prof", (r) => r.length);
+      check("10 marcos proféticos posicionados", profs === 10, profs);
+      const caps = await page.$$eval(".caps a", (as) => as.length);
+      check("navegação em capítulos (9 links)", caps === 9, caps);
     }
 
     const og = await page.$$eval('meta[property="og:title"]', (m) => m.length);
