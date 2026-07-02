@@ -40,11 +40,22 @@
     color:var(--ink); font-family:var(--sans); line-height:1.5; -webkit-font-smoothing:antialiased;
   }
   :focus-visible{outline:2px solid var(--focus); outline-offset:3px; border-radius:6px}
-  .wrap{max-width:980px; margin:0 auto; padding:48px 22px 60px}
-  .kicker{color:var(--gold1); font-size:12px; letter-spacing:.2em; text-transform:uppercase; margin-bottom:12px}
-  h1{font-family:var(--serif); font-weight:600; font-size:clamp(28px,5vw,46px); margin:0 0 14px; letter-spacing:.2px; max-width:20ch}
-  .sub{color:var(--muted); font-size:16px; max-width:60ch; margin:0}
+  .wrap{max-width:1020px; margin:0 auto; padding:40px 22px 60px}
+  .brand{display:flex; align-items:center; gap:14px; margin-bottom:30px}
+  .brand img{display:block; border-radius:13px; box-shadow:0 8px 22px rgba(0,0,0,.4)}
+  .kicker{color:var(--gold1); font-size:12px; letter-spacing:.2em; text-transform:uppercase}
+  .hero{display:grid; grid-template-columns:1.08fr .92fr; gap:34px; align-items:center}
+  @media(max-width:860px){.hero{grid-template-columns:1fr}}
+  h1{font-family:var(--serif); font-weight:600; font-size:clamp(28px,4.2vw,42px); margin:0 0 14px; letter-spacing:.2px; max-width:18ch}
+  .sub{color:var(--muted); font-size:16px; max-width:56ch; margin:0}
   .sub b{color:var(--ink); font-weight:600}
+  .mapa{margin:0; background:
+        radial-gradient(340px 300px at 62% 40%, rgba(233,196,106,.07), transparent 70%),
+        linear-gradient(165deg,#1c2736,#131a24);
+        border:1px solid #344355; border-radius:18px; padding:10px 10px 12px}
+  .mapa svg{display:block; width:100%; height:auto}
+  .mapa figcaption{text-align:center; font-size:12px; color:var(--muted); padding:8px 10px 2px}
+  .mapa figcaption i{font-family:var(--serif)}
 
   .ctas{display:flex; flex-wrap:wrap; gap:12px; margin:26px 0 0}
   .cta{display:inline-block; text-decoration:none; font-weight:700; font-size:15px; border-radius:12px; padding:12px 22px;
@@ -58,11 +69,8 @@
   .principles span{font-size:12px; color:var(--muted); background:var(--panel-2); border:1px solid var(--line); border-radius:20px; padding:6px 13px}
   .principles b{color:var(--gold1); font-weight:600}
 
-  /* ── faixa da jornada (hero visual) ── */
-  .faixa{margin:36px 0 0; background:linear-gradient(180deg,#17202d,var(--panel-2)); border:1px solid var(--line); border-radius:16px; padding:14px 10px 6px; overflow:hidden}
-  .faixa{overflow-x:auto}
-  .faixa svg{display:block; width:100%; min-width:680px; height:auto}
-  .rota{stroke:var(--gold1); stroke-width:2.2; fill:none; stroke-linecap:round; stroke-dasharray:7 8}
+  /* ── traço da jornada ── */
+  .rota{stroke:var(--gold1); stroke-width:2.4; fill:none; stroke-linecap:round; stroke-dasharray:7 8}
   @keyframes flui{to{stroke-dashoffset:-60}}
   .rota{animation:flui 4.5s linear infinite}
   @keyframes pulsa{0%,100%{opacity:.55}50%{opacity:1}}
@@ -119,47 +127,66 @@
 <body>
 <div class="wrap">
   <header>
-    <img src="assets/logo.svg" alt="" width="78" height="78" style="display:block;border-radius:18px;margin-bottom:16px;box-shadow:0 10px 30px rgba(0,0,0,.4)">
-    <div class="kicker">Atlas Bíblico Interativo</div>
-    <h1>A Bíblia inteira — no texto, no mapa e no tempo.</h1>
-    <p class="sub">Leia a Escritura de <b>Gênesis ao Apocalipse</b> enquanto o mapa, a linha do tempo e a árvore genealógica caminham com o texto. <b>Uma história única</b> — do Éden à nova Jerusalém — com cada povo, cada lugar e cada data no seu ponto da jornada.</p>
-    <div class="ctas">
-      <a class="cta" href="atlas.html">Começar do princípio →</a>
-      <a class="cta alt" href="biblioteca.html">Abrir a Bíblia</a>
+    <div class="brand">
+      <img src="assets/logo.svg" alt="" width="54" height="54">
+      <div class="kicker">Atlas Bíblico Interativo</div>
+    </div>
+    <div class="hero">
+      <div>
+        <h1>A Bíblia inteira — no texto, no mapa e no tempo.</h1>
+        <p class="sub">Leia a Escritura de <b>Gênesis ao Apocalipse</b> enquanto o mapa, a linha do tempo e a árvore genealógica caminham com o texto. <b>Uma história única</b> — do Éden à nova Jerusalém — com cada povo, cada lugar e cada data no seu ponto da jornada.</p>
+        <div class="ctas">
+          <a class="cta" href="atlas.html">Começar do princípio →</a>
+          <a class="cta alt" href="biblioteca.html">Abrir a Bíblia</a>
+        </div>
+      </div>
+      <figure class="mapa" aria-hidden="true">
+        <svg viewBox="0 0 420 356">
+          <defs>
+            <radialGradient id="brilho" cx="50%" cy="45%" r="60%">
+              <stop offset="0%" stop-color="#e9c46a" stop-opacity=".10"/>
+              <stop offset="100%" stop-color="#e9c46a" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <path d="M0,0 H190 Q150,52 84,80 Q36,98 0,104 Z" fill="#152230"/>
+          <path d="M190,0 Q150,52 84,80 Q36,98 0,104" fill="none" stroke="#33465a" stroke-width="1.4"/>
+          <path d="M0,150 Q120,132 220,150 T420,138" fill="none" stroke="#26313f" stroke-width="1"/>
+          <path d="M0,250 Q140,232 260,252 T420,240" fill="none" stroke="#26313f" stroke-width="1"/>
+          <rect x="0" y="0" width="420" height="356" fill="url(#brilho)"/>
+          <g transform="translate(384,30)" stroke="#5d7183" fill="none" opacity=".8">
+            <circle r="13"/><path d="M0,-13 L4,0 L0,13 L-4,0 Z" fill="#5d7183" stroke="none"/>
+            <text y="-18" text-anchor="middle" font-size="10" fill="#5d7183" stroke="none" font-family="Georgia,serif">N</text>
+          </g>
+          <path class="rota" d="M228,34 C170,38 128,56 132,76 C136,98 240,74 292,92 C330,106 220,128 112,150 C82,158 82,172 108,180 C160,194 216,168 252,184 C286,198 316,204 300,226 C282,248 190,224 158,248 C130,268 96,280 92,304 C90,320 130,330 180,330 C240,330 296,336 330,314"/>
+          <g font-family="Georgia,serif" font-style="italic" font-size="13" fill="#9aa6b6">
+            <circle cx="228" cy="34" r="5" fill="#7ed8c9" stroke="#0e1218" stroke-width="1.4"/>
+            <text x="244" y="30">Éden</text>
+            <g class="pulso"><rect x="122" y="70" width="20" height="5.5" fill="#d4933c"/><rect x="125.5" y="64.5" width="13" height="5.5" fill="#cf8f37"/><rect x="129" y="59" width="6" height="5.5" fill="#edca73"/></g>
+            <text x="112" y="92" text-anchor="end">Babel</text>
+            <circle cx="292" cy="92" r="5" fill="#e9c46a" stroke="#0e1218" stroke-width="1.4"/>
+            <text x="306" y="88">Ur</text>
+            <path d="M100,158 l9,-17 9,17 Z" fill="#8a6a3a"/>
+            <text x="94" y="150" text-anchor="end">Sinai</text>
+            <path d="M244,178 l3.5,-9 5,7.5 5,-9 5,9 5,-7.5 3.5,9 Z" fill="#e9c46a" stroke="#0e1218" stroke-width="1"/>
+            <text x="262" y="170">Jerusalém</text>
+            <path class="pulso" d="M302,222 l2.8,-7.4 7.4,-2 -7.4,-2 -2.8,-7.4 -2.8,7.4 -7.4,2 7.4,2 Z" fill="#e9c46a"/>
+            <text x="316" y="218">Belém</text>
+            <path d="M158,236 v24 M148,244 h20" stroke="#edca73" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+            <text x="140" y="242" text-anchor="end">Gólgota</text>
+            <circle cx="92" cy="304" r="5" fill="#7d8ef2" stroke="#0e1218" stroke-width="1.4"/>
+            <text x="82" y="290" text-anchor="end">Patmos</text>
+            <g class="pulso"><rect x="320" y="304" width="21" height="21" rx="3" fill="none" stroke="#e9c46a" stroke-width="2"/><rect x="326.5" y="310.5" width="8" height="8" rx="1.5" fill="#e9c46a"/></g>
+            <text x="331" y="344" text-anchor="middle">nova Jerusalém</text>
+          </g>
+        </svg>
+        <figcaption><i>Do Éden à nova Jerusalém</i> — a jornada que o atlas percorre com você.</figcaption>
+      </figure>
     </div>
     <div class="principles" aria-label="O que você encontra aqui">
       <span><b>73 livros</b> — a Bíblia completa, verso a verso</span>
       <span><b>Mapas</b> do mundo antigo em cada era</span>
       <span><b>Linhas do tempo</b> da Criação ao Apocalipse</span>
       <span><b>Gratuito</b>, aberto e sem cadastro</span>
-    </div>
-
-    <div class="faixa" aria-hidden="true">
-      <svg viewBox="0 0 940 168">
-        <path d="M0,118 Q90,96 170,108 T340,100 T520,110 T700,98 T940,108 L940,168 L0,168 Z" fill="#1d2a38"/>
-        <path d="M0,126 Q120,112 240,120 T480,118 T720,114 T940,122" fill="none" stroke="#33465a" stroke-width="1.2" opacity=".7"/>
-        <path class="rota" d="M36,96 C120,58 180,110 248,84 S380,44 452,84 S600,116 668,72 S810,40 886,76"/>
-        <g font-family="Georgia,serif" font-style="italic" font-size="12.5" fill="#9aa6b6">
-          <circle cx="36" cy="96" r="5" fill="#7ed8c9" stroke="#0e1218" stroke-width="1.4"/>
-          <text x="36" y="126" text-anchor="middle">Éden</text>
-          <g class="pulso"><rect x="118" y="62" width="20" height="5.5" fill="#d4933c"/><rect x="121.5" y="56.5" width="13" height="5.5" fill="#cf8f37"/><rect x="125" y="51" width="6" height="5.5" fill="#edca73"/></g>
-          <text x="128" y="46" text-anchor="middle">Babel</text>
-          <circle cx="248" cy="84" r="5" fill="#e9c46a" stroke="#0e1218" stroke-width="1.4"/>
-          <text x="248" y="114" text-anchor="middle">Ur</text>
-          <path d="M363,72 l8,-15 8,15 Z" fill="#8a6a3a"/>
-          <text x="371" y="46" text-anchor="middle">Sinai</text>
-          <path d="M444,84 l3.5,-9 5,7.5 5,-9 5,9 5,-7.5 3.5,9 Z" fill="#e9c46a" stroke="#0e1218" stroke-width="1"/>
-          <text x="455" y="112" text-anchor="middle">Jerusalém</text>
-          <path class="pulso" d="M576,96 l2.6,-7 7,-1.8 -7,-1.8 -2.6,-7 -2.6,7 -7,1.8 7,1.8 Z" fill="#e9c46a"/>
-          <text x="576" y="133" text-anchor="middle">Belém</text>
-          <path d="M668,58 v22 M659,66 h18" stroke="#edca73" stroke-width="2.6" stroke-linecap="round" fill="none"/>
-          <text x="668" y="98" text-anchor="middle">Gólgota</text>
-          <circle cx="778" cy="60" r="5" fill="#7d8ef2" stroke="#0e1218" stroke-width="1.4"/>
-          <text x="778" y="90" text-anchor="middle">Patmos</text>
-          <g class="pulso"><rect x="876" y="66" width="20" height="20" rx="3" fill="none" stroke="#e9c46a" stroke-width="2"/><rect x="882" y="72" width="8" height="8" rx="1.5" fill="#e9c46a"/></g>
-          <text x="886" y="104" text-anchor="middle">nova Jerusalém</text>
-        </g>
-      </svg>
     </div>
 
     <figure class="verso" id="verso">
