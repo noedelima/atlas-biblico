@@ -57,6 +57,11 @@ var POVOS = [
     txt:"Jeremias convoca 'os reinos de Ararate, Mini e Asquenaz' contra a Babilônia — a tríade bate com Urartu, Manneia e os citas (Ashkuza) dos arquivos assírios: geografia real da guerra de 539.",
     refs:["Jr 51:27"]}
 }},
+{id:"rifate", nome:"Rifate", lin:"J", pai:"Jafé › Gômer", conf:"deb", per:{
+  tabua:{lon:35.5, lat:41.6, ldx:-46, ldy:-5, id:"Paflagônia? (Josefo) — costa norte da Anatólia",
+    txt:"Filho de Gômer (grafado Difate em 1Cr). Josefo o ligou aos paflagônios, do mar Negro; a identificação segue aberta — é dos nomes da Tábua que a história não devolveu com clareza.",
+    refs:["Gn 10:3","1Cr 1:6"]}
+}},
 {id:"togarma", nome:"Togarma", lin:"J", pai:"Jafé › Gômer", conf:"prob", per:{
   tabua:{lon:38, lat:39.6, ldx:9, ldy:13, id:"Anatólia oriental",
     txt:"Filho de Gômer; ligado a Tegarama/Til-garimmu dos textos hititas e assírios, na alta Anatólia.",
@@ -185,6 +190,17 @@ var POVOS = [
     txt:"Sofonias vê adoradores vindo 'dalém dos rios de Cuxe'; o Sl 68:31 apressa 'a Etiópia estenderá as mãos para Deus'; Is 11:11 inclui Cuxe no segundo ajuntamento. (E Ez 38:5 também a alista com Gogue — os dois fios declarados.)",
     refs:["Sf 3:10","Sl 68:31","Is 11:11","Ez 38:5"]}
 }},
+{id:"seba", nome:"Seba", lin:"C", pai:"Cam › Cuxe", conf:"prob", per:{
+  tabua:{lon:34.2, lat:15.2, ldx:-42, id:"África oriental (Meroé?) — o par de Sabá",
+    txt:"Primogênito de Cuxe — distinto de Sabá (com sofrimento dos tradutores desde sempre): a Bíblia os emparelha ('reis de Sabá e Seba') mas os distingue; a leitura clássica o põe na África, na órbita de Meroé.",
+    refs:["Gn 10:7","Sl 72:10"]},
+  reinos:{id:"'dei o Egito por teu resgate, Cuxe e Seba'",
+    txt:"Isaías o alinha com o Egito e Cuxe como preço de resgate por Israel — e vê os sabeus 'homens de alta estatura' passando para Sião.",
+    refs:["Is 43:3","Is 45:14"]},
+  horizonte:{papel:"bencao", id:"'os reis de Sabá e Seba ofereçam presentes'",
+    txt:"No Sl 72, os dois irmãos-nomes aparecem juntos trazendo dons ao Rei — a África na procissão.",
+    refs:["Sl 72:10","Is 45:14"]}
+}},
 {id:"mizraim", nome:"Mizraim", lin:"C", pai:"Cam", conf:"att", per:{
   tabua:{lon:31, lat:27, id:"o Egito (forma dual hebraica)",
     txt:"Filho de Cam; o Egito das duas terras. Pai dos ludim, anamim… e dos casluim 'de onde saíram os filisteus'.",
@@ -266,6 +282,66 @@ var POVOS = [
     txt:"Urias serve na guarda de Davi; Salomão comercia cavalos com 'os reis dos heteus' — os reinos neo-hititas da Síria do norte (Carquemis, Hamate), bem documentados.",
     refs:["2Sm 11:3","1Rs 10:29","2Rs 7:6"]}
 }},
+{id:"jebuseu", nome:"Jebuseu", lin:"C", pai:"Cam › Canaã", conf:"att", fim:"reinos", per:{
+  tabua:{lon:35.25, lat:31.74, ldx:10, ldy:11, id:"Jebus — a futura Jerusalém",
+    txt:"Clã de Canaã assentado na cidadela que os hebreus chamarão Jebus — 'que é Jerusalém'.",
+    refs:["Gn 10:16","Js 15:63","Jz 19:10"]},
+  reinos:{id:"a eira de Araúna — o chão do Templo",
+    txt:"Davi toma a fortaleza (2Sm 5) mas o arco fecha em paz: compra a eira de Araúna, o jebuseu — o chão onde o Templo será erguido. Zacarias ainda usa o nome: 'Ecrom como o jebuseu' — absorvido, não apagado.",
+    refs:["2Sm 5:6-9","2Sm 24:18-25","2Cr 3:1","Zc 9:7"]}
+}},
+{id:"amorreu", nome:"Amorreu", lin:"C", pai:"Cam › Canaã", conf:"att", fim:"reinos", per:{
+  tabua:{lon:35.45, lat:32.05, ldx:-72, id:"Amurru — a montanha, dos dois lados do Jordão",
+    txt:"O grande clã das serras (Amurru dos textos acadianos, atestadíssimo). Em Gn 15:16, o relógio da promessa é dele: 'a medida da iniqüidade dos amorreus ainda não está cheia'.",
+    refs:["Gn 10:16","Gn 15:16","Nm 13:29"]},
+  reinos:{id:"Seom e Ogue — e o cedro cortado",
+    txt:"Seom e Ogue, reis amorreus da Transjordânia, caem diante de Israel (memória repetida nos Salmos); Amós resume: 'destruí diante dêles o amorreu, cuja altura era como a dos cedros'. O resto virou leva de trabalho sob Salomão.",
+    refs:["Nm 21:21-35","Sl 135:11","Am 2:9-10","1Rs 9:20-21"]}
+}},
+{id:"heveu", nome:"Heveu", lin:"C", pai:"Cam › Canaã", conf:"prob", fim:"reinos", per:{
+  tabua:{lon:35.28, lat:32.22, ldx:10, id:"Siquém e Gibeão — os heveus do centro",
+    txt:"Clã de Canaã do centro da terra: Hamor, pai de Siquém, é heveu; e será heveia a cidade que enganará Josué.",
+    refs:["Gn 10:17","Gn 34:2","Jz 3:3"]},
+  reinos:{id:"os gibeonitas — o ardil que virou aliança",
+    txt:"Gibeão, 'cidade grande como uma das cidades reais', obtém pacto por astúcia e fica: rachadores de lenha e tiradores de água junto ao altar — e é em Gibeão que Salomão sonhará (1Rs 3).",
+    refs:["Js 9:3-27","2Sm 21:1-9","1Rs 3:4-5","1Rs 9:20-21"]}
+}},
+{id:"girgaseu", nome:"Girgaseu", lin:"C", pai:"Cam › Canaã", conf:"deb", fim:"reinos", per:{
+  tabua:{lon:35.6, lat:32.85, ldx:10, id:"localização aberta — nas listas das sete nações",
+    txt:"Presente em tôdas as listas das nações de Canaã, mas sem cidade nem episódio próprio — um grgš aparece em textos de Ugarit; a localização segue aberta, e o atlas a declara assim.",
+    refs:["Gn 10:16","Dt 7:1","Js 3:10","Js 24:11"]}
+}},
+{id:"arqueu", nome:"Arqueu", lin:"C", pai:"Cam › Canaã", conf:"att", fim:"reinos", per:{
+  tabua:{lon:36.1, lat:34.45, ldx:10, ldy:9, id:"Arca (Tell Arqa) — norte do Líbano",
+    txt:"Clã da cidade de Arca/Irqata, nas cartas de Amarna e nos anais assírios — sítio identificado no Acar libanês.",
+    refs:["Gn 10:17","1Cr 1:15"]}
+}},
+{id:"sineu", nome:"Sineu", lin:"C", pai:"Cam › Canaã", conf:"prob", fim:"reinos", per:{
+  tabua:{lon:36.1, lat:35.3, ldx:10, id:"Siyannu — costa síria, ao sul de Ugarit",
+    txt:"Ligado a Siyannu, reino-satélite de Ugarit conhecido pelos arquivos do Bronze — a Tábua alcançando a costa síria.",
+    refs:["Gn 10:17","1Cr 1:15"]}
+}},
+{id:"arvadeu", nome:"Arvadeu", lin:"C", pai:"Cam › Canaã", conf:"att", fim:"reinos", per:{
+  tabua:{lon:35.75, lat:34.95, ldx:-58, ldy:-4, id:"Arvade — a cidade-ilha",
+    txt:"Arvade (Arwad), a cidade-ilha fenícia ao norte, firme nos registros de Amarna aos assírios.",
+    refs:["Gn 10:18","1Cr 1:16"]},
+  reinos:{id:"remadores e sentinelas de Tiro",
+    txt:"Ezequiel os vê a serviço da grande irmã: 'os moradores de Arvade foram os teus remadores… e os arvadeus estavam sôbre os teus muros'.",
+    refs:["Ez 27:8","Ez 27:11"]}
+}},
+{id:"zemareu", nome:"Zemareu", lin:"C", pai:"Cam › Canaã", conf:"prob", fim:"reinos", per:{
+  tabua:{lon:35.98, lat:34.72, ldx:10, ldy:10, id:"Sumur (Tell Kazel?) — a Ṣumur de Amarna",
+    txt:"Ligado a Sumur/Ṣumur, pôrto importante nas cartas de Amarna (Tell Kazel é o candidato usual).",
+    refs:["Gn 10:18","1Cr 1:16"]}
+}},
+{id:"hamateu", nome:"Hamateu", lin:"C", pai:"Cam › Canaã", conf:"att", fim:"reinos", per:{
+  tabua:{lon:36.75, lat:35.13, ldx:10, id:"Hamate — o Orontes",
+    txt:"Hamate (Hama, no Orontes) guarda o nome até hoje; 'a entrada de Hamate' é a fronteira norte ideal de Israel em tôda a Bíblia.",
+    refs:["Gn 10:18","Nm 34:8","1Rs 8:65"]},
+  reinos:{id:"de Toí a 'Hamate é como Arpade?'",
+    txt:"Toí de Hamate manda presentes a Davi; Jeroboão II 'restaurou até Hamate'; a Assíria a engole ('não é Hamate como Arpade?') e Isaías a inclui no segundo ajuntamento (11:11).",
+    refs:["2Sm 8:9-10","2Rs 14:25-28","Is 10:9","Is 11:11"]}
+}},
 {id:"caftor", nome:"Caftor", lin:"C", pai:"Cam › Mizraim", conf:"att", per:{
   tabua:{lon:25, lat:35.2, id:"Creta (Caftorim)",
     txt:"Dos filhos de Mizraim; Caftor é Creta (Keftiu dos egípcios) — e a Bíblia lembra: dali 'saíram os filisteus'.",
@@ -291,16 +367,27 @@ var POVOS = [
     txt:"Zacarias, depois do juízo cidade a cidade, surpreende: o filisteu 'será um resto para o nosso Deus, e será como chefe em Judá; e Ecrom como o jebuseu' — absorvido, como Jerusalém absorveu Jebus.",
     refs:["Zc 9:7","Sl 87:4"]}
 }},
-{id:"saba-dedan", nome:"Sabá e Dedã", lin:"C", pai:"Cam › Cuxe › Raamá (× Sem › Joctã)", conf:"deb", per:{
-  tabua:{lon:45, lat:16.5, id:"o sul da Arábia — e o crux da dupla genealogia",
-    txt:"Sabá e Dedã aparecem como netos de Cuxe (Gn 10:7) E Sabá como filho de Joctã (10:28), e Dedã como neto de Abraão por Quetura (25:3) — a Tábua registrando, com honestidade, o entrelaçamento das rotas árabes.",
-    refs:["Gn 10:7","Gn 10:28","Gn 25:3"]},
-  reinos:{nome:"Sabá (sabeus) · Dedã", lon:44, lat:17.5, id:"a rota do incenso — e a rainha",
-    txt:"A rainha de Sabá sobe a Jerusalém 'com ouro e pedras e especiarias em grande abundância'; Ezequiel lista Sabá e Dedã (o oásis de al-ʿUla) nas feiras de Tiro; Jó já conhecia as caravanas de ambos.",
-    refs:["1Rs 10:1-10","Ez 27:20-22","Jó 6:19"]},
-  horizonte:{papel:"pergunta", id:"'Sabá, Dedã e os mercadores de Társis' — e o ouro que sobe",
-    txt:"Em Ez 38:13, são êles que questionam Gogue; em Is 60:6 e Sl 72:10-15, 'todos os de Sabá virão, trarão ouro e incenso e anunciarão os louvores do SENHOR' — a rota da rainha refeita para o Rei.",
+{id:"saba", nome:"Sabá", lin:"C", pai:"Cam › Cuxe › Raamá (× Sem › Joctã)", conf:"deb", per:{
+  tabua:{lon:45.5, lat:16.5, id:"o sul da Arábia — e o crux da dupla genealogia",
+    txt:"Sabá aparece como neto de Cuxe (Gn 10:7) E como filho de Joctã (10:28) — a Tábua registrando, com honestidade, o entrelaçamento das rotas árabes entre África e Arábia.",
+    refs:["Gn 10:7","Gn 10:28"]},
+  reinos:{nome:"Sabá (sabeus)", lon:44.5, lat:17, conf:"att", id:"a rota do incenso — e a rainha",
+    txt:"A rainha de Sabá sobe a Jerusalém 'com ouro e pedras e especiarias em grande abundância'; o reino sabeu do Iêmen (Maʾrib) é bem atestado; Jó conhecia tanto as caravanas quanto os salteadores sabeus.",
+    refs:["1Rs 10:1-10","Jó 1:15","Jó 6:19","Ez 27:22"]},
+  horizonte:{papel:"pergunta", id:"questiona Gogue — e traz o ouro que sobe",
+    txt:"Em Ez 38:13 Sabá questiona Gogue; em Is 60:6 e Sl 72:10-15, 'todos os de Sabá virão, trarão ouro e incenso e anunciarão os louvores do SENHOR' — a rota da rainha refeita para o Rei (e ecoada nos magos, Mt 2:11).",
     refs:["Ez 38:13","Is 60:6","Sl 72:10-15","Mt 2:11"]}
+}},
+{id:"deda", nome:"Dedã", lin:"C", pai:"Cam › Cuxe › Raamá (× Abraão › Jocsã)", conf:"att", per:{
+  tabua:{lon:37.9, lat:26.6, id:"o oásis de al-ʿUla — noroeste da Arábia",
+    txt:"Irmão de Sabá pela linha de Raamá (Gn 10:7) — e neto de Abraão por Quetura (Gn 25:3): outra dupla genealogia declarada. O oásis de Dedã (al-ʿUla) é sítio identificado, na rota do incenso.",
+    refs:["Gn 10:7","Gn 25:3"]},
+  reinos:{id:"'caravanas de dedanitas' — e a fuga para o deserto",
+    txt:"Isaías vê as caravanas de Dedã pernoitando nos matos da Arábia; Jeremias manda os moradores de Dedã fugirem fundo diante do juízo de Edom; Ezequiel os lista nas feiras de Tiro (panos para cavalgar).",
+    refs:["Is 21:13","Jr 49:8","Ez 27:20"]},
+  horizonte:{papel:"pergunta", id:"com Sabá, diante de Gogue",
+    txt:"'Sabá e Dedã, e os mercadores de Társis… te dirão: Vens tu para tomar o despojo?' (Ez 38:13).",
+    refs:["Ez 38:13"]}
 }},
 
 /* ═══ SEM — de Elão ao epônimo dos hebreus ═══ */
@@ -491,10 +578,46 @@ var POVOS = [
 }}
 ];
 
+/* ── a árvore da Tábua (p = povo clicável; n = ancestral nominal) ── */
+var ARVORE = {n:"Noé", kids:[
+  {n:"Jafé", kids:[
+    {p:"gomer", kids:[{p:"asquenaz"},{p:"rifate"},{p:"togarma"}]},
+    {p:"magogue"},
+    {p:"madai"},
+    {p:"java", kids:[{p:"elisa"},{p:"tarsis"},{p:"quitim"},{p:"rodanim"}]},
+    {p:"tubal"},
+    {p:"meseque"},
+    {p:"tiras"}
+  ]},
+  {n:"Cam", kids:[
+    {p:"cuxe", kids:[{p:"seba"},{n:"Raamá", kids:[{p:"saba"},{p:"deda"}]},{p:"ninrode"}]},
+    {p:"mizraim", kids:[{p:"caftor"},{n:"Casluim", kids:[{p:"filisteus"}]}]},
+    {p:"pute"},
+    {p:"canaa", kids:[{p:"sidom"},{p:"hete"},{p:"jebuseu"},{p:"amorreu"},{p:"girgaseu"},{p:"heveu"},{p:"arqueu"},{p:"sineu"},{p:"arvadeu"},{p:"zemareu"},{p:"hamateu"}]}
+  ]},
+  {n:"Sem", kids:[
+    {p:"elao"},
+    {p:"assur"},
+    {p:"arfaxade", kids:[{n:"Salá", kids:[{p:"heber", kids:[
+      {n:"Pelegue", kids:[{n:"… Terá", kids:[
+        {n:"Abraão", kids:[
+          {p:"ismael"},
+          {n:"Isaque", kids:[{n:"Esaú", kids:[{p:"edom"},{p:"amaleque"}]},{n:"Jacó (Israel)"}]},
+          {p:"midia"}
+        ]},
+        {n:"Ló", kids:[{p:"moabe"},{p:"amom"}]}
+      ]}]},
+      {p:"jocta", kids:[{p:"ofir"},{p:"hazarmave"}]}
+    ]}]}]},
+    {p:"lude"},
+    {p:"ara", kids:[{p:"uz"}]}
+  ]}
+]};
+
 var povoById={}; POVOS.forEach(function(p){povoById[p.id]=p;});
 var perById={}; PERIODOS.forEach(function(p){perById[p.id]=p;});
 
-return {CONF:CONF, PERIODOS:PERIODOS, PAPEIS:PAPEIS, POVOS:POVOS,
+return {CONF:CONF, PERIODOS:PERIODOS, PAPEIS:PAPEIS, POVOS:POVOS, ARVORE:ARVORE,
         povo:function(id){return povoById[id];},
         periodo:function(id){return perById[id];}};
 })();

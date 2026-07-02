@@ -455,8 +455,30 @@ function check(name, ok, extra) {
         quitimRoma: window.NACOES.povo("quitim").per.imperios.nome.includes("Roma"),
         madaiMedia: window.NACOES.povo("madai").per.reinos.nome === "Média"
       }));
-      check("40 povos em 5 períodos", dados.povos === 40 && dados.periodos === 5,
+      check("52 povos em 5 períodos", dados.povos === 52 && dados.periodos === 5,
         dados.povos + "/" + dados.periodos);
+      const arv = await page.evaluate(() => ({
+        clicaveis: document.querySelectorAll("#arvore .hit").length,
+        nodos: document.querySelectorAll("#arvore .tnode").length
+      }));
+      check("árvore genealógica com 51 povos clicáveis", arv.clicaveis === 51, arv.clicaveis);
+      // clicar em Dedã na árvore abre o card correto
+      await page.evaluate(() => {
+        const hits = [...document.querySelectorAll("#arvore .hit")];
+        const q = hits.find((h) => h.getAttribute("aria-label").startsWith("Dedã"));
+        q.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      });
+      await page.waitForTimeout(250);
+      const nomeDeda = await page.evaluate(() => document.getElementById("pname").textContent);
+      check("árvore → card (Dedã, com dupla genealogia)", nomeDeda === "Dedã", nomeDeda);
+      const jebuseuSome = await page.evaluate(() => {
+        location.hash = "#imperios";
+        return new Promise((r) => setTimeout(() => {
+          const labels = [...document.querySelectorAll("#nodes .hit")].map((h) => h.getAttribute("aria-label"));
+          r(labels.some((l) => l.includes("Jebuseu")));
+        }, 350));
+      });
+      check("clãs absorvidos saem nos impérios (Jebuseu)", jebuseuSome === false);
       check("povos com horizonte profético", dados.comHorizonte >= 18, dados.comHorizonte);
       check("nomenclatura evolui (Quitim→Roma, Madai→Média)", dados.quitimRoma && dados.madaiMedia);
       await page.evaluate(() => { location.hash = "#horizonte"; });

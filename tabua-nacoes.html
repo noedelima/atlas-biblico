@@ -81,12 +81,21 @@
   .hit{cursor:pointer}
   .hit:focus{outline:none}
   .hit:focus-visible{outline:2px solid var(--halo);stroke:var(--halo);stroke-width:2.5}
-  .trail{fill:none;stroke-dasharray:4 4;stroke-width:1.4;opacity:.65;pointer-events:none}
+  .trail{fill:none;stroke-dasharray:4 4;stroke-width:1.4;opacity:.65;pointer-events:none;animation:flui 1.1s linear infinite}
+  @keyframes flui{to{stroke-dashoffset:-16}}
+  @media(prefers-reduced-motion:reduce){.trail{animation:none}}
   .papel-ring{fill:none;stroke-width:2.4;pointer-events:none}
   .plegend{display:flex;flex-wrap:wrap;gap:12px;color:var(--muted);font-size:11.5px;margin:8px 8px 4px}
   .plegend i{width:11px;height:11px;border-radius:50%;display:inline-block;margin-right:5px;vertical-align:-1px;border:2px solid}
   .hint{color:var(--muted);font-size:12px;margin:10px 4px 0}
   .hint b{color:var(--gold)}
+  .tnode{cursor:pointer}
+  .tnode:hover .tlbl,.tnode:focus-within .tlbl{fill:var(--gold);font-weight:700}
+  .tnode .hit:focus-visible{outline:2px solid var(--halo);stroke:var(--halo);stroke-width:2}
+  .tanc .tlbl{fill:var(--muted)}
+  .tlbl{font-size:10px;fill:#c8cfda}
+  .tlink{fill:none;stroke:#3a4756;stroke-width:1.1}
+  .tsel{fill:none;stroke:var(--gold);stroke-width:2.2}
   footer{margin-top:20px;color:var(--muted);font-size:12px;border-top:1px solid var(--line);padding-top:13px;line-height:1.7}
   footer b{color:var(--ink)}
   footer a{color:var(--gold)}
@@ -168,7 +177,14 @@
     </div>
     <div class="plegend" id="plegend" hidden></div>
   </div>
-  <p class="hint">▸ <b>Clique</b> num povo (ou navegue com <b>Tab</b> + <b>Enter</b>) para ver a evolução completa — cada referência abre o capítulo na <b>biblioteca</b>. Troque o <b>período</b> para ver nomes e posições mudarem; a linha tracejada mostra a migração. Formas: <b>●</b> Jafé · <b>■</b> Cam · <b>▲</b> Sem · <b>◆</b> Abraão/Ló.</p>
+  <p class="hint">▸ <b>Clique</b> num povo (ou navegue com <b>Tab</b> + <b>Enter</b>) para ver a evolução completa — cada referência abre o capítulo na <b>biblioteca</b>. Troque o <b>período</b> para ver nomes e posições <b>migrarem no mapa</b>; a linha tracejada corre no sentido da migração. Formas: <b>●</b> Jafé · <b>■</b> Cam · <b>▲</b> Sem · <b>◆</b> Abraão/Ló.</p>
+
+  <div class="mapcard">
+    <div class="insight" style="margin:6px 6px 8px"><b>A árvore da Tábua</b> — Gênesis 10 como genealogia: clique num nome para abrir o povo (os cinzentos são elos da linhagem). A linha de Sem desce até Abraão — e dali saem os povos-irmãos.</div>
+    <div class="scroll">
+      <svg class="map" id="arvore" viewBox="0 0 1180 560" role="group" aria-label="Árvore genealógica da Tábua das Nações, de Noé aos povos. Cada povo é um botão que abre o card de evolução."></svg>
+    </div>
+  </div>
 
   <footer>
     <b>Proveniência:</b> identificações tradicionais com grau de confiança declarado (cheio = atestado · tracejado = provável · rosa = debatido); a atestação extra-bíblica citada (anais assírios, Estela de Mesa, óstraco de Ofir) é a clássica dos manuais. <b>O horizonte profético apresenta leituras, não datas</b> — o que é debatido (Rôs, Magogue) vai dito. Basemap <b>Natural Earth</b> (domínio público) · texto <b>Bíblia Livre</b> e <b>Figueiredo</b> na <a href="biblioteca.html">biblioteca</a>.
@@ -223,6 +239,7 @@
   }
   function visivel(povo,perId){
     if(perId==="horizonte") return !!povo.per.horizonte;
+    if(povo.fim&&ORDEM.indexOf(perId)>ORDEM.indexOf(povo.fim)) return false;
     return estado(povo,perId)!==null;
   }
 
@@ -292,7 +309,8 @@
   var nodes=document.getElementById("nodes"), trails=document.getElementById("trails");
   var insight=document.getElementById("insight"), plegend=document.getElementById("plegend");
   var halo=el("circle",{r:11,fill:"none",stroke:"#8a5f04","stroke-width":2.6,"pointer-events":"none"});
-  var curPer="tabua", selId=null, G={};
+  var curPer="tabua", prevPer=null, selId=null, G={};
+  var reduz=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function render(){
     nodes.textContent=""; trails.textContent=""; G={};
@@ -314,11 +332,26 @@
       if(st.prevLon!==undefined&&(st.prevLon!==st.lon||st.prevLat!==st.lat)){
         trails.appendChild(el("line",{class:"trail",x1:xp(st.prevLon),y1:yp(st.prevLat),x2:x,y2:y,stroke:LIN[povo.lin].col}));
       }
+      /* posição no período anterior (para a animação de migração) */
+      var x0=x, y0=y;
+      if(prevPer&&!reduz&&visivel(povo,prevPer)){
+        var st0=estado(povo,prevPer);
+        if(st0){x0=xp(st0.lon); y0=yp(st0.lat);}
+      }
       var g=el("g",{class:"npt"});
       var hit=el("circle",{class:"hit",r:13,cx:x,cy:y,fill:"transparent","pointer-events":"all",
                            tabindex:"0",role:"button",
                            "aria-label":st.nome+", linhagem de "+LIN[povo.lin].nome+". Abrir a evolu\u00E7\u00E3o do povo."});
-      var vis=el("g",{transform:"translate("+x+","+y+")"});
+      var vis=el("g");
+      vis.style.transform="translate("+x0+"px,"+y0+"px)";
+      if(x0!==x||y0!==y){
+        vis.style.transition="transform .9s cubic-bezier(.35,.9,.35,1)";
+        requestAnimationFrame(function(){requestAnimationFrame(function(){
+          vis.style.transform="translate("+x+"px,"+y+"px)";
+        });});
+      } else {
+        vis.style.transform="translate("+x+"px,"+y+"px)";
+      }
       vis.appendChild(makeShape(povo.lin,st.conf));
       /* anel de papel no horizonte */
       if(curPer==="horizonte"&&povo.per.horizonte&&povo.per.horizonte.papel){
@@ -342,6 +375,7 @@
     halo.style.display=""; halo.setAttribute("cx",G[selId].x); halo.setAttribute("cy",G[selId].y);
   }
   function setPeriodo(id){
+    prevPer=curPer===id?prevPer:curPer;
     curPer=id;
     [].slice.call(perseg.children).forEach(function(b){
       var on=b.dataset.per===id;
@@ -350,6 +384,67 @@
     });
     if(history.replaceState) history.replaceState(null,"","#"+id);
     render();
+  }
+
+  /* ── a árvore da Tábua ── */
+  var arvSvg=document.getElementById("arvore"), tnodes={};
+  (function(){
+    var ROWH=46, SLOT=26, X0=28, Y0=30, prox=0;
+    function medir(no){ /* pós-ordem: folhas ganham slots; pais centram */
+      if(!no.kids||!no.kids.length){no._x=X0+prox*SLOT; prox++; return no._x;}
+      var xs=no.kids.map(medir);
+      no._x=(xs[0]+xs[xs.length-1])/2;
+      return no._x;
+    }
+    medir(X.ARVORE);
+    var links=el("g"), nos=el("g");
+    arvSvg.appendChild(links); arvSvg.appendChild(nos);
+    function desenhar(no,depth){
+      var y=Y0+depth*ROWH, povo=no.p?X.povo(no.p):null;
+      (no.kids||[]).forEach(function(k){
+        var ky=Y0+(depth+1)*ROWH;
+        links.appendChild(el("path",{class:"tlink",
+          d:"M"+no._x+","+(y+6)+" C"+no._x+","+(y+24)+" "+k._x+","+(ky-24)+" "+k._x+","+(ky-7)}));
+        desenhar(k,depth+1);
+      });
+      var g=el("g",{class:"tnode"+(povo?"":" tanc")});
+      if(povo){
+        var hit=el("circle",{class:"hit",r:11,cx:no._x,cy:y,fill:"transparent","pointer-events":"all",
+                             tabindex:"0",role:"button","aria-label":povo.nome+" — abrir a evolu\u00E7\u00E3o."});
+        g.appendChild(hit);
+        var vis=el("g",{transform:"translate("+no._x+","+y+")"});
+        var sh=makeShape(povo.lin,povo.conf);
+        sh.setAttribute("transform",(sh.getAttribute("transform")||"")+" scale(.82)");
+        vis.appendChild(sh); g.appendChild(vis);
+        var sel=el("circle",{class:"tsel",r:8.5,cx:no._x,cy:y}); sel.style.display="none";
+        sel.dataset.povo=no.p; g.appendChild(sel);
+        tnodes[no.p]=sel;
+        g.addEventListener("click",function(){openCard(no.p);});
+        hit.addEventListener("keydown",function(e){
+          if(e.key==="Enter"||e.key===" "){e.preventDefault();e.stopPropagation();openCard(no.p);}
+        });
+      } else {
+        g.appendChild(el("circle",{r:3,cx:no._x,cy:y,fill:"#5d7183"}));
+      }
+      var folha=!no.kids||!no.kids.length;
+      var t=el("text",{class:"tlbl"});
+      var nome=povo?povo.nome:no.n;
+      if(folha){
+        t.setAttribute("x",no._x+3); t.setAttribute("y",y+14);
+        t.setAttribute("transform","rotate(48 "+(no._x+3)+" "+(y+14)+")");
+      } else {
+        t.setAttribute("x",no._x); t.setAttribute("y",y-11);
+        t.setAttribute("text-anchor","middle");
+      }
+      t.textContent=nome; g.appendChild(t);
+      nos.appendChild(g);
+    }
+    desenhar(X.ARVORE,0);
+  })();
+  function pintaArvore(){
+    Object.keys(tnodes).forEach(function(id){
+      tnodes[id].style.display=id===selId?"":"none";
+    });
   }
 
   /* card com a evolução completa */
@@ -379,7 +474,7 @@
     document.getElementById("pevo").innerHTML=h;
     document.getElementById("psrc").innerHTML=
       "Identifica\u00E7\u00F5es tradicionais, com confian\u00E7a declarada por per\u00EDodo \u00B7 cada refer\u00EAncia abre o cap\u00EDtulo na <a href='biblioteca.html' style='color:var(--gold)'>biblioteca</a>.";
-    selId=id; placeHalo();
+    selId=id; placeHalo(); pintaArvore();
   }
   function openCard(id){
     if(!panel.classList.contains("show")) lastFocus=document.activeElement;
@@ -389,7 +484,7 @@
   }
   function closeCard(){
     panel.classList.remove("show"); backdrop.classList.remove("show");
-    selId=null; placeHalo();
+    selId=null; placeHalo(); pintaArvore();
     if(lastFocus&&lastFocus.focus) lastFocus.focus();
     lastFocus=null;
   }
