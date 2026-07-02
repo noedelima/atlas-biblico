@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Atlas Bíblico Interativo">
+  <rect width="64" height="64" rx="14" fill="#0e1218"/>
+  <path d="M13 48 C22 42 24 34 31 28 C38 22 44 20 51 18"
+        fill="none" stroke="#e9c46a" stroke-width="4" stroke-linecap="round"/>
+  <g transform="rotate(45 32 28)">
+    <rect x="22.5" y="18.5" width="19" height="19" rx="3.5" fill="#e9c46a"/>
+    <rect x="28" y="24" width="8" height="8" rx="1.6" fill="#0e1218"/>
+  </g>
+</svg>

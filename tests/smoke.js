@@ -8,7 +8,7 @@ const { chromium } = require("playwright");
 
 const ROOT = path.resolve(__dirname, "..");
 const url = (f) => "file://" + path.join(ROOT, f);
-const PAGES = ["index.html", "atlas.html", "patriarcas.html", "exodo.html", "genesis5.html", "tabua-nacoes.html"];
+const PAGES = ["index.html", "atlas.html", "patriarcas.html", "exodo.html", "conquista.html", "genesis5.html", "tabua-nacoes.html"];
 
 let failures = 0;
 function check(name, ok, extra) {
@@ -33,7 +33,9 @@ function check(name, ok, extra) {
 
     if (f === "index.html") {
       const links = await page.$$eval(".mods a.mod", (as) => as.map((a) => a.getAttribute("href")));
-      check("5 módulos na landing", links.length === 5, links.join(","));
+      check("6 módulos na landing", links.length === 6, links.join(","));
+      const logo = await page.$$eval('img[src="assets/logo.svg"]', (m) => m.length);
+      check("logo na landing", logo === 1);
     }
 
     if (f === "atlas.html") {
@@ -117,8 +119,34 @@ function check(name, ok, extra) {
       check("console limpo após interações", errors.length === 0, errors.join(" | "));
     }
 
+    if (f === "conquista.html") {
+      const dados = await page.evaluate(() => ({
+        etapas: window.CONQUISTA.ETAPAS.length,
+        porPerna: window.CONQUISTA.PERNAS.map((p) => window.CONQUISTA.ETAPAS.filter((e) => e.perna === p.id).length),
+        tribos: window.CONQUISTA.TRIBOS.length,
+        jz: Object.keys(window.TEXTO.livro("Jz").caps).length,
+        ultimo: (window.TEXTO.passagem("Jz 21:25") || []).reduce((s, g) => s + g.versos.length, 0)
+      }));
+      check("17 etapas em 3 atos (6·4·7)", dados.etapas === 17 && dados.porPerna.join(",") === "6,4,7",
+        JSON.stringify(dados.porPerna));
+      check("12 tribos na camada", dados.tribos === 12, dados.tribos);
+      check("Juízes completo (21 capítulos)", dados.jz === 21, dados.jz);
+      check("texto: Jz 21:25 disponível", dados.ultimo === 1, dados.ultimo);
+      // etapa da terra repartida acende a camada das tribos
+      await page.evaluate(() => { location.hash = "#e9"; });
+      await page.waitForTimeout(300);
+      const tribosOn = await page.evaluate(() =>
+        document.getElementById("btntribos").getAttribute("aria-pressed") === "true");
+      check("camada das tribos acende na etapa 9", tribosOn);
+      const ciclo = await page.$$eval("#ciclo .cbox", (b) => b.length);
+      check("diagrama do ciclo (4 fases)", ciclo === 4, ciclo);
+      check("console limpo após interações", errors.length === 0, errors.join(" | "));
+    }
+
     const og = await page.$$eval('meta[property="og:title"]', (m) => m.length);
     check("meta Open Graph presente", og === 1);
+    const icone = await page.$$eval('link[rel="icon"][href="assets/icone.svg"]', (m) => m.length);
+    check("favicon vetorial", icone === 1);
   }
 
   await browser.close();

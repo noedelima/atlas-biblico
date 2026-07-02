@@ -112,7 +112,7 @@ var ETAPAS = [
    nota:"Defronte de Jericó: Balaão (Nm 22–24), Baal-Peor (Nm 25) e todo o Deuteronômio acontecem aqui."},
   {perna:"terra", lugar:"nebo", ref:"Dt 34:1,4-5", leitura:"Dt 34", titulo:"Moisés vê a terra"},
   {perna:"terra", lugar:"gilgal", ref:"Js 3:15-17", leitura:"Js 3:9-17; 4:19-24", titulo:"A travessia do Jordão (→ F4)", futura:true, quando:"ano 41 · mês 1 · dia 10 (Js 4:19)",
-   nota:"A ponte para a Conquista: as doze pedras de Gilgal são o memorial da passagem."}
+   nota:"A ponte para a Conquista: as doze pedras de Gilgal são o memorial da passagem. <a href='conquista.html' style='color:#e9c46a'>Seguir a Conquista →</a>"}
 ];
 
 /* cronologia — anos desde a saída (eixo com quebra nos ~38 anos) */
