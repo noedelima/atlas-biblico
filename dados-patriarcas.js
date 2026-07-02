@@ -150,7 +150,7 @@ var JORN = [
     {lugar:"siquem", ref:"Js 24:32", titulo:"Os ossos de José", futura:true,
      via:[[33.0,30.9],[34.3,31.3],[35.0,32.0]],
      txt:"Também enterraram em Siquém os ossos de José, que os filhos de Israel trouxeram do Egito, naquela parte do campo que Jacó comprara […] de Hamor, pai de Siquém.",
-     nota:"A ponte para o Êxodo: José fez os filhos de Israel jurarem levar seus ossos (Gn 50:25; Êx 13:19) — e Josué fecha o arco."}
+     nota:"A ponte para o Êxodo: José fez os filhos de Israel jurarem levar seus ossos (Gn 50:25; Êx 13:19) — e Josué fecha o arco. <a href='exodo.html' style='color:#e9c46a'>Seguir a rota do Êxodo →</a>"}
    ]}
 ];
 
