@@ -377,11 +377,20 @@ function check(name, ok, extra) {
         caps: window.BIBLIOTECA.reduce((s, l) => s + l.c, 0),
         versos: window.BIBLIOTECA.reduce((s, l) => s + l.v, 0)
       }));
-      check("66 livros no manifesto", manifesto.livros === 66, manifesto.livros);
-      check("1.189 capítulos", manifesto.caps === 1189, manifesto.caps);
-      check("31.102 versículos — a Bíblia inteira", manifesto.versos === 31102, manifesto.versos);
+      check("73 livros no manifesto (com os deuterocanônicos)", manifesto.livros === 73, manifesto.livros);
+      check("1.326 capítulos", manifesto.caps === 1326, manifesto.caps);
+      check("35.476 versículos — a Bíblia inteira", manifesto.versos === 35476, manifesto.versos);
       const estante = await page.$$eval("#shelf .bk", (b) => b.length);
-      check("estante com 66 livros clicáveis", estante === 66, estante);
+      check("estante com 73 livros clicáveis", estante === 73, estante);
+      const dc = await page.evaluate(() => window.BIBLIOTECA.filter((l) => l.d).map((l) => l.s).join(","));
+      check("7 deuterocanônicos marcados", dc === "Tb,Jt,1Mc,2Mc,Sb,Eclo,Br", dc);
+      // deep link deuterocanônico → carga sob demanda (Figueiredo)
+      await page.evaluate(() => { location.hash = "#Sb.3"; });
+      await page.waitForTimeout(700);
+      const sb3 = await page.evaluate(() => document.getElementById("rtexto").textContent);
+      check("Sb 3 carrega — 'as almas dos justos'", sb3.includes("almas dos justos"), sb3.slice(0, 60));
+      const fonteFig = await page.evaluate(() => document.querySelector("#rtexto .fonte").textContent);
+      check("fonte por livro: Figueiredo", fonteFig.includes("Figueiredo"), fonteFig.slice(0, 80));
       // deep link → carga sob demanda
       await page.evaluate(() => { location.hash = "#Jo.1"; });
       await page.waitForTimeout(700);
