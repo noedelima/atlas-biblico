@@ -8,7 +8,7 @@ const { chromium } = require("playwright");
 
 const ROOT = path.resolve(__dirname, "..");
 const url = (f) => "file://" + path.join(ROOT, f);
-const PAGES = ["index.html", "atlas.html", "patriarcas.html", "exodo.html", "conquista.html", "genesis5.html", "tabua-nacoes.html"];
+const PAGES = ["index.html", "atlas.html", "patriarcas.html", "exodo.html", "conquista.html", "monarquia.html", "genesis5.html", "tabua-nacoes.html"];
 
 let failures = 0;
 function check(name, ok, extra) {
@@ -33,7 +33,7 @@ function check(name, ok, extra) {
 
     if (f === "index.html") {
       const links = await page.$$eval(".mods a.mod", (as) => as.map((a) => a.getAttribute("href")));
-      check("6 módulos na landing", links.length === 6, links.join(","));
+      check("7 módulos na landing", links.length === 7, links.join(","));
       const logo = await page.$$eval('img[src="assets/logo.svg"]', (m) => m.length);
       check("logo na landing", logo === 1);
     }
@@ -140,6 +140,35 @@ function check(name, ok, extra) {
       check("camada das tribos acende na etapa 9", tribosOn);
       const ciclo = await page.$$eval("#ciclo .cbox", (b) => b.length);
       check("diagrama do ciclo (4 fases)", ciclo === 4, ciclo);
+      check("console limpo após interações", errors.length === 0, errors.join(" | "));
+    }
+
+    if (f === "monarquia.html") {
+      const dados = await page.evaluate(() => ({
+        etapas: window.MONARQUIA.ETAPAS.length,
+        porPerna: window.MONARQUIA.PERNAS.map((p) => window.MONARQUIA.ETAPAS.filter((e) => e.perna === p.id).length),
+        livros: window.TEXTO.livros().join(","),
+        rt: (window.TEXTO.passagem("Rt 1:16-17") || []).reduce((s, g) => s + g.versos.length, 0),
+        sm: (window.TEXTO.passagem("1Sm 3:1-14,19-21") || []).reduce((s, g) => s + g.versos.length, 0),
+        promessa: (window.TEXTO.passagem("2Sm 7:12-16") || []).reduce((s, g) => s + g.versos.length, 0),
+        linhagem: window.MONARQUIA.LINHAGEM.length
+      }));
+      check("19 etapas em 3 fios (4·7·8)", dados.etapas === 19 && dados.porPerna.join(",") === "4,7,8",
+        JSON.stringify(dados.porPerna));
+      check("livros Rt·1Sm·2Sm carregados", dados.livros === "Rt,1Sm,2Sm", dados.livros);
+      check("texto: Rt 1:16-17 = 2 versos", dados.rt === 2, dados.rt);
+      check("texto: 1Sm 3 (lista com vírgula) = 17 versos", dados.sm === 17, dados.sm);
+      check("texto: 2Sm 7:12-16 = 5 versos", dados.promessa === 5, dados.promessa);
+      const linh = await page.$$eval("#linhagem .lnode", (b) => b.length);
+      check("linhagem Rute → Davi (5 nós)", linh === 5, linh);
+      // navegar até a última etapa (a promessa) cruzando os fios
+      await page.evaluate(() => { location.hash = "#e19"; });
+      await page.waitForTimeout(300);
+      const fim = await page.evaluate(() => ({
+        on: document.querySelector('[data-gi="18"]')?.dataset.on,
+        perna: document.querySelector('.seg button[aria-checked="true"]')?.dataset.p
+      }));
+      check("deep link #e19 → a promessa (fio Davi)", fim.on === "1" && fim.perna === "davi", JSON.stringify(fim));
       check("console limpo após interações", errors.length === 0, errors.join(" | "));
     }
 
