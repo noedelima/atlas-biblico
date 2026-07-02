@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Atlas Bíblico Interativo — o panorama do Antigo Testamento: uma linha do tempo única, da Criação (Anno Mundi) às âncoras absolutas (a.C.), com as eras clicáveis, os profetas posicionados e a costura cronológica declarada.">
+<title>Panorama do Antigo Testamento — o atlas inteiro numa linha</title>
+<link rel="icon" href="assets/icone.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Atlas Bíblico Interativo">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Panorama do Antigo Testamento">
+<meta property="og:description" content="Da Criação à espera de Malaquias, numa linha só: eras clicáveis, profetas posicionados, e a costura entre o Anno Mundi e as datas a.C. — declarada.">
+<meta property="og:url" content="https://noedelima.github.io/atlas-biblico/panorama.html">
+<meta property="og:image" content="https://noedelima.github.io/atlas-biblico/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  /* ═══ DESIGN TOKENS · Atlas Bíblico Interativo · v1 · WCAG 2.1 AA ═══ */
+  :root{
+    color-scheme:dark;
+    --bg:#0e1218; --panel:#161d27; --panel-2:#131922; --field:#0f1620;
+    --line:#26303d; --line-strong:#5d7183;
+    --ink:#eceae3; --muted:#9aa6b6;
+    --gold1:#e9c46a; --gold2:#d4933c; --teal1:#7ed8c9;
+    --focus:#e9c46a;
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:
+      radial-gradient(1200px 600px at 80% -10%, #1b2a3a 0, transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, #16202b 0, transparent 55%),
+      var(--bg);
+    color:var(--ink); font-family:var(--sans); line-height:1.5; -webkit-font-smoothing:antialiased;
+  }
+  :focus-visible{outline:2px solid var(--focus); outline-offset:2px; border-radius:4px}
+  .wrap{max-width:1240px; margin:0 auto; padding:26px 20px 56px}
+  .crumbs{margin-bottom:14px;font-size:13px}
+  .crumbs a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line-strong);padding-bottom:1px}
+  .crumbs a:hover{color:var(--ink)}
+  .kicker{color:var(--gold1); font-size:12px; letter-spacing:.18em; text-transform:uppercase; margin-bottom:8px}
+  h1{font-family:var(--serif); font-weight:600; font-size:clamp(22px,3.4vw,34px); margin:0 0 6px}
+  .sub{color:var(--muted); font-size:14.5px; max-width:76ch; margin:0}
+  .sub b{color:var(--ink)}
+
+  .mapcard{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:6px; overflow:hidden; margin-top:20px}
+  .maphead{color:var(--gold1); font-size:11px; letter-spacing:.1em; text-transform:uppercase; margin:6px 8px 4px}
+  .scroll{overflow-x:auto; -webkit-overflow-scrolling:touch}
+  svg.pan{display:block; width:100%; min-width:860px; height:auto}
+  .viewnote{color:var(--muted); font-size:11.5px; margin:8px 8px 6px; line-height:1.6}
+  .viewnote b{color:var(--gold1)}
+  .confchip{display:inline-block; font-size:10px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; border-radius:5px; padding:1px 7px; margin-right:6px}
+  .conf-att{background:#1d3326; color:#7ee0b0}
+  .conf-deb{background:#3a2731; color:#f0a8c0}
+  .conf-der{background:#22303f; color:#9fc6ea}
+
+  text{font-family:var(--sans)}
+  .era rect{stroke-width:1.4; cursor:pointer; transition:filter .15s}
+  .era:hover rect,.era:focus rect{filter:brightness(1.35)}
+  .era:focus{outline:none}
+  .era text{pointer-events:none}
+  .eranome{fill:#0e1218; font-size:12px; font-weight:700}
+  .eranome2{fill:var(--ink); font-size:12px; font-weight:600}
+  .tick{fill:var(--muted); font-size:10px}
+  .seglbl{fill:var(--gold1); font-size:11px; letter-spacing:.1em; text-transform:uppercase; font-weight:600}
+  .costura line{stroke:var(--line-strong); stroke-width:1.4; stroke-dasharray:6 5}
+  .costura text{fill:var(--muted); font-size:10.5px; font-style:italic}
+  .prof{fill:#0e1218; stroke:#9fc6ea; stroke-width:1.5}
+  .proflbl{fill:var(--muted); font-size:9.5px}
+  .profln{stroke:#66798e; stroke-width:.7; stroke-dasharray:2 2}
+  .eixo line{stroke:var(--line-strong)}
+  .eixo text{fill:var(--muted); font-size:10px}
+
+  .caps{display:flex; flex-wrap:wrap; gap:8px; margin-top:18px}
+  .caps a{font-size:12.5px; color:var(--ink); background:#22303f; border:1px solid var(--line); border-radius:20px; padding:7px 14px; text-decoration:none}
+  .caps a:hover{border-color:var(--gold1); color:var(--gold1)}
+  .caps a b{color:var(--gold1); font-weight:600}
+  .caps a:hover b{color:inherit}
+
+  footer{margin-top:26px; color:var(--muted); font-size:12px; border-top:1px solid var(--line); padding-top:14px; line-height:1.7}
+  footer b{color:var(--ink)}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <nav class="crumbs" aria-label="Navegação"><a href="./">← Atlas Bíblico Interativo</a></nav>
+    <div class="kicker">Atlas Bíblico Interativo · Panorama · Antigo Testamento</div>
+    <h1>O Antigo Testamento, costurado — da Criação à espera</h1>
+    <p class="sub">Todo o arco narrativo do atlas numa linha só: à esquerda, o tempo <b>relativo</b> (<i>Anno Mundi</i> — plural nos módulos: TM · LXX · PS); à direita, as <b>âncoras absolutas</b> (a.C.) dos sincronismos assírios, babilônicos e persas. No meio, a <b>costura</b> — onde a cronologia é honestamente aberta. Clique numa era para abrir o módulo; os losangos azuis posicionam os profetas.</p>
+  </header>
+
+  <div class="mapcard">
+    <div class="maphead">Da Criação a Malaquias · nove eras clicáveis</div>
+    <div class="scroll">
+      <svg id="pan" class="pan" viewBox="0 0 1000 400" role="group" aria-label="Linha do tempo do Antigo Testamento com nove eras clicáveis, da Criação ao pós-exílio, e os profetas posicionados nos séculos oitavo ao quinto antes de Cristo."></svg>
+    </div>
+    <p class="viewnote" id="nota1"></p>
+    <p class="viewnote" id="nota2"></p>
+  </div>
+
+  <nav class="caps" aria-label="Os módulos, em ordem narrativa">
+    <a href="atlas.html"><b>1</b> Gênesis 1–11</a>
+    <a href="patriarcas.html"><b>2</b> Patriarcas</a>
+    <a href="exodo.html"><b>3</b> Êxodo</a>
+    <a href="conquista.html"><b>4</b> Conquista e Juízes</a>
+    <a href="monarquia.html"><b>5</b> Rute · Samuel · a monarquia</a>
+    <a href="reis.html"><b>6</b> Salomão · o reino dividido</a>
+    <a href="exilio.html"><b>7</b> Exílio e retorno</a>
+    <a href="genesis5.html"><b>+</b> Gn 5 (protótipo)</a>
+    <a href="tabua-nacoes.html"><b>+</b> Tábua das Nações (protótipo)</a>
+  </nav>
+
+  <footer>
+    <b>O que este panorama afirma — e o que não afirma:</b> as eras são portas de navegação, não uma cronologia fechada; o <i>Anno Mundi</i> é sempre plural (TM · LXX · PS), o período dos juízes fica declaradamente em aberto, e as datas absolutas só começam nos sincronismos da monarquia. Os <b>Escritos</b> (Jó · Salmos · Provérbios · Eclesiastes · Cantares · Lamentações · Joel…) não têm ancoragem narrativa única — entram como camadas temáticas no roadmap.
+    <br><b>Adiante:</b> ~400 anos entre Malaquias e Mateus — e o Novo Testamento no horizonte do atlas.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var NS="http://www.w3.org/2000/svg";
+  function el(t,a){var e=document.createElementNS(NS,t);if(a)for(var k in a)e.setAttribute(k,a[k]);return e;}
+  var svg=document.getElementById("pan");
+
+  var YE=150, HE=46;              /* faixa das eras */
+  var A0=42, A1=408;              /* segmento AM (não linear: eras iguais) */
+  var B0=520, B1=958;             /* segmento a.C. (linear 1100→400) */
+  function xb(t){return B0+(1100-t)/(1100-400)*(B1-B0);}
+
+  /* rótulos dos segmentos */
+  var s1=el("text",{class:"seglbl",x:A0,y:64}); s1.textContent="Tempo relativo · Anno Mundi (plural)"; svg.appendChild(s1);
+  var s2=el("text",{class:"seglbl",x:B0,y:64}); s2.textContent="Âncoras absolutas · a.C."; svg.appendChild(s2);
+
+  /* eras — segmento A (larguras iguais; AM nas bordas) */
+  var ERAS_A=[
+    {nome:"Primeva",      sub:"Gn 1–11",   href:"atlas.html",      cor:"#e9c46a", am0:"AM 0",    am1:"1948*"},
+    {nome:"Patriarcas",   sub:"Gn 12–50",  href:"patriarcas.html", cor:"#7d8ef2", am0:"",        am1:"2238*"},
+    {nome:"Êxodo",        sub:"Êx–Dt",     href:"exodo.html",      cor:"#2ea87d", am0:"",        am1:"~2708*"}
+  ];
+  var wA=(A1-A0)/3;
+  ERAS_A.forEach(function(e,i){
+    var x=A0+i*wA;
+    var a=el("a",{href:e.href,class:"era",role:"link","aria-label":"Era "+e.nome+" ("+e.sub+") — abrir o módulo"});
+    a.appendChild(el("rect",{x:x,y:YE,width:wA-4,height:HE,rx:9,fill:e.cor,stroke:"#0e1218"}));
+    var t1=el("text",{class:"eranome",x:x+(wA-4)/2,y:YE+20,"text-anchor":"middle"}); t1.textContent=e.nome; a.appendChild(t1);
+    var t2=el("text",{class:"eranome",x:x+(wA-4)/2,y:YE+35,"text-anchor":"middle","font-weight":"400"}); t2.textContent=e.sub; a.appendChild(t2);
+    svg.appendChild(a);
+    var tk=el("text",{class:"tick",x:x,y:YE+HE+16}); tk.textContent=e.am0; svg.appendChild(tk);
+    var tk2=el("text",{class:"tick",x:x+wA-4,y:YE+HE+16,"text-anchor":"end"}); tk2.textContent=e.am1; svg.appendChild(tk2);
+  });
+  var nl=el("text",{class:"tick",x:A0,y:YE+HE+32}); nl.textContent="* AM no TM · escala não linear — as datas mudam com a tradição (LXX · PS)"; svg.appendChild(nl);
+  /* Conquista e Juízes: a era em aberto, na costura */
+  (function(){
+    var a=el("a",{href:"conquista.html",class:"era",role:"link","aria-label":"Era da Conquista e dos Juízes — cronologia em aberto — abrir o módulo"});
+    a.appendChild(el("rect",{x:A1+4,y:YE,width:104,height:HE,rx:9,fill:"none",stroke:"#c97a35","stroke-dasharray":"6 4"}));
+    var t1=el("text",{class:"eranome2",x:A1+56,y:YE+20,"text-anchor":"middle"}); t1.textContent="Conquista"; a.appendChild(t1);
+    var t2=el("text",{class:"eranome2",x:A1+56,y:YE+35,"text-anchor":"middle"}); t2.textContent="e Juízes"; a.appendChild(t2);
+    svg.appendChild(a);
+  })();
+
+  /* a costura */
+  var cost=el("g",{class:"costura"});
+  cost.appendChild(el("line",{x1:A1+2,y1:86,x2:A1+2,y2:340}));
+  cost.appendChild(el("line",{x1:B0-4,y1:86,x2:B0-4,y2:340}));
+  var ct=el("text",{x:(A1+B0)/2,y:108,"text-anchor":"middle"}); ct.textContent="a costura"; cost.appendChild(ct);
+  var ct2=el("text",{x:(A1+B0)/2,y:122,"text-anchor":"middle"}); ct2.textContent="Jz em aberto ·"; cost.appendChild(ct2);
+  var ct3=el("text",{x:(A1+B0)/2,y:136,"text-anchor":"middle"}); ct3.textContent="1Rs 6:1 debatido"; cost.appendChild(ct3);
+  svg.appendChild(cost);
+
+  /* eras — segmento B (linear a.C.) */
+  var ERAS_B=[
+    {nome:"Monarquia", sub:"Rt·Sm", href:"monarquia.html", cor:"#e9c46a", t0:1050, t1:931},
+    {nome:"O reino dividido", sub:"1–2Rs", href:"reis.html", cor:"#7d8ef2", t0:931, t1:605},
+    {nome:"Exílio e retorno", sub:"Dn–Ml", href:"exilio.html", cor:"#2ea87d", t0:605, t1:430}
+  ];
+  ERAS_B.forEach(function(e){
+    var x=xb(e.t0), w=xb(e.t1)-x;
+    var a=el("a",{href:e.href,class:"era",role:"link","aria-label":"Era "+e.nome+" ("+e.sub+") — abrir o módulo"});
+    a.appendChild(el("rect",{x:x,y:YE,width:w-3,height:HE,rx:9,fill:e.cor,stroke:"#0e1218"}));
+    var t1=el("text",{class:"eranome",x:x+(w-3)/2,y:YE+20,"text-anchor":"middle"}); t1.textContent=e.nome; a.appendChild(t1);
+    var t2=el("text",{class:"eranome",x:x+(w-3)/2,y:YE+35,"text-anchor":"middle","font-weight":"400"}); t2.textContent=e.sub; a.appendChild(t2);
+    svg.appendChild(a);
+  });
+  /* eixo a.C. */
+  var eixo=el("g",{class:"eixo"});
+  eixo.appendChild(el("line",{x1:B0,y1:YE+HE+8,x2:B1,y2:YE+HE+8}));
+  [1000,900,800,700,600,500,400].forEach(function(t){
+    eixo.appendChild(el("line",{x1:xb(t),y1:YE+HE+8,x2:xb(t),y2:YE+HE+13}));
+    var tx=el("text",{x:xb(t),y:YE+HE+26,"text-anchor":"middle"}); tx.textContent=t; eixo.appendChild(tx);
+  });
+  [{t:931,l:"931"},{t:722,l:"722"},{t:586,l:"586"},{t:445,l:"445"}].forEach(function(m){
+    eixo.appendChild(el("line",{x1:xb(m.t),y1:YE-6,x2:xb(m.t),y2:YE,stroke:"#8a5f04","stroke-width":1.6}));
+    var tx=el("text",{x:xb(m.t),y:YE-10,"text-anchor":"middle",fill:"#e9c46a","font-size":"9.5px"}); tx.textContent=m.l; eixo.appendChild(tx);
+  });
+  svg.appendChild(eixo);
+
+  /* os profetas (datas aproximadas — derivadas) */
+  var PROF=[
+    {t:760,n:"Jonas · Amós",lane:0},{t:745,n:"Oséias",lane:1},{t:725,n:"Miqueias",lane:2},{t:700,n:"Isaías",lane:3},
+    {t:640,n:"Naum · Sofonias",lane:0},{t:600,n:"Habacuque · Jeremias",lane:1},{t:578,n:"Ezequiel · Obadias",lane:2},
+    {t:560,n:"Daniel",lane:3},{t:520,n:"Ageu · Zacarias",lane:0},{t:430,n:"Malaquias",lane:1}
+  ];
+  var YP=286;
+  var pl=el("text",{class:"seglbl",x:B0,y:YP-32}); pl.textContent="Os profetas (≈)"; svg.appendChild(pl);
+  svg.appendChild(el("line",{x1:xb(770),y1:YP,x2:xb(425),y2:YP,stroke:"#66798e","stroke-width":1.2,"stroke-dasharray":"2 4"}));
+  PROF.forEach(function(p,k){
+    var x=xb(p.t), nivel=p.lane, up=nivel===0||nivel===2;
+    var ly=nivel===0?YP-24:(nivel===1?YP+26:(nivel===2?YP-42:YP+44));
+    svg.appendChild(el("line",{class:"profln",x1:x,y1:YP+(up?-6:6),x2:x,y2:ly+(up?4:-8)}));
+    svg.appendChild(el("rect",{class:"prof",x:x-3.5,y:YP-3.5,width:7,height:7,transform:"rotate(45 "+x+" "+YP+")"}));
+    var t=el("text",{class:"proflbl",x:x,y:ly+(up?0:4),"text-anchor":"middle"}); t.textContent=p.n; svg.appendChild(t);
+  });
+  /* o silêncio, adiante */
+  var sil=el("text",{class:"tick",x:B1,y:YP+2,"text-anchor":"start"}); sil.textContent="→"; svg.appendChild(sil);
+  var sil2=el("text",{class:"proflbl",x:B1-2,y:YP+64,"text-anchor":"end","font-style":"italic"});
+  sil2.textContent="…e ~400 anos de silêncio, até o Jordão (Mt 3)"; svg.appendChild(sil2);
+
+  document.getElementById("nota1").innerHTML=
+    "<span class='confchip conf-deb'>debatido</span><b>A costura</b> — a passagem do tempo relativo às datas absolutas depende de duas pontes declaradas: a cronologia dos juízes (somas maiores que o intervalo — sobreposições prováveis) e o ano 480 de 1Rs 6:1 (leitura direta × leitura simbólica). O atlas mostra as duas pontas sem forçar a solda.";
+  document.getElementById("nota2").innerHTML=
+    "<span class='confchip conf-der'>derivado</span><b>Os profetas</b> — posições aproximadas, pelos reinados citados nos títulos dos livros e pelos sincronismos; Joel e Obadias são os mais debatidos. <span class='confchip conf-att'>atestado</span><b>As âncoras</b> — 931 · 853 · 841 · 722 · 701 · 586 · 539 · 445 firmes nos registros assírios, babilônicos e persas (ver os módulos 6 e 7).";
+})();
+</script>
+</body>
+</html>

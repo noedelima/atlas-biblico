@@ -106,7 +106,7 @@ var ETAPAS = [
    via:[[35.15,32.20]],
    nota:"586 a.C. — as crônicas babilônicas registram; as óstracas de Laquis dão a voz das últimas semanas. A casa arde; o povo parte."},
   {perna:"juda", lugar:"jerusalem", ref:"2Rs 25:27-30", leitura:"2Rs 25:27-30", titulo:"Uma mesa na Babilônia (→ F7)", futura:true, exilio:true,
-   nota:"O livro dos Reis termina com um detalhe estranho e cheio de esperança: Joaquim, rei preso, come à mesa do rei da Babilônia. A lâmpada de Davi não se apagou — a ponte para o exílio e o retorno."}
+   nota:"O livro dos Reis termina com um detalhe estranho e cheio de esperança: Joaquim, rei preso, come à mesa do rei da Babilônia. A lâmpada de Davi não se apagou. <a href='exilio.html' style='color:#e9c46a'>Seguir o exílio e o retorno →</a>"}
 ];
 
 /* âncoras absolutas (a.C.) — onde o atlas encosta na história datada */

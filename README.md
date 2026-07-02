@@ -14,10 +14,12 @@ Estudo interativo da Escritura que consolida **texto, tempo, território e genea
 | **F4 · Conquista e Juízes** | [`conquista.html`](https://noedelima.github.io/atlas-biblico/conquista.html) | Três atos em **17 etapas**: **a conquista** (Jericó, Ai — com o problema arqueológico clássico declarado —, o Ebal, o sol detido, Hazor), **a herança** (a terra repartida, com a **camada das doze tribos** no mapa) e **os juízes** (de Otniel a Sansão, com o **diagrama do ciclo** de Jz 2 e a cronologia honestamente aberta). |
 | **F5 · Rute · Samuel · a monarquia** | [`monarquia.html`](https://noedelima.github.io/atlas-biblico/monarquia.html) | Três fios em **19 etapas**: **Rute** (Belém → Moabe → Belém, fechando na genealogia com a **linhagem Rute → Davi** diagramada), **Samuel e a arca** (Siló, a arca capturada e peregrina — Afeca, Asdode, Quiriate-Jearim —, o Ebenézer e o pedido por um rei) e **Saul e Davi** (Gibeá, o vale de Elá, En-Gedi, Gilboa, Hebrom e a **cidade de Davi** — até a promessa de 2Sm 7). Crux de 1Sm 13:1 declarado. |
 | **F6 · Salomão · o reino dividido** | [`reis.html`](https://noedelima.github.io/atlas-biblico/reis.html) | Três atos em **16 etapas**: **Salomão** (o sonho de Gibeão, o Templo do ano 480 — 1Rs 6:1, a âncora interna do atlas, declarada como debatida —, a rainha de Sabá, a queda), **o reino dividido** (a ruptura em Siquém com a **camada Israel/Judá** no mapa, os bezerros, Elias no Carmelo, Eliseu em Dotã, 722) e **Judá até o exílio** (o cerco de 701 — triplamente atestado —, Josias, Megido, 586 e a mesa na Babilônia). Com a faixa das **âncoras absolutas (a.C.)**: é aqui que o atlas encosta na história datada. |
+| **F7 · Exílio e retorno** | [`exilio.html`](https://noedelima.github.io/atlas-biblico/exilio.html) | Três movimentos em **14 etapas**: **na Babilônia** (as levas, Daniel, a fornalha, Ezequiel junto ao Quebar — o canal Kabaru dos arquivos de Murashu —, a escrita na parede), **o retorno** (o edito de Ciro com o cilindro citado com honestidade, o altar entre as ruínas, o segundo Templo) e **os muros e a espera** (Ester em Susã, Neemias — 445 a.C. —, a Lei lida na praça, e **Malaquias**, o último verso do AT, como ponte → NT). O mapa se estende de Jerusalém à Pérsia; os "70 anos" com as duas contagens declaradas. |
+| **Panorama · AT** | [`panorama.html`](https://noedelima.github.io/atlas-biblico/panorama.html) | **O Antigo Testamento, costurado**: uma linha do tempo única com as **nove eras clicáveis** (do *Anno Mundi* plural às âncoras a.C.), a **costura** cronológica declarada (Jz em aberto · 1Rs 6:1 debatido), os **profetas posicionados** (~, derivados) e os Escritos anotados como camadas futuras. |
 
-Os dados vivem fora do HTML, em [`dados.js`](dados.js), [`dados-patriarcas.js`](dados-patriarcas.js), [`dados-exodo.js`](dados-exodo.js), [`dados-conquista.js`](dados-conquista.js), [`dados-monarquia.js`](dados-monarquia.js) e [`dados-reis.js`](dados-reis.js) — o **grafo de conhecimento**: pessoas, lugares, eventos, perícopes, jornadas e **Afirmações como cidadãs de primeira classe** (cada identificação/data carrega fonte e confiança: *atestado · provável · debatido · derivado*). Os *cruxes* clássicos estão anotados: Matusalém 167/187 na LXX, o **Cainã (II)** que só existe na LXX (e em Lc 3:36), o nascimento de Sem derivado de Gn 11:10, o crux Terá 70/130 (At 7:4), as idades derivadas de Jacó em Harã.
+Os dados vivem fora do HTML, em [`dados.js`](dados.js), [`dados-patriarcas.js`](dados-patriarcas.js), [`dados-exodo.js`](dados-exodo.js), [`dados-conquista.js`](dados-conquista.js), [`dados-monarquia.js`](dados-monarquia.js), [`dados-reis.js`](dados-reis.js) e [`dados-exilio.js`](dados-exilio.js) — o **grafo de conhecimento**: pessoas, lugares, eventos, perícopes, jornadas e **Afirmações como cidadãs de primeira classe** (cada identificação/data carrega fonte e confiança: *atestado · provável · debatido · derivado*). Os *cruxes* clássicos estão anotados: Matusalém 167/187 na LXX, o **Cainã (II)** que só existe na LXX (e em Lc 3:36), o nascimento de Sem derivado de Gn 11:10, o crux Terá 70/130 (At 7:4), as idades derivadas de Jacó em Harã.
 
-**Texto integral**: o diretório [`texto/`](texto/) é o corpus — [`core.js`](texto/core.js) (registro de livros + parser de referências: `"Gn 1:1–2:3"`, `"Nm 13:17-33; 14:26-35"`, `"Gn 22:2,14"`…) e um arquivo por livro. Hoje: **onze livros completos — Gênesis a 2 Reis** (9.394 versículos, Bíblia Livre — revisão moderna e livre da Almeida, CC-BY 3.0 BR); cada página carrega só os livros de que precisa. Cada perícope, etapa e card oferece **“Ler o texto completo”** com numeração de versículos.
+**Texto integral**: o diretório [`texto/`](texto/) é o corpus — [`core.js`](texto/core.js) (registro de livros + parser de referências: `"Gn 1:1–2:3"`, `"Nm 13:17-33; 14:26-35"`, `"Gn 22:2,14"`…) e um arquivo por livro. Hoje: **dezessete livros completos** — todo o arco narrativo do AT, de Gênesis a 2 Reis mais Esdras, Neemias, Ester, Ezequiel, Daniel e Malaquias (**11.932 versículos**, Bíblia Livre — revisão moderna e livre da Almeida, CC-BY 3.0 BR); cada página carrega só os livros de que precisa. Cada perícope, etapa e card oferece **“Ler o texto completo”** com numeração de versículos.
 
 ## Protótipos F0 (mantidos)
 
@@ -44,15 +46,17 @@ O site é **HTML + JS puro, sem build e sem dependências em runtime** — abra 
 - ✅ **F4** — MVP Conquista e Juízes: campanhas, a herança das doze tribos e o ciclo dos juízes
 - ✅ **F5** — MVP Rute · Samuel · a monarquia: de Belém à cidade de Davi
 - ✅ **F6** — MVP Salomão e o Templo · o reino dividido: do ano 480 às âncoras absolutas (a.C.)
+- ✅ **F7** — MVP Exílio e retorno: da Babilônia a Malaquias
+- ✅ **Panorama do AT** — o arco narrativo do Antigo Testamento está **completo**
 - **Refinamento** — gazetteers acadêmicos (Pleiades · OpenBible · STEPBible), Isaque/Ismael/Esaú, mais afirmações estruturadas
-- **F7** — Exílio e retorno (Daniel · Esdras · Neemias)
-- **F8+** — expansão progressiva, Gênesis → Apocalipse
+- **F8** — o Novo Testamento: dos evangelhos às viagens de Paulo — rumo ao Gênesis → Apocalipse completo
+- **Camadas** — Escritos e profetas como camadas temáticas sobre o panorama
 
 ## Fontes e licenças de conteúdo
 
 | Fonte | Uso | Licença |
 |---|---|---|
-| [Bíblia Livre](https://sites.google.com/site/biblialivre/) (BLIVRE) | **texto integral** de Gn a 2Rs (11 livros), via eBible/getBible | CC-BY 3.0 BR |
+| [Bíblia Livre](https://sites.google.com/site/biblialivre/) (BLIVRE) | **texto integral** — 17 livros (o arco narrativo do AT), via eBible/getBible | CC-BY 3.0 BR |
 | Bíblia Almeida (edição em domínio público) | trechos em destaque nas perícopes e cards | Domínio público |
 | [Natural Earth](https://www.naturalearthdata.com/) | geometria de costas/rios do basemap | Domínio público |
 | Identificações dos povos e lugares | tradicionais/debatidas, sinalizadas por confiança | — |
